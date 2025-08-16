@@ -171,7 +171,6 @@ export function ClientSection() {
           >
             <ChevronRight className="w-6 h-6 group-hover:text-red-500 transition-colors duration-300" />
           </button>
-
           <div className="flex justify-center gap-2 mt-8">
             {clients.map((_, index) => (
               <button
