@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import { ArrowRight, Download, Projector } from "lucide-react";
+import { ArrowRight, Projector } from "lucide-react";
 
 export function HeroSection() {
   const [displayText, setDisplayText] = useState("");
