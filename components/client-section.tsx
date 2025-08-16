@@ -74,11 +74,9 @@ export function ClientSection() {
 
   return (
     <section id="clients" className="relative py-20 overflow-hidden">
-      {/* Background with red grid pattern */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(239,68,68,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(239,68,68,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
 
-        {/* Floating particles */}
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
@@ -101,7 +99,6 @@ export function ClientSection() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -122,32 +119,7 @@ export function ClientSection() {
           </p>
         </motion.div>
 
-        {/* Client Stats */}
-        {/* <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
-        >
-          {[
-            { number: "6+", label: "Happy Clients", icon: Users },
-            { number: "50+", label: "Projects Delivered", icon: Star },
-            { number: "100%", label: "Client Satisfaction", icon: Quote },
-          ].map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 hover:border-red-500/50 transition-all duration-300 group">
-                <stat.icon className="w-8 h-8 text-red-500 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
-                <div className="text-3xl font-bold text-white mb-2 font-poppins">{stat.number}</div>
-                <div className="text-gray-400 font-inter">{stat.label}</div>
-              </div>
-            </div>
-          ))}
-        </motion.div> */}
-
-        {/* Client Testimonials Carousel */}
         <div className="relative max-w-4xl mx-auto">
-          {/* Carousel Container */}
           <div className="relative overflow-hidden rounded-3xl">
             <AnimatePresence mode="wait">
               <motion.div
@@ -159,22 +131,18 @@ export function ClientSection() {
                 className="w-full"
               >
                 <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-3xl p-8 md:p-12 min-h-[400px] flex flex-col justify-center">
-                  {/* Quote Icon */}
                   <Quote className="w-12 h-12 text-red-500/60 mb-6 mx-auto" />
 
-                  {/* Testimonial */}
                   <p className="text-gray-300 text-lg md:text-xl mb-8 font-inter leading-relaxed text-center max-w-3xl mx-auto">
                     "{clients[currentIndex].testimonial}"
                   </p>
 
-                  {/* Rating */}
                   <div className="flex gap-1 mb-6 justify-center">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-5 h-5 text-yellow-500 fill-current" />
                     ))}
                   </div>
 
-                  {/* Client Info */}
                   <div className="flex items-center gap-4 justify-center">
                     <img
                       src={clients[currentIndex].image || "/placeholder.svg"}
@@ -190,7 +158,6 @@ export function ClientSection() {
             </AnimatePresence>
           </div>
 
-          {/* Navigation Buttons */}
           <button
             onClick={prevSlide}
             className="absolute left-4 top-1/2 -translate-y-1/2 bg-gray-900/80 backdrop-blur-sm border border-gray-700 hover:border-red-500/50 text-white p-3 rounded-full transition-all duration-300 hover:bg-red-500/10 group"
@@ -205,7 +172,6 @@ export function ClientSection() {
             <ChevronRight className="w-6 h-6 group-hover:text-red-500 transition-colors duration-300" />
           </button>
 
-          {/* Dots Indicator */}
           <div className="flex justify-center gap-2 mt-8">
             {clients.map((_, index) => (
               <button
