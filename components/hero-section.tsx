@@ -105,7 +105,6 @@ export function HeroSection() {
           />
         </div>
 
-        {/* Floating particles */}
         {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
@@ -209,7 +208,6 @@ export function HeroSection() {
             className="relative flex justify-center items-center"
           >
             <div className="relative w-full max-w-lg">
-              {/* Central glowing orb */}
               <motion.div
                 animate={{
                   scale: [1, 1.1, 1],
@@ -239,7 +237,6 @@ export function HeroSection() {
                 </motion.div>
               </motion.div>
 
-              {/* Orbiting tech icons */}
               {techIcons.map((tech, index) => {
                 const angle = index * 60 * (Math.PI / 180);
                 const radius = 140;
@@ -285,7 +282,6 @@ export function HeroSection() {
                 );
               })}
 
-              {/* Additional floating code elements */}
               <motion.div
                 animate={{
                   y: [0, -20, 0],
