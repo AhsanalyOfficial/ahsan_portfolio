@@ -37,7 +37,7 @@ export function PageLoader() {
       {[...Array(20)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-1 h-1 bg-red-500 rounded-full"
+          className="absolute w-1 h-1 bg-teal-400 rounded-full"
           initial={{
             x: Math.random() * window.innerWidth,
             y: Math.random() * window.innerHeight,
@@ -72,7 +72,7 @@ export function PageLoader() {
               ],
             }}
             transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-            className="w-24 h-24 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto"
+            className="w-24 h-24 bg-gradient-to-br from-teal-400 to-teal-400 rounded-2xl flex items-center justify-center mx-auto"
           >
             <motion.div
               animate={{ rotate: 360 }}
@@ -97,7 +97,7 @@ export function PageLoader() {
             initial={{ width: 0 }}
             animate={{ width: "100%" }}
             transition={{ delay: 1, duration: 1 }}
-            className="h-0.5 bg-gradient-to-r from-red-500 to-red-600 mx-auto mb-3"
+            className="h-0.5 bg-gradient-to-r from-teal-400 to-teal-400 mx-auto mb-3"
           />
           <p className="text-gray-400 font-inter">Full Stack Developer</p>
         </motion.div>
@@ -110,15 +110,16 @@ export function PageLoader() {
           className="bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-lg p-4 max-w-md mx-auto mb-6"
         >
           <div className="flex items-center gap-2 mb-3">
-            <Terminal className="w-4 h-4 text-red-500" />
+            <Terminal className="w-4 h-4 text-teal-400" />
             <span className="text-xs text-gray-400 font-mono">portfolio.js</span>
             <div className="flex gap-1 ml-auto">
-              <div className="w-2 h-2 bg-red-500 rounded-full" />
+              <div className="w-2 h-2 bg-teal-400 rounded-full" />
               <div className="w-2 h-2 bg-yellow-500 rounded-full" />
               <div className="w-2 h-2 bg-green-500 rounded-full" />
             </div>
           </div>
           <div className="text-left font-mono text-sm">
+            
             {codeLines.map((line, index) => (
               <motion.div
                 key={index}
@@ -140,7 +141,7 @@ export function PageLoader() {
           transition={{ delay: 2.5, duration: 0.5 }}
           className="flex items-center justify-center gap-3"
         >
-          <Zap className="w-5 h-5 text-red-500" />
+          <Zap className="w-5 h-5 text-teal-400" />
           <div className="flex gap-1">
             {[...Array(3)].map((_, i) => (
               <motion.div
@@ -154,7 +155,7 @@ export function PageLoader() {
                   repeat: Number.POSITIVE_INFINITY,
                   delay: i * 0.2,
                 }}
-                className="w-2 h-2 bg-red-500 rounded-full"
+                className="w-2 h-2 bg-teal-400 rounded-full"
               />
             ))}
           </div>

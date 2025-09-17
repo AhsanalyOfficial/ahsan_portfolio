@@ -1,0 +1,2248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Q&A Hub - Node.js, MongoDB, Angular</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      h1 {
+        color: white;
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .subtitle {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.2rem;
+      }
+
+      .search-section {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        margin-bottom: 30px;
+      }
+
+      .search-container {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .search-input {
+        flex: 1;
+        min-width: 250px;
+        padding: 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 10px rgba(102, 126, 234, 0.2);
+      }
+
+      .voice-btn {
+        padding: 15px;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+      }
+
+      .voice-btn:hover:not(.listening) {
+        background: #5a6fd8;
+        transform: scale(1.05);
+      }
+
+      .voice-btn.listening {
+        background: #ff4757;
+        animation: pulse 1s infinite;
+      }
+
+      .voice-btn:disabled {
+        background: #cccccc;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .filter-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .filter-btn {
+        padding: 10px 20px;
+        border: 2px solid #667eea;
+        background: transparent;
+        color: #667eea;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s;
+      }
+
+      .filter-btn:hover,
+      .filter-btn.active {
+        background: #667eea;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+      }
+
+      .stats {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+      }
+
+      .stat-item {
+        text-align: center;
+        padding: 15px;
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        border-radius: 10px;
+        min-width: 120px;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: bold;
+        display: block;
+      }
+
+      .qa-container {
+        display: grid;
+        gap: 20px;
+      }
+
+      .qa-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s;
+        border-left: 5px solid #667eea;
+      }
+
+      .qa-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .qa-card.nodejs {
+        border-left-color: #68a063;
+      }
+
+      .qa-card.mongodb {
+        border-left-color: #4db33d;
+      }
+
+      .qa-card.angular {
+        border-left-color: #dd0031;
+      }
+
+      .question {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 15px;
+      }
+
+      .tech-tag {
+        display: inline-block;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: white;
+        margin-left: 10px;
+      }
+
+      .tech-tag.nodejs {
+        background: #68a063;
+      }
+      .tech-tag.mongodb {
+        background: #4db33d;
+      }
+      .tech-tag.angular {
+        background: #dd0031;
+      }
+
+      .answer {
+        color: #666;
+        line-height: 1.6;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #f0f0f0;
+      }
+
+      .no-results {
+        text-align: center;
+        padding: 50px;
+        color: white;
+        font-size: 1.2rem;
+      }
+
+      code {
+        background: #f8f9fa;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: "Courier New", monospace;
+        color: #d63384;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 10px;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .search-container {
+          flex-direction: column;
+        }
+
+        .stats {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .filter-buttons {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Tech Q&A Hub</h1>
+        <p class="subtitle">
+          Master Node.js, MongoDB & Angular with Expert Q&A
+        </p>
+      </header>
+
+      <div class="search-section">
+        <div class="search-container">
+          <input
+            type="text"
+            class="search-input"
+            id="searchInput"
+            placeholder="Search questions..."
+          />
+          <button class="voice-btn" id="voiceBtn" title="Voice Search" disabled>
+            🎤
+          </button>
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="nodejs">Node.js</button>
+            <button class="filter-btn" data-filter="mongodb">MongoDB</button>
+            <button class="filter-btn" data-filter="angular">Angular</button>
+            <button class="filter-btn" data-filter="expressjs">
+              Express.js
+            </button>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat-item">
+            <span class="stat-number" id="totalQuestions">90</span>
+            <span>Total Questions</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" id="visibleQuestions">90</span>
+            <span>Showing</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">3</span>
+            <span>Technologies</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-container" id="qaContainer">
+        <!-- Questions will be populated by JavaScript -->
+      </div>
+
+      <div class="no-results" id="noResults" style="display: none">
+        <h3>No questions found</h3>
+        <p>Try adjusting your search terms or filters</p>
+      </div>
+    </div>
+
+    <script>
+      const qaData = [
+        // Node.js Questions (30+)
+        {
+          category: "nodejs",
+          question:
+            "What is Node.js and what is its key architectural feature?",
+          answer:
+            "Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. It allows developers to run JavaScript on the server-side. Its key architectural feature is its **non-blocking, event-driven I/O model**. This means it uses a single-threaded event loop to handle concurrent requests efficiently, delegating I/O operations to the system kernel (which are multi-threaded) and using callbacks, promises, or async/await to handle the results. This makes it lightweight, efficient, and perfect for data-intensive real-time applications (RTAs) that run across distributed devices.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "Explain the Node.js Event Loop and how it enables non-blocking I/O.",
+          answer:
+            "The Event Loop is the core mechanism that allows Node.js to perform non-blocking operations despite being single-threaded. It continuously checks the call stack and a series of queues (Callback Queue, Microtask Queue for Promises). When an asynchronous operation (like a file read or network request) is initiated, it's offloaded to the system kernel. Once completed, its callback function is placed in a queue. The Event Loop, once the call stack is empty, picks callbacks from these queues and pushes them onto the stack for execution. This process enables handling thousands of concurrent connections without creating multiple threads.",
+        },
+        {
+          category: "nodejs",
+          question: "What is the difference between `require` and `import`?",
+          answer:
+            '`require` is the legacy, CommonJS syntax used to import modules in Node.js. It is synchronous and can be called anywhere in the code. `import` is the newer, ES6 (ECMAScript) module syntax. It is asynchronous and can only be used at the top of a file (statically analyzable). While Node.js now supports ES modules (using `.mjs` extension or `"type": "module"` in `package.json`), the ecosystem still heavily uses CommonJS. Key differences include how they handle default exports and their loading behavior.',
+        },
+        {
+          category: "nodejs",
+          question: "What is the purpose of the `package.json` file?",
+          answer:
+            "The `package.json` file is the manifest file for a Node.js project. It holds metadata relevant to the project and is crucial for managing dependencies. Its key purposes include: listing all project dependencies (`dependencies` and `devDependencies`), defining project scripts (`scripts` like `start`, `test`), specifying the project name, version, and entry point (`main`), configuring the Node.js package manager (npm) itself, and enabling reproducible builds by locking dependency versions (when used with `package-lock.json`).",
+        },
+        {
+          category: "nodejs",
+          question:
+            "How does Node.js handle child processes and why are they needed?",
+          answer:
+            "Node.js provides the `child_process` module to create and manage subprocesses. This is needed to perform CPU-intensive tasks that would otherwise block the single-threaded event loop. Key methods include `spawn()` for launching a new process with a command, `exec()` for running a command in a shell and buffering the output, and `fork()` for spawning a new Node.js process specifically for running modules, enabling inter-process communication (IPC). This allows Node.js to leverage multi-core systems despite its single-threaded nature.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "What is the Cluster module and how does it improve performance?",
+          answer:
+            "The `cluster` module allows you to create multiple instances of your Node.js application (worker processes) that share the same server port. It is used to leverage multiple CPU cores on a single machine. A master process forks worker processes and distributes incoming connections among them using a round-robin algorithm (by default). This significantly improves performance and throughput for applications that are not I/O bound but are instead constrained by the single-threaded CPU limit, as it effectively parallelizes the workload.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "Explain the concepts of `middleware` in the context of Express.js.",
+          answer:
+            "In Express.js, middleware are functions that have access to the request object (`req`), the response object (`res`), and the next middleware function in the application’s request-response cycle (`next`). They can execute any code, make changes to the request and response objects, end the request-response cycle (e.g., by sending a response), or call the next middleware. They are used for tasks like parsing request bodies (`express.json()`), authentication, logging, compression, and error handling, allowing for modular and organized application logic.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "How do you manage environment variables and configuration in Node.js?",
+          answer:
+            "The standard way is to use the `dotenv` package. You create a `.env` file in your project root (and add it to `.gitignore`) to store environment-specific variables like database URLs, API keys, and ports. The `dotenv.config()` function loads these variables into `process.env`. For more complex scenarios, you can use config management libraries like `config` or `nconf` that support hierarchical configurations for different environments (development, production, testing). This keeps sensitive credentials out of your codebase.",
+        },
+        {
+          category: "nodejs",
+          question: "What are Streams in Node.js and what are their benefits?",
+          answer:
+            "Streams are collections of data that might not be available all at once. Instead, data is read or written in chunks. There are four types: Readable, Writable, Duplex, and Transform. The key benefit is **efficient memory usage** – you can process large files (like videos) without loading the entire file into memory at once. This is crucial for performance and scalability. They also enable **pipelining** (using the `.pipe()` method), where data from a readable stream is directly passed to a writable stream with minimal overhead.",
+        },
+        {
+          category: "nodejs",
+          question: "What is the purpose of the `Buffer` class in Node.js?",
+          answer:
+            "The `Buffer` class is a global object designed to handle binary data directly. It represents a fixed-size chunk of raw memory allocated outside the V8 heap. It is essential when working with TCP streams, file system operations, or any context where it's necessary to deal with raw binary data, such as when dealing with image or video processing, encryption, or network protocols. Before the introduction of `TypedArray`, `Buffer` was the primary way to handle binary data in Node.js.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "How do you handle errors in Node.js applications effectively?",
+          answer:
+            "Use a combination of techniques: For synchronous code, use `try/catch` blocks. For asynchronous code, always handle promise rejections with `.catch()` or use `try/catch` with `async/await`. Avoid unhandled promise rejections. For Express apps, create error-handling middleware (a function with four parameters: `err, req, res, next`) to centralize error processing, log errors (using libraries like `winston` or `pino`), and send appropriate responses to the client. Always use operational errors (app-level issues) vs. programmer errors (bugs) for better control.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "What is the purpose of the `__dirname` and `__filename` variables?",
+          answer:
+            "`__dirname` returns the absolute path of the directory containing the currently executing JavaScript file. `__filename` returns the absolute path of the current module's file. They are crucial for resolving file paths reliably, as the current working directory (`process.cwd()`) can change. This is especially important when reading files or requiring modules using relative paths, as it provides a consistent reference point regardless of where the `node` command was launched from. Note: They are not available in ES modules, where `import.meta.url` is used instead.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "What are JWT (JSON Web Tokens) and how are they used for authentication?",
+          answer:
+            "JWT is an open standard (RFC 7519) for securely transmitting information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. For authentication, after a user logs in (e.g., with a username/password), the server generates a signed JWT containing a payload (like user ID and permissions) and sends it to the client. The client includes this token in the header of subsequent requests (`Authorization: Bearer <token>`). The server verifies the signature to authenticate the user, eliminating the need for server-side sessions.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "How can you prevent SQL Injection attacks in a Node.js application?",
+          answer:
+            "Never construct database queries by directly concatenating user input into the query string. Instead, use **parameterized queries** (also known as prepared statements). All major Node.js ORMs (Sequelize, TypeORM) and database drivers (like `pg` for PostgreSQL or `mysql2`) support this. They ensure user input is always treated as data, not executable SQL code. For example, in `pg`, you use parameterized placeholders (`$1, $2`) and pass the values as an array to the query method. This is the most effective defense against SQL injection.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "What is an ORM and what are popular options in the Node.js ecosystem?",
+          answer:
+            "An ORM (Object-Relational Mapping) is a tool that allows you to interact with a database using JavaScript objects and methods instead of writing raw SQL queries. It maps database tables to application models (classes), providing abstraction, security (against SQL injection), and often database portability. Popular Node.js ORMs include **Sequelize** (mature, supports PostgreSQL, MySQL, etc.), **TypeORM** (written in TypeScript, supports Active Record and Data Mapper patterns), **Prisma** (next-generation, type-safe ORM with its own schema definition language), and **Mongoose** (specifically for MongoDB).",
+        },
+        {
+          category: "nodejs",
+          question:
+            "What is the purpose of API rate limiting and how can it be implemented?",
+          answer:
+            "Rate limiting protects your API from abuse (e.g., Denial-of-Service attacks, brute force attempts) and ensures fair usage by restricting the number of requests a client can make in a given time window (e.g., 100 requests per hour per IP). It can be implemented using middleware. Popular packages include `express-rate-limit` for Express.js. It typically works by storing request counts in memory or, more effectively for distributed systems, in a shared store like Redis to track requests across multiple application instances.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "How do you structure a large Node.js application for maintainability?",
+          answer:
+            "Follow a modular architecture. Separate concerns into distinct layers: **Routes** (handle HTTP requests/responses), **Controllers** (contain the application logic for specific routes), **Services** (contain business logic, interact with data sources), and **Models** (define data structures and database interactions). Use a `config` folder for configuration and a `utils` folder for helpers. This separation of concerns (SoC) makes the code easier to test, debug, and maintain. Adhering to the **SOLID principles** further enhances code quality and scalability.",
+        },
+        {
+          category: "nodejs",
+          question: "What is the purpose of the `util.promisify` function?",
+          answer:
+            "`util.promisify` is a utility function that takes a function following the Node.js error-first callback style (i.e., `(err, value) => ...`) and returns a version that returns a Promise. This is incredibly useful for modernizing older, callback-based APIs (like many core `fs` functions) to work with the cleaner `async/await` syntax. It eliminates callback hell and integrates seamlessly with promise-based workflows. For example, `const readFile = promisify(fs.readFile);` allows you to use `await readFile('file.txt')`.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "What are some common performance bottlenecks and how to identify them?",
+          answer:
+            "Common bottlenecks include: **Synchronous code** blocking the event loop, **Inefficient database queries** (lack of indexing, fetching too much data), **Memory leaks** (from global variables, unclosed event listeners), and **CPU-intensive tasks** (hashing, image processing). Identify them using: the built-in **profiler** (`--prof` flag), **debugging with Chrome DevTools**, monitoring **Event Loop delay** with `process.hrtime()`, using APM (Application Performance Monitoring) tools like **New Relic** or **Datadog**, and analyzing logs for slow operations.",
+        },
+        {
+          category: "nodejs",
+          question: "How does caching improve Node.js application performance?",
+          answer:
+            "Caching stores copies of frequently accessed data in a fast, temporary storage layer (like memory) to reduce latency and load on primary data sources (like databases). It dramatically improves performance and scalability. Strategies include: **In-memory caching** with Redis or Memcached for database query results or session data, **CDN caching** for static assets, and implementing HTTP caching headers (`Cache-Control`, `ETag`) for API responses. This reduces repeated computation and database load, leading to faster response times.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "What is the purpose of the `helmet` middleware in Express.js?",
+          answer:
+            "`helmet.js` is a collection of security-focused middleware functions for Express. It helps secure your app by setting various HTTP headers that mitigate common web vulnerabilities. It sets headers like: `X-Content-Type-Options` to prevent MIME-type sniffing, `Strict-Transport-Security` to enforce HTTPS, `X-Frame-Options` to prevent clickjacking, and `X-XSS-Protection` to enable browser XSS filters. It's not a silver bullet, but it's a crucial first line of defense for any Express application and should be used by default.",
+        },
+        {
+          category: "nodejs",
+          question: "What is the purpose of process managers like PM2?",
+          answer:
+            "Process managers like **PM2** are used to keep Node.js applications alive and running in production. They provide key features: **Process management** (starting, stopping, restarting, reloading apps without downtime), **Load balancing** (across multiple CPU cores using the cluster mode), **Application logging management**, **Monitoring** (CPU/RAM usage), and **Zero-downtime reloads**. This ensures high availability, improves performance via clustering, and simplifies deployment and operational tasks, which is essential for production environments.",
+        },
+        {
+          category: "nodejs",
+          question: "How do you debug a Node.js application?",
+          answer:
+            "Debug using several methods: 1) **Console logging** (basic but effective, use structured JSON logging). 2) The built-in **debugger** (`inspect` flag) and connecting Chrome DevTools for a GUI with breakpoints, stepping, and variable inspection. 3) **Visual Studio Code's** integrated debugger, which provides an excellent debugging experience. 4) For advanced production debugging, use **APM tools** (Application Performance Monitoring) that provide traces, profiles, and metrics to pinpoint performance issues and errors in real-time.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "What is the purpose of testing and name common testing frameworks for Node.js.",
+          answer:
+            "Testing ensures code correctness, prevents regressions, and enables safe refactoring. Key types are unit tests (testing individual functions/modules in isolation) and integration tests (testing how modules work together). Popular frameworks include **Jest** (all-in-one, popular for its simplicity and built-in mocking), **Mocha** (flexible, often paired with assertion libraries like `Chai` and mocking tools like `Sinon`), and **Vitest** (fast, gaining popularity). **Supertest** is specifically used for testing HTTP servers (e.g., Express apps).",
+        },
+        {
+          category: "nodejs",
+          question:
+            "What are WebSockets and how are they implemented in Node.js?",
+          answer:
+            "WebSockets provide a persistent, full-duplex communication channel over a single TCP connection, unlike HTTP's request-response model. This is ideal for real-time applications like chat, live feeds, gaming, or collaborative tools. In Node.js, the `ws` library is a simple, fast implementation of the WebSocket protocol. For more feature-rich solutions, **Socket.IO** is popular—it provides additional features like rooms, namespaces, and automatic fallback to long polling for clients that don't support WebSockets, ensuring broader compatibility.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "How do you secure a RESTful API built with Node.js and Express?",
+          answer:
+            "Secure an API by implementing multiple layers: 1) **HTTPS** to encrypt data in transit. 2) **Authentication** (e.g., JWT) to verify user identity. 3) **Authorization** to check user permissions. 4) **Input Validation/Sanitization** (with `joi` or `express-validator`) to prevent injection attacks. 5) **Rate Limiting** to prevent abuse. 6) **Security Headers** (using `helmet`). 7) **Parameterized Queries** to prevent SQL injection. 8) **CORS** configuration to restrict which domains can access your API. This defense-in-depth approach is critical.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "What is the purpose of the `NODE_ENV` environment variable?",
+          answer:
+            "`NODE_ENV` is a conventional environment variable used to specify the environment in which the application is running (e.g., `development`, `production`, `test`). It is used by Express and many other libraries to toggle behavior. For example, in `production` mode, Express view templates are cached, and less verbose error messages are returned to the client. Developers also use it to conditionally load configurations (e.g., use a local database in `development` vs. a cloud database in `production`). It's a fundamental variable for environment-specific configuration.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "What is the purpose of the `events` module and the `EventEmitter` class?",
+          answer:
+            "The `events` module provides the `EventEmitter` class, which is the core building block for Node.js's event-driven architecture. Many built-in Node.js objects (like HTTP servers) inherit from `EventEmitter`. It allows you to create your own objects that can emit named events and register listener functions that will be called when those events occur. This pattern is crucial for handling asynchronous operations, implementing custom event-based APIs, and decoupling components in your application, as one part can emit an event that multiple other parts can listen for and react to.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "What is Node.js and how does it differ from traditional server-side technologies?",
+          answer:
+            "Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Unlike traditional server-side technologies like PHP or Java, Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. It allows developers to use JavaScript for both client-side and server-side development, enabling full-stack JavaScript development. We use Node.js when building scalable network applications, real-time web apps, or APIs where high concurrency is needed without blocking threads.",
+        },
+        {
+          category: "nodejs",
+          question: "Explain the concept of Event Loop in Node.js.",
+          answer:
+            "The Event Loop is the heart of Node.js's asynchronous nature. It's a single-threaded loop that handles all asynchronous operations. When an async operation is initiated, it's offloaded to the system, and the Event Loop continues executing other code. When the async operation completes, its callback is placed in the event queue and executed when the Event Loop is free. This mechanism allows Node.js to handle thousands of concurrent connections efficiently.",
+        },
+        {
+          category: "nodejs",
+          question: "What are modules in Node.js and how do you create them?",
+          answer:
+            "Modules in Node.js are reusable blocks of code whose existence doesn't impact other code. You can create a module by using <code>module.exports</code> or <code>exports</code> to expose functions, objects, or variables. For example: <code>module.exports = { myFunction: () => {} }</code>. You can then import it using <code>require()</code> or ES6 <code>import/export</code> statements. Modules promote code organization and reusability in large projects.",
+        },
+        {
+          category: "nodejs",
+          question: "What is npm and what are package.json files?",
+          answer:
+            "NPM (Node Package Manager) is the default package manager for Node.js. It allows you to install, share, and manage dependencies. The <code>package.json</code> file is a manifest that contains metadata about your project, including dependencies, scripts, version info, and project configuration. It's essential for managing Node.js projects and their dependencies. Use npm when initializing projects with <code>npm init</code> to set up package.json automatically.",
+        },
+        {
+          category: "nodejs",
+          question: "Explain callback functions and callback hell in Node.js.",
+          answer:
+            "Callback functions are functions passed as arguments to other functions and executed after some operation completes. Callback hell occurs when you have multiple nested callbacks, making code hard to read and maintain. It looks like a pyramid of callbacks. This can be solved using Promises, async/await, or modularizing code into smaller functions. Avoid callback hell in complex async flows by adopting modern patterns for better maintainability.",
+        },
+        {
+          category: "nodejs",
+          question: "What are Promises in Node.js and how do they help?",
+          answer:
+            "Promises are objects that represent the eventual completion or failure of an asynchronous operation. They help avoid callback hell by providing a cleaner way to handle async operations. A Promise has three states: pending, fulfilled, or rejected. You can chain promises using <code>.then()</code> and <code>.catch()</code> methods, or use async/await for even cleaner syntax. Promises are crucial for handling API calls or file operations reliably.",
+        },
+        {
+          category: "nodejs",
+          question: "What is Express.js and why is it popular?",
+          answer:
+            "Express.js is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications. It's popular because it simplifies server creation, provides middleware support, has excellent routing capabilities, and offers a large ecosystem of plugins. It makes building REST APIs and web applications much easier. Use Express when you need a fast, unopinionated framework for backend services.",
+        },
+        {
+          category: "nodejs",
+          question: "Explain middleware in Express.js.",
+          answer:
+            "Middleware functions are functions that execute during the request-response cycle. They have access to the request object, response object, and the next middleware function. Middleware can execute code, modify request/response objects, end the request-response cycle, or call the next middleware. Examples include body parsing, authentication, logging, and error handling middleware. Middleware is key for building modular and extensible Express applications.",
+        },
+        {
+          category: "nodejs",
+          question: "What is the difference between require() and import?",
+          answer:
+            "<code>require()</code> is the CommonJS way of importing modules (traditional Node.js). <code>import</code> is the ES6 module syntax. Key differences: <code>require()</code> is synchronous and can be called anywhere, while <code>import</code> is asynchronous and must be at the top level. <code>import</code> supports tree shaking and static analysis, making it better for bundlers. Use ES6 imports for modern Node.js projects with better optimization.",
+        },
+        {
+          category: "nodejs",
+          question: "How do you handle errors in Node.js?",
+          answer:
+            "Error handling in Node.js can be done through: 1) Try-catch blocks for synchronous code, 2) Error-first callbacks for async operations, 3) Promise .catch() methods, 4) Try-catch with async/await, 5) Event emitters with error events, and 6) Process-level error handlers like <code>process.on('uncaughtException')</code> and <code>process.on('unhandledRejection')</code>. Proper error handling prevents crashes and logs issues for debugging. Always implement global handlers for production apps.",
+        },
+        {
+          category: "nodejs",
+          question: "What are streams in Node.js?",
+          answer:
+            "Streams are objects that let you read data from a source or write data to a destination continuously. There are four types: Readable (read data), Writable (write data), Duplex (both read and write), and Transform (modify data as it's read/written). Streams are memory efficient as they process data piece by piece rather than loading everything into memory. Use streams for handling large files or real-time data processing like video streaming.",
+        },
+        {
+          category: "nodejs",
+          question: "Explain clustering in Node.js.",
+          answer:
+            "Clustering allows you to create child processes (workers) that share server ports. Since Node.js is single-threaded, clustering helps utilize multiple CPU cores. The cluster module can create workers that run simultaneously, with the master process distributing incoming connections among workers. This improves application performance and provides better fault tolerance. Use clustering for high-traffic production servers to scale horizontally.",
+        },
+        {
+          category: "nodejs",
+          question: "What is the purpose of process.nextTick()?",
+          answer:
+            "<code>process.nextTick()</code> schedules a callback to be invoked in the next iteration of the Event Loop, before any I/O events. It has higher priority than <code>setTimeout()</code> or <code>setImmediate()</code>. It's useful for handling errors, API consistency, or executing code after the current phase of the Event Loop completes but before moving to the next phase. Use it to defer execution without introducing delays in critical paths.",
+        },
+        {
+          category: "nodejs",
+          question: "How do you manage environment variables in Node.js?",
+          answer:
+            "Environment variables in Node.js are accessed through <code>process.env</code>. You can set them in the system, command line, or use a <code>.env</code> file with the <code>dotenv</code> package. They're used to store configuration data like database URLs, API keys, and environment-specific settings without hardcoding them in your application. This enhances security and flexibility across development, staging, and production environments.",
+        },
+        {
+          category: "nodejs",
+          question: "What is JWT and how is it used in Node.js authentication?",
+          answer:
+            "JWT (JSON Web Token) is a compact, URL-safe token format for securely transmitting information between parties. In Node.js authentication, JWTs contain user data and are signed with a secret key. After login, the server generates a JWT that the client stores and sends with each request. The server verifies the token to authenticate users without maintaining session state. Use JWT for stateless, scalable authentication in microservices.",
+        },
+        {
+          category: "nodejs",
+          question:
+            "Explain the difference between setImmediate() and setTimeout().",
+          answer:
+            "<code>setImmediate()</code> executes callback after the current event loop phase completes, while <code>setTimeout()</code> schedules callback after a minimum delay. When both are called together, <code>setImmediate()</code> typically runs first if called within an I/O callback. <code>setTimeout(0)</code> has a minimum delay of 1ms, while <code>setImmediate()</code> has no delay constraint. Use setImmediate for deferring to the next loop iteration without timer overhead.",
+        },
+        {
+          category: "nodejs",
+          question: "What are Buffer objects in Node.js?",
+          answer:
+            "Buffer objects handle binary data in Node.js. Since JavaScript originally had no way to handle binary data, Node.js created Buffers to work with streams of binary data. Buffers represent fixed-size memory allocation and are useful for handling file systems, network protocols, or any binary data manipulation. They're similar to arrays but specifically for binary data. Use Buffers when processing images, videos, or TCP sockets.",
+        },
+        {
+          category: "nodejs",
+          question: "How do you implement rate limiting in Node.js?",
+          answer:
+            "Rate limiting can be implemented using middleware like <code>express-rate-limit</code> for Express.js applications. You can also create custom rate limiting using Redis or in-memory stores to track request counts per IP/user within time windows. Rate limiting helps prevent abuse, DDoS attacks, and ensures fair resource usage among clients. Configure limits based on your API's capacity and user tiers for optimal security.",
+        },
+        {
+          category: "nodejs",
+          question: "What is the role of package-lock.json?",
+          answer:
+            '<code>package-lock.json</code> is automatically generated by npm to lock the exact versions of dependencies and their sub-dependencies. It ensures that all developers working on the project install the exact same dependency tree, preventing "works on my machine" issues. It also speeds up installation by providing exact download locations and checksums for packages. Commit it to version control for reproducible builds.',
+        },
+        {
+          category: "nodejs",
+          question: "How do you test Node.js applications?",
+          answer:
+            "Node.js applications can be tested using frameworks like Jest, Mocha, or Jasmine. Testing approaches include unit testing (individual functions), integration testing (multiple components), and end-to-end testing. Tools like Supertest help test HTTP endpoints, while libraries like Sinon help with mocking. Test coverage can be measured using tools like NYC or Istanbul. Write tests early to ensure reliability and catch regressions.",
+        },
+        // Additional Node.js Questions (10+ more for 30+ total)
+        {
+          category: "nodejs",
+          question: "When should you use Node.js for a web project?",
+          answer:
+            "Use Node.js for web projects that require high concurrency, real-time features like chat or gaming, or when your team prefers JavaScript across the stack. It excels in I/O-bound tasks such as API servers or streaming services due to its non-blocking architecture. Avoid it for CPU-intensive tasks like complex computations where languages like Python or Go might be better. Node.js is ideal for microservices and scalable backends in modern web apps.",
+        },
+        {
+          category: "nodejs",
+          question: "How do you secure a Node.js application?",
+          answer:
+            "Secure Node.js apps by using HTTPS, validating inputs with libraries like Joi, implementing authentication with JWT or OAuth, and using middleware like Helmet for security headers. Sanitize user inputs to prevent XSS and SQL injection, and use bcrypt for password hashing. Regularly update dependencies with npm audit to fix vulnerabilities. Monitor logs with tools like Winston and implement rate limiting to mitigate DDoS attacks.",
+        },
+        {
+          category: "nodejs",
+          question: "What is a typical Node.js project structure?",
+          answer:
+            "A typical Node.js project structure includes folders like /src for source code, /config for configurations, /routes for API endpoints, /models for data schemas, /controllers for business logic, /middleware for utilities, /tests for test files, and /public for static assets. The root has package.json, .env, and README.md. This modular structure promotes maintainability and scalability. Use tools like Express Generator to scaffold initial structure.",
+        },
+        {
+          category: "nodejs",
+          question: "Why use Node.js for real-time applications?",
+          answer:
+            "Node.js is perfect for real-time apps like chat, collaborative tools, or live notifications because of its event-driven model and WebSocket support via Socket.io. It handles multiple simultaneous connections efficiently without blocking, enabling low-latency bidirectional communication. Traditional servers struggle with polling, but Node.js uses long-polling or websockets natively. Deploy with PM2 for clustering to handle high loads.",
+        },
+        {
+          category: "nodejs",
+          question: "How to optimize Node.js performance?",
+          answer:
+            "Optimize Node.js by using clustering to utilize multiple cores, implementing caching with Redis, compressing responses with gzip, and minimizing middleware chains. Profile with tools like Clinic.js to identify bottlenecks, use connection pooling for databases, and enable HTTP/2 for faster transfers. Load balance with Nginx and monitor with New Relic. These techniques can improve throughput by 5-10x in production.",
+        },
+        {
+          category: "nodejs",
+          question: "What are Node.js security best practices?",
+          answer:
+            "Follow best practices like never trusting user input, using parameterized queries to avoid injection, setting secure cookie flags, and enabling CORS properly. Use libraries like bcrypt for hashing, helmet for headers, and express-validator for sanitization. Rotate secrets regularly and use environment variables. Conduct regular security audits with npm audit and tools like Snyk to stay ahead of vulnerabilities.",
+        },
+        {
+          category: "nodejs",
+          question: "How to build a REST API with Node.js?",
+          answer:
+            "Build a REST API using Express.js by defining routes for CRUD operations, connecting to a database like MongoDB with Mongoose, and handling errors globally. Use middleware for authentication and validation. Test with Postman and deploy to Heroku or AWS. Structure with MVC pattern for separation of concerns. This setup allows scalable, stateless APIs for modern web apps.",
+        },
+        {
+          category: "nodejs",
+          question: "Where does Node.js fit in microservices architecture?",
+          answer:
+            "Node.js fits well in microservices as lightweight services communicating via REST or gRPC, leveraging its fast startup and low memory footprint. Use it for API gateways or event-driven services with Kafka integration. Orchestrate with Docker and Kubernetes for scaling. Its async nature handles inter-service calls efficiently, making it ideal for distributed systems.",
+        },
+        {
+          category: "nodejs",
+          question: "Why choose Node.js over Python for backend?",
+          answer:
+            "Choose Node.js over Python for backends needing high concurrency and real-time features, as its single-threaded event loop outperforms Python's GIL-limited threading. JavaScript ecosystem unifies frontend-backend development. However, Python is better for data-heavy tasks. Use Node.js when speed and scalability are priorities in web APIs.",
+        },
+        {
+          category: "nodejs",
+          question: "How to handle database connections in Node.js?",
+          answer:
+            "Handle database connections using connection pooling with libraries like pg-pool for PostgreSQL or mongoose for MongoDB to manage multiple queries efficiently. Implement retry logic for transient failures and use transactions for data integrity. Close connections properly to avoid leaks. In production, monitor pool sizes and use environment-based configs for different databases.",
+        },
+        {
+          category: "nodejs",
+          question: "What is PM2 and why use it with Node.js?",
+          answer:
+            "PM2 is a process manager for Node.js that enables clustering, load balancing, and zero-downtime restarts. Use it to run apps in production, monitor memory/CPU, and auto-restart on crashes. It simplifies deployment with ecosystem files and integrates with log management. Essential for reliable, scaled Node.js services beyond development.",
+        },
+        // Express.js
+        {
+          category: "expressjs",
+          question: "What is Express.js and why use it?",
+          answer:
+            "Express.js is a minimal, unopinionated web framework for Node.js that simplifies building APIs and web apps. It provides routing, middleware support, and utilities while staying lightweight. Use Express when you want fast development, full control over middleware, and easy integration with Node libraries. It's ideal for REST APIs, microservices, and server-rendered apps. Large ecosystem and community make it easy to find plugins and examples. Express handles HTTP requests efficiently without imposing structure, allowing flexibility for various project sizes.",
+        },
+        {
+          category: "expressjs",
+          question:
+            "How do you install and set up a basic Express.js application?",
+          answer:
+            "To install Express, run 'npm init -y' followed by 'npm install express' in your project directory. Create an 'app.js' file and require Express: const express = require('express'); const app = express(); app.listen(3000, () => console.log('Server running on port 3000'));. Add a basic route: app.get('/', (req, res) => res.send('Hello World'));. This sets up a simple server. For production, use nodemon for development restarts and consider environment variables for port configuration. Ensure Node.js is installed globally for seamless setup.",
+        },
+        {
+          category: "expressjs",
+          question: "What are routes in Express.js and how do you define them?",
+          answer:
+            "Routes in Express define how an application responds to client requests at specific endpoints. Use app.get('/path', callback) for GET requests, where callback is (req, res) => {}. Define multiple methods like POST, PUT, DELETE similarly. Chain methods for the same path: app.route('/book').get(handler).post(handler);. Routes can be modularized into separate files using express.Router(). This promotes code organization. Always handle errors in routes to prevent crashes. Routes support wildcards like /users/:id for dynamic paths.",
+        },
+        {
+          category: "expressjs",
+          question:
+            "Explain route parameters and how to access them in Express.js.",
+          answer:
+            "Route parameters are placeholders in the URL path, defined as /users/:id, where :id is dynamic. Access them via req.params.id in the handler function. For multiple params: /users/:userId/books/:bookId, access both via req.params. Use req.params for validation, like checking if id is numeric. Combine with query strings: req.query for ?key=value. This enables flexible, RESTful APIs. Always sanitize params to prevent injection attacks in production.",
+        },
+        {
+          category: "expressjs",
+          question:
+            "What are query strings in Express.js and how to handle them?",
+          answer:
+            "Query strings are key-value pairs in the URL after ?, like /search?q=express&limit=10. Access them via req.query, an object: req.query.q gives 'express'. Parse arrays: ?tags=js&tags=node yields req.query.tags as ['js', 'node']. Use libraries like qs for deeper parsing if needed. Handle in routes: app.get('/search', (req, res) => res.json({ results: filterByQuery(req.query) }));. This is crucial for filtering, pagination in APIs. Validate queries to avoid malformed requests.",
+        },
+        {
+          category: "expressjs",
+          question: "What is middleware in Express.js and how does it work?",
+          answer:
+            "Middleware are functions that process requests before reaching the route handler, executed in order. Signature: (req, res, next) => {}, where next() passes control. Built-in: express.json() parses JSON bodies. Custom: function log(req, res, next) { console.log(req.url); next(); } app.use(log);. Apply globally with app.use(), route-specific with app.get('/path', middleware, handler). Error middleware: (err, req, res, next). Middleware enables logging, auth, CORS seamlessly. Chain multiple for layered processing.",
+        },
+        {
+          category: "expressjs",
+          question:
+            "How do you handle POST requests and body parsing in Express.js?",
+          answer:
+            "For POST requests, define app.post('/submit', (req, res) => {});. Parse body with middleware: app.use(express.urlencoded({ extended: true })); for form data, app.use(express.json()); for JSON. Access via req.body. For file uploads, use multer: npm install multer, then app.use(multer().single('file'));. Validate body with joi or express-validator. This setup handles form submissions, API payloads securely. Always limit body size to prevent DoS: express.json({ limit: '10kb' }).",
+        },
+        {
+          category: "expressjs",
+          question: "Explain error handling in Express.js applications.",
+          answer:
+            "Error handling uses middleware with four arguments: (err, req, res, next). Place at the end: app.use((err, req, res, next) => { res.status(500).send('Error'); });. In routes, pass errors to next(err): try { ... } catch(e) { next(e); }. For async, use express-async-errors package. Define specific handlers: if(err.name === 'ValidationError') res.status(400).json({errors});. Log errors with morgan or winston. This ensures graceful failures without crashing the server.",
+        },
+        {
+          category: "expressjs",
+          question: "How do you serve static files in Express.js?",
+          answer:
+            "Use express.static() middleware: app.use(express.static('public')); serves files from /public directory at root URL. For multiple dirs: app.use('/static', express.static('public')); accesses at /static/file.js. Set cache control: app.use(express.static('public', { maxAge: '1d' })); for performance. Handle fallbacks for SPAs: app.get('', express.static('dist'));. This is essential for CSS, JS, images in web apps. Ensure security by not serving sensitive files.",
+        },
+        {
+          category: "expressjs",
+          question:
+            "What are template engines in Express.js and how to integrate one?",
+          answer:
+            "Template engines render dynamic HTML: Pug, EJS, Handlebars. Install e.g., npm install ejs, then app.set('view engine', 'ejs');. Render: res.render('index', { title: 'Home' }); looks for views/index.ejs. Use partials for reusability. For Pug: app.set('view engine', 'pug'); res.render('index', { title: 'Home' });. This enables server-side rendering for SEO-friendly apps. Cache templates in production: app.set('view cache', true); for speed.",
+        },
+        {
+          category: "expressjs",
+          question: "How do you implement sessions in Express.js?",
+          answer:
+            "Sessions store user data server-side. Install express-session: npm install express-session. Setup: const session = require('express-session'); app.use(session({ secret: 'key', resave: false, saveUninitialized: true }));. Access req.session.user = { id: 1 };. Use connect-redis for Redis storage in production. Regenerate session ID on login: req.session.regenerate(). This prevents session fixation. Secure with cookie options: { secure: true, httpOnly: true } for HTTPS.",
+        },
+        {
+          category: "expressjs",
+          question: "Explain authentication and JWT in Express.js.",
+          answer:
+            "Authentication verifies users; use JWT for stateless tokens. Install jsonwebtoken: npm install jsonwebtoken. On login: const token = jwt.sign({ id: user.id }, 'secret'); res.json({ token });. Middleware to verify: function auth(req, res, next) { const token = req.header('Authorization'); if(!token) return res.status(401).send('Access denied'); try { const verified = jwt.verify(token, 'secret'); req.user = verified; next(); } catch(e) { res.status(400).send('Invalid token'); } }. Protect routes: app.get('/protected', auth, handler);. Refresh tokens for longer sessions.",
+        },
+        {
+          category: "expressjs",
+          question: "How do you handle CORS in Express.js?",
+          answer:
+            "CORS allows cross-origin requests. Install cors: npm install cors. Use app.use(cors()); for all origins, or app.use(cors({ origin: 'https://example.com' })); for specific. For credentials: { origin: true, credentials: true }. Handle preflight OPTIONS automatically. In production, whitelist origins dynamically. This prevents browser blocking AJAX calls. Combine with helmet for security headers.",
+        },
+        {
+          category: "expressjs",
+          question:
+            "What is request validation in Express.js and tools for it?",
+          answer:
+            "Validation ensures input integrity. Use express-validator: npm install express-validator. In route: const { body, validationResult } = require('express-validator'); app.post('/user', [ body('email').isEmail(), body('password').isLength({ min: 5 }) ], (req, res) => { const errors = validationResult(req); if(!errors.isEmpty()) return res.status(400).json({ errors }); ... });. Joi alternative for schemas. Sanitize inputs to prevent XSS. Always validate on server-side, even with frontend checks.",
+        },
+        {
+          category: "expressjs",
+          question:
+            "How do you integrate MongoDB with Express.js using Mongoose?",
+          answer:
+            "Mongoose is an ODM for MongoDB. Install: npm install mongoose. Connect: const mongoose = require('mongoose'); mongoose.connect('mongodb://localhost:27017/db');. Define schema: const UserSchema = new mongoose.Schema({ name: String }); const User = mongoose.model('User', UserSchema);. Query: app.get('/users', async (req, res) => { const users = await User.find({}); res.json(users); });. Handle queries with filters: User.find({ age: { $gt: 18 } }). Use populate for relations. Async/await prevents callback hell.",
+        },
+        {
+          category: "expressjs",
+          question:
+            "Explain SQL database queries in Express.js with Sequelize.",
+          answer:
+            "Sequelize is an ORM for SQL dbs. Install: npm install sequelize mysql2. Define: const { Sequelize, DataTypes } = require('sequelize'); const sequelize = new Sequelize('db', 'user', 'pass'); const User = sequelize.define('User', { name: DataTypes.STRING });. Sync: sequelize.sync();. Query: app.get('/users', async (req, res) => { const users = await User.findAll({ where: { active: true } }); res.json(users); });. Use transactions for atomicity. Migrations for schema changes.",
+        },
+        {
+          category: "expressjs",
+          question: "How do you perform pagination in Express.js API queries?",
+          answer:
+            "Pagination limits results: Use query params ?page=1&limit=10. In route: const page = parseInt(req.query.page) || 1; const limit = parseInt(req.query.limit) || 10; const offset = (page - 1) * limit;. For Mongoose: User.find().skip(offset).limit(limit);. For Sequelize: User.findAll({ limit, offset });. Return metadata: { data, total: await User.count(), pages: Math.ceil(total / limit) }. This optimizes large datasets, reduces load times.",
+        },
+        {
+          category: "expressjs",
+          question:
+            "What are performance optimizations for Express.js applications?",
+          answer:
+            "Optimize by using clustering: const cluster = require('cluster'); if(cluster.isMaster) cluster.fork(); else app.listen(3000); for multi-core. Compression: npm install compression, app.use(compression());. Caching with redis: npm install redis, store frequent queries. Use helmet for secure headers. Minify static assets. Database indexing for queries. Monitor with New Relic or clinic.js. These reduce latency, handle more requests.",
+        },
+        {
+          category: "expressjs",
+          question: "How do you handle async operations in Express.js routes?",
+          answer:
+            "Use async/await in handlers: app.get('/data', async (req, res) => { try { const data = await fetchData(); res.json(data); } catch(err) { next(err); } });. For promises without async: app.get('/data', (req, res, next) => { fetchData().then(data => res.json(data)).catch(next); });. Install express-async-errors for automatic error wrapping. Avoid blocking I/O with worker threads if needed. This keeps the event loop non-blocking for scalability.",
+        },
+        {
+          category: "expressjs",
+          question: "Explain logging in Express.js using Morgan.",
+          answer:
+            "Morgan logs HTTP requests. Install: npm install morgan. Use: app.use(morgan('combined')); for Apache-like logs, or 'dev' for console. Custom format: morgan(':method :url :status :res[content-length] - :response-time ms');. Stream to file: const fs = require('fs'); app.use(morgan('combined', { stream: fs.createWriteStream('./access.log') }));. Integrate with Winston for structured logs. Essential for debugging, monitoring traffic patterns.",
+        },
+        {
+          category: "expressjs",
+          question: "How do you secure Express.js apps with Helmet?",
+          answer:
+            "Helmet sets security headers. Install: npm install helmet. Use: app.use(helmet()); adds X-XSS-Protection, etc. Customize: app.use(helmet.contentSecurityPolicy({ directives: { defaultSrc: ['self'] } }));. Prevent MIME sniffing: helmet.noSniff(). Hide Express version: helmet.hidePoweredBy(). Use with rate-limiter for DoS protection. This mitigates common web vulnerabilities out-of-the-box.",
+        },
+        {
+          category: "expressjs",
+          question:
+            "What is rate limiting in Express.js and how to implement it?",
+          answer:
+            "Rate limiting prevents abuse by capping requests per IP. Install express-rate-limit: npm install express-rate-limit. Use: const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }); app.use(limiter);. Per route: app.post('/api', rateLimit({ max: 5 }));. Store in Redis for distributed apps. Skip for whitelisted IPs. This enhances security, maintains performance under load.",
+        },
+        {
+          category: "expressjs",
+          question: "How do you test Express.js applications?",
+          answer:
+            "Use Jest and supertest: npm install --save-dev jest supertest. Test route: test('GET /', async () => { const res = await request(app).get('/'); expect(res.status).toBe(200); });. Mock databases with sinon. Integration tests: start server, hit endpoints. Unit test middleware separately. Coverage with jest --coverage. Run: npm test. This ensures reliability across routes, middleware.",
+        },
+        {
+          category: "expressjs",
+          question: "Explain environment variables in Express.js with dotenv.",
+          answer:
+            "Environment variables configure apps securely. Install dotenv: npm install dotenv. Require at top: require('dotenv').config();. Use: const port = process.env.PORT || 3000; app.listen(port);. .env file: PORT=3000 DB_URL=mongo://... Never commit .env to git, use .gitignore. For production, set via Heroku or Docker. This separates config from code for flexibility.",
+        },
+        {
+          category: "expressjs",
+          question: "How do you deploy an Express.js app to Heroku?",
+          answer:
+            "Create Procfile: web: node app.js. Install heroku CLI, heroku create appname. Git init, add files, commit, git push heroku main. Set env vars: heroku config:set NODE_ENV=production. Scale: heroku ps:scale web=1. Use buildpacks if needed. Monitor logs: heroku logs --tail. This gets your app live quickly with auto-scaling.",
+        },
+        {
+          category: "expressjs",
+          question: "What is clustering in Node.js for Express.js performance?",
+          answer:
+            "Clustering uses multiple processes for CPU cores. Require 'cluster', 'os'. If master: for(let i=0; i<os.cpus().length; i++) cluster.fork(); else: app.listen(port);. Handle worker exit: cluster.on('exit', (worker) => cluster.fork());. Use with PM2 for management: pm2 start app.js -i max. This boosts throughput by parallelizing requests. Ideal for CPU-bound tasks in Express.",
+        },
+        {
+          category: "expressjs",
+          question:
+            "How do you cache responses in Express.js for better performance?",
+          answer:
+            "Caching stores frequent responses. Use node-cache: npm install node-cache. Middleware: const cache = new NodeCache(); app.get('/data', (req, res, next) => { if(cache.has(req.url)) return res.json(cache.get(req.url)); res.sendCallback = (data) => { cache.set(req.url, data, 600); }; next(); });. For Redis: npm install redis, client.setex(key, ttl, data). Invalidate on updates. This reduces DB hits, speeds up APIs.",
+        },
+        {
+          category: "expressjs",
+          question: "Explain file uploads with Multer in Express.js.",
+          answer:
+            "Multer handles multipart/form-data. Install: npm install multer. Setup: const upload = multer({ dest: 'uploads/' }); app.post('/upload', upload.single('file'), (req, res) => res.json({ filename: req.file.filename }));. For multiple: upload.array('files', 5). Disk storage options: { filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname) }. Limits: { fileSize: 51024*1024 }. Validate mime types. Secure uploads by scanning files.",
+        },
+        {
+          category: "expressjs",
+          question: "How do you implement API versioning in Express.js?",
+          answer:
+            "Versioning keeps APIs backward-compatible. Use routes: app.use('/api/v1', v1Router); app.use('/api/v2', v2Router);. Or headers: app.use((req, res, next) => { const version = req.header('api-version') || '1'; req.version = version; next(); });. Accept header: req.accepts('application/vnd.api.v2+json'). Query param: /api?version=2. Deprecate old versions with warnings. This allows evolution without breaking clients.",
+        },
+        {
+          category: "expressjs",
+          question: "What are WebSockets in Express.js using Socket.io?",
+          answer:
+            "WebSockets enable real-time bidirectional communication. Install socket.io: npm install socket.io. Setup: const io = require('socket.io')(server); io.on('connection', (socket) => { socket.on('chat', (msg) => io.emit('chat', msg)); });. In Express: const server = app.listen(3000);. Client: src='/socket.io/socket.io.js' socket.emit('chat', 'hello');. Namespaces for rooms. Fallback to polling if needed. Great for chat, live updates.",
+        },
+        {
+          category: "expressjs",
+          question:
+            "How do you optimize database queries for performance in Express.js?",
+          answer:
+            "Optimize by indexing fields: In Mongoose, { name: { type: String, index: true } }. Use lean() for plain objects: User.find().lean(). Use aggregation for complex: User.aggregate([{ $match: { age: { $gt: 18 } } }]).select() to limit fields. Connection pooling in Sequelize. Avoid N+1: populate wisely. Profile with MongoDB Profiler or EXPLAIN in SQL. Cache query results. These cut query times dramatically.",
+        },
+        {
+          category: "expressjs",
+          question: "Explain graceful shutdown in Express.js.",
+          answer:
+            "Graceful shutdown closes connections cleanly. Use process.on('SIGTERM', async () => { server.close(() => { console.log('Closed'); process.exit(0); }); });. For DB: mongoose.connection.close(). Wait for active requests: let activeRequests = 0; middleware to increment/decrement. Timeout after 30s. In clusters, handle on workers. This prevents data loss on restarts, crucial for production.",
+        },
+        {
+          category: "expressjs",
+          question:
+            "How do you handle large payloads in Express.js efficiently?",
+          answer:
+            "Limit body size: app.use(express.json({ limit: '50mb' }));. Stream large files: res.write() in chunks, or pipe streams. For uploads, multer with memory storage for processing. Compress responses: app.use(compression({ threshold: 0 }));. Offload to queues like Bull for heavy processing. Monitor memory with process.memoryUsage(). This avoids OOM errors, maintains responsiveness.",
+        },
+        {
+          category: "expressjs",
+          question: "What is the role of nodemon in Express.js development?",
+          answer:
+            "Nodemon auto-restarts server on file changes. Install: npm install -g nodemon. Run: nodemon app.js instead of node app.js. Config in nodemon.json: { 'watch': ['src'], 'ext': 'js,json' }. Ignore files: 'ignore': ['node_modules']. Delay restarts for quick saves. Essential for fast iteration in development, saves manual restarts.",
+        },
+        {
+          category: "expressjs",
+          question:
+            "How do you implement custom 404 and global error pages in Express.js?",
+          answer:
+            "For 404: app.use((req, res) => res.status(404).send('Not Found')); place after routes. Global errors after that. For nicer pages: res.render('404', { url: req.url }); with template engine. JSON API: res.status(404).json({ error: 'Not found' });. Log 404s for analytics. This provides user-friendly feedback, improves UX.",
+        },
+        {
+          category: "expressjs",
+          question: "Explain using Redis for session storage in Express.js.",
+          answer:
+            "Redis stores sessions scalably. Install connect-redis: npm install connect-redis redis. Setup: const RedisStore = require('connect-redis')(session); const store = new RedisStore({ client: redis.createClient() }); app.use(session({ store, secret: 'key' }));. Connect: redis.client.on('error', err => console.log(err));. TTL matches session expiry. This enables horizontal scaling, persists across restarts unlike memory.",
+        },
+        {
+          category: "expressjs",
+          question: "What is Express.js and why use it?",
+          answer:
+            "Express.js is a minimal, unopinionated web framework for Node.js that simplifies building APIs and web apps. It provides routing, middleware support, and utilities while staying lightweight. Use Express when you want fast development, full control over middleware, and easy integration with Node libraries. It's ideal for REST APIs, microservices, and server-rendered apps. Large ecosystem and community make it easy to find plugins and examples.",
+        },
+        {
+          category: "expressjs",
+          question: "How does Express middleware work?",
+          answer:
+            "Middleware in Express are functions that run sequentially during request processing. They can modify request/response objects, end the response, or call `next()` to continue chain execution. Use middleware for logging, authentication, parsing bodies, error handling, and CORS. Order matters: declare global middleware before route handlers. Reusable middleware keeps app code modular and testable.",
+        },
+        {
+          category: "expressjs",
+          question: "How to structure an Express project for production?",
+          answer:
+            "Organize by feature: separate routes, controllers, services, and models into folders. Keep app.js/bootstrap thin and move configuration to environment-specific files. Use a router per resource and central error-handling middleware. Add logging, health-check endpoints, and a process manager (PM2). This separation aids testing, scalability, and team collaboration.",
+        },
+        {
+          category: "expressjs",
+          question: "How to handle errors in Express?",
+          answer:
+            "Use centralized error-handling middleware with four arguments `(err, req, res, next)` to catch sync and async errors. Wrap async route handlers with a helper to propagate rejections to the error handler. Normalize errors to include status codes and safe messages; log details separately. Return minimal info to clients and detailed logs to observability systems.",
+        },
+        {
+          category: "expressjs",
+          question: "How to secure an Express application?",
+          answer:
+            "Harden Express with middleware like `helmet` for headers, `express-rate-limit` to prevent brute force, and `cors` to configure allowed origins. Validate inputs using Joi/Zod and sanitize user data before DB writes. Disable stack traces in production, use HTTPS, and manage secrets via environment variables or secret managers. Regular dependency scans and updates reduce vulnerabilities.",
+        },
+        {
+          category: "expressjs",
+          question: "How to organize routes in Express?",
+          answer:
+            "Use `express.Router()` to group related endpoints (e.g., `/users`, `/orders`) and mount them in the main app. Keep route files thin and delegate logic to controllers or services. Version your APIs (e.g., `/api/v1/`) to enable backwards-compatible changes. This improves readability, testing, and controlled expansion of endpoints.",
+        },
+        {
+          category: "expressjs",
+          question: "What's the best way to do request validation?",
+          answer:
+            "Use validation libraries like Joi, Zod, or Yup in middleware to validate `req.body`, `req.query`, and `req.params`. Centralize validation schemas close to routes and return clear validation errors. Validation prevents malformed data from reaching business logic and reduces security issues like injection attacks. Combine validation with type generation for TypeScript projects.",
+        },
+        {
+          category: "expressjs",
+          question: "How to implement authentication in Express?",
+          answer:
+            "Implement auth using middleware: session-based (cookie + server session), token-based (JWT), or OAuth with Passport.js strategies. Keep authentication logic separate and issue short-lived tokens with refresh flows. Store session data in Redis or a database for horizontal scaling. Always protect sensitive endpoints and validate tokens on each request.",
+        },
+        {
+          category: "expressjs",
+          question: "How to add input sanitization and prevent injection?",
+          answer:
+            "Sanitize incoming data using libraries (e.g., validator.js) and parameterized queries/ORMs to avoid SQL/NoSQL injection. Reject unexpected fields and enforce types via validation middleware. Escape output when rendering templates and avoid `eval` or string-based query composition. Combine with least-privilege DB credentials to reduce blast radius.",
+        },
+        {
+          category: "expressjs",
+          question: "How to serve static files efficiently?",
+          answer:
+            "Use `express.static()` with a CDN for production assets rather than serving files from Node directly. Set proper caching headers (ETag, Cache-Control) and enable gzip/brotli compression upstream. For uploads, store files in object storage like S3 and serve via signed URLs. This reduces Node process load and improves global performance.",
+        },
+        {
+          category: "expressjs",
+          question: "How to implement rate limiting and throttling?",
+          answer:
+            "Use `express-rate-limit` or API gateway features to limit requests per IP or user. Differentiate limits by route (e.g., stricter for login) and apply burst allowances for trusted clients. Rate limiting prevents abuse and reduces load spikes. For distributed apps, store counters in Redis to share state across instances.",
+        },
+        {
+          category: "expressjs",
+          question: "How to log correctly in Express?",
+          answer:
+            "Use structured logging (JSON) with libraries like pino or Winston. Log request IDs, timestamps, status codes, latencies, and error stacks. Avoid logging sensitive data. Export logs to a central system (ELK, Datadog) and add correlation IDs for tracing. Proper logs speed debugging and help in production monitoring.",
+        },
+        {
+          category: "expressjs",
+          question: "How to test Express applications?",
+          answer:
+            "Write unit tests for controllers and services, and integration tests for routes using supertest. Mock external dependencies using sinon/jest and keep tests deterministic. Use test databases (or in-memory) and fixtures for reproducible states. Continuous testing on CI prevents regressions and ensures API contracts remain stable.",
+        },
+        {
+          category: "expressjs",
+          question: "How to use Express with TypeScript?",
+          answer:
+            "Install `@types/express`, enable `strict` in tsconfig, and type request/response where needed. Create typed middleware helpers to extend `Request` with user data. Split types into shared interfaces for DTOs and services. TypeScript adds early errors, improves IDE support, and helps maintain large codebases safely.",
+        },
+        {
+          category: "expressjs",
+          question: "How to handle file uploads in Express?",
+          answer:
+            "Use middleware like multer to parse multipart/form-data and stream uploads. For large files, stream directly to object storage (S3) to avoid filling server memory. Validate file types and sizes, and scan for malware if needed. Offload serving to CDNs or signed URLs for scalability and security.",
+        },
+        {
+          category: "expressjs",
+          question: "How to build RESTful APIs with Express?",
+          answer:
+            "Follow resource-based routes (GET/POST/PUT/PATCH/DELETE) and return consistent HTTP statuses and error shapes. Use pagination, filtering, and sorting via query parameters. Document endpoints with OpenAPI/Swagger and keep controllers thin. Consistent API design improves client integration and long-term maintainability.",
+        },
+        {
+          category: "expressjs",
+          question: "How to implement GraphQL with Express?",
+          answer:
+            "Integrate Apollo Server or express-graphql as middleware and mount at `/graphql`. Keep resolvers small and move heavy logic to services. Use persisted queries, batching, and DataLoader to avoid N+1 problems. Protect GraphQL endpoints with auth middleware and depth/complexity limits to prevent abusive queries.",
+        },
+        {
+          category: "expressjs",
+          question: "How to do request tracing across services?",
+          answer:
+            "Inject and propagate correlation/request IDs via headers (e.g., `X-Request-ID`). Use OpenTelemetry or tracing services (Jaeger, Zipkin) to capture spans across calls. Instrument middleware to record latencies and errors. Tracing helps diagnose performance issues in distributed Express-based microservices.",
+        },
+        {
+          category: "expressjs",
+          question: "How to implement caching in Express apps?",
+          answer:
+            "Cache responses at multiple levels: CDN for static assets, in-memory (Redis) for hot API responses, and application-level memoization for computed values. Use cache headers to let clients/cache layers respect TTLs. Invalidate caches on writes and use cache stamps or versioning to avoid stale data problems.",
+        },
+        {
+          category: "expressjs",
+          question: "How to scale Express apps horizontally?",
+          answer:
+            "Stateless design enables horizontal scaling—store sessions in Redis or use JWTs, and store files externally. Use a load balancer and container orchestration (Kubernetes) to manage instances. Centralize logging and metrics, and use readiness/liveness probes for health checks. Autoscaling policies handle traffic spikes gracefully.",
+        },
+        {
+          category: "expressjs",
+          question: "How to do graceful shutdowns with Express?",
+          answer:
+            "Listen for SIGTERM/SIGINT signals and stop accepting new connections, finish in-flight requests, and close DB/Redis clients before exiting. Use a timeout fallback to forcefully terminate hung processes. Graceful shutdowns prevent dropped requests and help rolling deployments without data loss.",
+        },
+        {
+          category: "expressjs",
+          question: "How to protect against CSRF and XSS in Express?",
+          answer:
+            "Use CSRF tokens (csurf) for state-changing routes and require same-site cookies. Escape output in templates and validate/sanitize inputs to prevent XSS. Use `helmet` to set CSP and XSS-related headers. For APIs consumed by SPAs, prefer CORS + tokens over cookie auth to simplify CSRF concerns.",
+        },
+        {
+          category: "expressjs",
+          question: "How to use websockets with Express?",
+          answer:
+            "Express serves the HTTP upgrade; use libraries like socket.io or ws to manage WebSocket connections. Keep socket logic in its own layer and authenticate connections on handshake. Scale WebSocket servers with sticky sessions or use a pub/sub broker (Redis) for cross-instance message routing. Websockets are ideal for real-time features like notifications or collaboration.",
+        },
+        {
+          category: "expressjs",
+          question: "How to configure environment variables and secrets?",
+          answer:
+            "Keep secrets out of source control and load them via environment variables or secret managers (AWS Secrets Manager, Vault). Use dotenv for local development and different env files per stage. Validate required env vars at startup and fail fast if missing. Rotate credentials regularly and use least privilege roles.",
+        },
+        {
+          category: "expressjs",
+          question: "How to measure and improve Express performance?",
+          answer:
+            "Measure using APMs (New Relic, Datadog) and benchmark with load tests (k6, artillery). Profile hotspots and optimize DB queries, reduce sync/blocking operations, and cache heavy computations. Use compression, avoid large JSON payloads, and offload static content to CDNs. Continuous profiling helps catch regressions early.",
+        },
+        {
+          category: "expressjs",
+          question: "How to implement content negotiation?",
+          answer:
+            "Use `req.accepts()` to check the client's preferred format and set responses accordingly (JSON, XML, HTML). Maintain consistent API responses and return appropriate `Content-Type` headers. Provide helpful error messages when unsupported types are requested. Content negotiation improves interoperability across varied clients.",
+        },
+        {
+          category: "expressjs",
+          question: "How to do database connection pooling with Express?",
+          answer:
+            "Use the database driver's pooling configuration or an ORM (Prisma, TypeORM) which manages pools. Create and reuse pool instances at app startup, not per request. Monitor pool exhaustion and tune max/min connections to match app concurrency and DB capacity. Pools reduce connection overhead and improve throughput.",
+        },
+        {
+          category: "expressjs",
+          question: "How to version and document Express APIs?",
+          answer:
+            "Version routes (e.g., `/api/v1`) and maintain backward compatibility with deprecation plans. Generate docs with OpenAPI and tools like Swagger UI or Redoc. Include examples, error schemas, and rate limits in docs. Versioning and docs make client upgrades predictable and reduce integration friction.",
+        },
+        {
+          category: "expressjs",
+          question: "How to deploy Express apps serverless (AWS Lambda)?",
+          answer:
+            "Use adapters like `serverless-http` or frameworks (Serverless Framework, AWS SAM) to wrap Express for Lambda. Keep cold starts small by minimizing dependencies and using lighter middleware. Prefer stateless patterns and externalize sessions to DynamoDB/Redis. Serverless reduces infra ops but requires architecture adjustments for latency and concurrency needs.",
+        },
+        {
+          category: "expressjs",
+          question: "How to implement file streaming and large responses?",
+          answer:
+            "Stream large files using Node streams and `res.pipe()` to avoid buffering in memory. Use Range requests for partial content and set proper headers (`Content-Range`, `Accept-Ranges`). For heavy streaming workloads, offload to object storage with signed URLs to reduce app server load.",
+        },
+        {
+          category: "expressjs",
+          question: "What are common Express anti-patterns to avoid?",
+          answer:
+            "Avoid putting business logic directly in route handlers, synchronous blocking code, and unbounded memory growth (caching everything in process). Don’t spawn DB connections per request or use global mutable state. Avoid suppressing errors silently and returning inconsistent HTTP statuses. These anti-patterns harm maintainability and performance.",
+        },
+        {
+          category: "expressjs",
+          question: "How to integrate background jobs with Express?",
+          answer:
+            "Use job queues like Bull or Agenda and Redis to process long-running tasks asynchronously (email, image processing). Enqueue jobs from Express handlers and return responses quickly. Monitor job metrics and dead-letter queues. Separating background work keeps the HTTP layer responsive under load.",
+        },
+        {
+          category: "expressjs",
+          question: "How to internationalize (i18n) an Express app?",
+          answer:
+            "Use middleware like i18next or express-translate to detect locale from headers or URLs and serve translations. Keep message catalogs separate and fall back to defaults when missing. For APIs, return localized messages or codes; for UIs, render localized templates. CI for translations ensures consistent user experience across regions.",
+        },
+        // MongoDB Questions (30+ - existing 20 + 10 more)
+        {
+          category: "mongodb",
+          question:
+            "What is MongoDB and how does it differ from SQL databases?",
+          answer:
+            "MongoDB is a NoSQL, document-oriented database that stores data in flexible, JSON-like documents called BSON. Unlike SQL databases with fixed schemas and tables, MongoDB uses collections and documents with dynamic schemas, allowing easier handling of unstructured or semi-structured data. It excels in horizontal scaling, leveraging sharding for large datasets, and provides high performance for read-heavy workloads. SQL databases, however, enforce rigid schemas and are better suited for structured data with complex joins. MongoDB is ideal for applications requiring flexibility, such as real-time analytics or content management systems, while SQL databases are preferred for transactional systems.",
+        },
+        {
+          category: "mongodb",
+          question: "What is a document in MongoDB?",
+          answer:
+            "A document in MongoDB is a single record stored in a collection, represented in BSON (Binary JSON) format. It consists of key-value pairs, where values can be strings, numbers, arrays, or even nested documents, offering flexibility in data structure. Unlike rows in SQL tables, documents in a collection can have different fields, supporting dynamic schemas. This makes MongoDB suitable for applications with evolving data needs, like e-commerce or social media platforms. Documents are analogous to JSON objects but include binary data support for enhanced performance.",
+        },
+        {
+          category: "mongodb",
+          question: "What is a collection in MongoDB?",
+          answer:
+            "A collection in MongoDB is a group of documents, equivalent to a table in a relational database. However, collections do not enforce a fixed schema, allowing documents within the same collection to have different structures. This flexibility supports diverse data types and simplifies schema evolution in agile development. Collections are stored within a database and can be indexed for efficient querying. They are ideal for hierarchical data storage, such as user profiles or product catalogs, but require careful design to optimize performance.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB handle indexing?",
+          answer:
+            "MongoDB uses indexes to improve the performance of search operations on collections. Indexes are created on fields to allow efficient querying, sorting, and filtering, reducing the need to scan entire collections. Types include single-field, compound, multikey, and text indexes, each suited for specific use cases. For example, a compound index supports queries on multiple fields, while text indexes enable full-text search. Proper indexing is crucial for performance but increases storage and write overhead, so it requires strategic planning.",
+        },
+        {
+          category: "mongodb",
+          question: "What is sharding in MongoDB?",
+          answer:
+            "Sharding is MongoDB’s method for distributing data across multiple servers to handle large datasets and high throughput. It partitions data into smaller chunks called shards, each managed by a separate server, based on a shard key. This enables horizontal scaling, improving performance for write-heavy applications. Sharding is ideal for large-scale systems like social networks but requires careful shard key selection to avoid hotspots. MongoDB’s balancer ensures even data distribution across shards for optimal performance.",
+        },
+        {
+          category: "mongodb",
+          question: "What is replication in MongoDB?",
+          answer:
+            "Replication in MongoDB ensures high availability and data redundancy by maintaining multiple copies of data across servers. A replica set consists of a primary node that handles writes and secondary nodes that replicate the primary’s data for reads. If the primary fails, a secondary is elected as the new primary, ensuring failover. Replication supports disaster recovery and read scaling but increases storage needs. It’s commonly used in applications requiring high uptime, like financial systems.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB ensure data consistency?",
+          answer:
+            "MongoDB ensures data consistency within a single document through atomic operations, as writes to a document are all-or-nothing. For multi-document transactions (available since version 4.0), MongoDB supports ACID properties, ensuring consistency across operations. Replica sets use a majority write concern to confirm data is replicated before acknowledging writes. However, eventual consistency may occur in distributed setups if read operations target secondaries. Careful configuration of write and read concerns is critical for consistency in high-concurrency applications.",
+        },
+        {
+          category: "mongodb",
+          question: "What is the Aggregation Pipeline in MongoDB?",
+          answer:
+            "The Aggregation Pipeline is MongoDB’s framework for processing and transforming data through a series of stages, like filtering, grouping, or sorting. Each stage processes documents and passes the results to the next, enabling complex data manipulations, such as computing averages or joining collections. It’s highly flexible and optimized for large datasets, making it suitable for analytics or reporting. However, complex pipelines can impact performance, requiring careful optimization and indexing.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB handle queries?",
+          answer:
+            "MongoDB queries use a JSON-like syntax to retrieve documents from collections based on specified criteria, such as field values or ranges. Queries can include operators like $eq, $gt, or $in for precise filtering and support regex for pattern matching. Indexes significantly improve query performance by reducing document scans. The `find()` method retrieves multiple documents, while `findOne()` fetches a single match. Efficient query design, leveraging indexes, is essential for performance in large-scale applications.",
+        },
+        {
+          category: "mongodb",
+          question:
+            "What is the difference between find() and findOne() in MongoDB?",
+          answer:
+            "In MongoDB, `find()` retrieves all documents in a collection that match a query, returning a cursor for iteration, while `findOne()` returns only the first matching document. `find()` is used for bulk data retrieval, like listing all users, and supports pagination with `skip()` and `limit()`. `findOne()` is ideal for single-record lookups, such as fetching a user by ID. Both methods benefit from indexes for performance but differ in their use case and output format.",
+        },
+        {
+          category: "mongodb",
+          question: "How can you optimize query performance in MongoDB?",
+          answer:
+            "To optimize query performance in MongoDB, create indexes on frequently queried fields to reduce full collection scans. Use the `explain()` method to analyze query execution plans and identify bottlenecks. Select appropriate index types, like compound or multikey, based on query patterns. Avoid overuse of regex or unindexed queries, as they are slow. Project only necessary fields to reduce data transfer, and use the Aggregation Pipeline judiciously to minimize computational overhead.",
+        },
+        {
+          category: "mongodb",
+          question: "What is a capped collection in MongoDB?",
+          answer:
+            "A capped collection in MongoDB is a fixed-size collection that automatically overwrites old documents when it reaches its size limit, operating like a circular buffer. It’s ideal for logging or caching, where only recent data is needed, such as storing application logs. Capped collections maintain insertion order and support high-speed writes but don’t allow document updates that increase size. They are memory-efficient but require careful sizing to avoid data loss.",
+        },
+        {
+          category: "mongodb",
+          question: "What are MongoDB’s write concerns?",
+          answer:
+            "Write concerns in MongoDB define the acknowledgment level for write operations, balancing durability and performance. Options include `w: 1` (acknowledge write on primary), `w: majority` (acknowledge after replication to most nodes), or `w: 0` (no acknowledgment for maximum speed). The `j` option ensures writes are journaled for durability. Higher write concerns increase latency but ensure data consistency, critical for applications like banking. Choose based on application needs.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB support geospatial queries?",
+          answer:
+            "MongoDB supports geospatial queries using 2dsphere or 2d indexes to store and query location-based data, like coordinates. Operators like `$near`, `$geoWithin`, and `$geoIntersects` enable finding points near a location or within a shape, ideal for mapping applications. Geospatial indexes improve query performance for location-based searches, such as finding nearby restaurants. Data must be stored in GeoJSON format or as legacy coordinate pairs. Proper index usage is key for efficiency.",
+        },
+        {
+          category: "mongodb",
+          question: "What is the role of the MongoDB Compass tool?",
+          answer:
+            "MongoDB Compass is a graphical user interface for exploring, managing, and visualizing MongoDB data. It allows users to browse collections, create and test queries, manage indexes, and analyze schema structures without writing code. Compass supports aggregation pipeline building and performance monitoring, making it useful for developers and DBAs. It’s particularly helpful for prototyping queries or debugging issues in development environments but may not scale for large production systems.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB handle transactions?",
+          answer:
+            "Since version 4.0, MongoDB supports multi-document ACID transactions in replica sets and sharded clusters. Transactions allow multiple operations across documents to be executed as a single atomic unit, ensuring consistency. They are initiated with a session and use commands like `startTransaction()` and `commitTransaction()`. Transactions are useful for operations like transferring funds but can impact performance due to locking. Careful design is needed to minimize transaction duration in high-throughput systems.",
+        },
+        {
+          category: "mongodb",
+          question: "What is the role of the shard key in MongoDB?",
+          answer:
+            "The shard key in MongoDB determines how data is distributed across shards in a sharded cluster. It’s a field or combination of fields used to partition documents into chunks. Choosing a shard key with high cardinality, like user IDs, ensures even data distribution and prevents hotspots. Poor shard key selection, such as using low-cardinality fields like gender, can lead to uneven load and performance issues. The shard key is immutable once set, requiring careful planning.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB handle schema validation?",
+          answer:
+            "MongoDB supports schema validation to enforce rules on document structure within a collection, using JSON Schema. Validation rules, defined during collection creation or modification, specify required fields, data types, or value constraints. Invalid documents trigger errors or warnings, depending on the validation level. This ensures data integrity in applications like e-commerce, where consistent product data is critical. However, overuse of strict validation can reduce MongoDB’s schema flexibility, so balance is key.",
+        },
+        {
+          category: "mongodb",
+          question:
+            "What is the difference between embedded and referenced relationships in MongoDB?",
+          answer:
+            "Embedded relationships store related data within a single document, like a user’s address inside their profile, optimizing read performance by reducing queries. Referenced relationships use separate collections with references, like storing order IDs in a user document, linking to an orders collection. Embedding suits tightly coupled data with low update frequency, while referencing is better for large or frequently updated datasets. Choose based on access patterns and data size to balance performance and complexity.",
+        },
+        {
+          category: "mongodb",
+          question: "How can you monitor MongoDB performance?",
+          answer:
+            "MongoDB performance can be monitored using tools like MongoDB Atlas’s performance advisor, MongoDB Compass, or commands like `db.serverStatus()` and `db.currentOp()`. These provide metrics on query performance, index usage, and server health. Third-party tools like Prometheus or Grafana can visualize metrics for large deployments. Profiling slow queries with the database profiler and analyzing execution plans with `explain()` help identify bottlenecks. Regular monitoring ensures optimal performance in production environments.",
+        },
+        {
+          category: "mongodb",
+          question: "What is the purpose of the $lookup operator in MongoDB?",
+          answer:
+            "The `$lookup` operator in MongoDB’s Aggregation Pipeline performs a left outer join between collections, combining documents based on matching fields. It’s used to fetch related data from another collection, like joining user and order data for reporting. The operator requires specifying the target collection, join fields, and output field. While powerful, `$lookup` can be resource-intensive, so it’s best used with indexed fields and optimized pipelines to maintain performance.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB handle large datasets?",
+          answer:
+            "MongoDB handles large datasets through sharding, which distributes data across multiple servers, and indexing, which optimizes query performance. Sharding splits data into chunks based on a shard key, enabling horizontal scaling for massive datasets. Indexes reduce query times by avoiding full collection scans. For read-heavy workloads, replica sets scale read operations across secondaries. Efficient schema design and query optimization are critical to managing large datasets effectively.",
+        },
+        {
+          category: "mongodb",
+          question: "What are the benefits of using MongoDB Atlas?",
+          answer:
+            "MongoDB Atlas is a fully managed cloud database service that simplifies deployment, scaling, and maintenance. It offers automated backups, security features like encryption and authentication, and global cluster support for low-latency access. Atlas provides monitoring tools, auto-scaling, and sharding, reducing operational overhead. It supports multiple cloud providers (AWS, Azure, GCP) and is ideal for teams lacking dedicated DBAs. However, it may incur higher costs compared to self-hosted MongoDB.",
+        },
+        {
+          category: "mongodb",
+          question: "How do you perform a backup in MongoDB?",
+          answer:
+            "MongoDB backups can be performed using tools like `mongodump` to export data to BSON files or MongoDB Atlas for automated cloud backups. `mongodump` creates a snapshot of collections or databases, which can be restored with `mongorestore`. For replica sets, backups should target secondaries to avoid impacting the primary. Atlas provides point-in-time recovery and scheduled backups for minimal data loss. Ensure backups are encrypted and stored securely for compliance.",
+        },
+        {
+          category: "mongodb",
+          question: "What is the $match stage in the Aggregation Pipeline?",
+          answer:
+            "The `$match` stage in MongoDB’s Aggregation Pipeline filters documents based on specified conditions, similar to a query in `find()`. It’s typically used early in the pipeline to reduce the dataset, improving performance by limiting documents passed to subsequent stages. For example, `$match` can filter orders by date or status. It supports query operators like `$gt` or `$in` and benefits from indexes. Proper use of `$match` optimizes pipeline efficiency.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB handle high availability?",
+          answer:
+            "MongoDB achieves high availability through replica sets, where a primary node handles writes, and secondary nodes replicate data for reads and failover. If the primary fails, an election promotes a secondary to primary, ensuring continuous operation. Replica sets also support read scaling by distributing read queries to secondaries. Write concerns like `w: majority` ensure data durability. High availability is critical for mission-critical applications like e-commerce or real-time analytics.",
+        },
+        {
+          category: "mongodb",
+          question:
+            "What are the performance considerations for MongoDB writes?",
+          answer:
+            "MongoDB write performance depends on factors like write concern, indexing, and hardware. Higher write concerns (e.g., `w: majority`) ensure durability but increase latency. Indexes improve read performance but slow writes due to index updates. Sharding distributes write load but requires careful shard key selection. Use bulk writes to reduce overhead, and ensure sufficient memory and disk I/O to handle write-intensive workloads like logging systems.",
+        },
+        {
+          category: "mongodb",
+          question: "How do you create a text index in MongoDB?",
+          answer:
+            "A text index in MongoDB enables full-text search on string fields, created using the `createIndex()` method with the `text` type, e.g., `db.collection.createIndex({ field: 'text' })`. It supports searching for words or phrases within text fields, useful for applications like search engines. Multiple fields can be included in a single text index for broader searches. However, text indexes increase storage and should be used with specific fields to optimize performance.",
+        },
+        {
+          category: "mongodb",
+          question: "What is the $group stage in the Aggregation Pipeline?",
+          answer:
+            "The `$group` stage in MongoDB’s Aggregation Pipeline groups documents by a specified field and performs operations like sum, count, or average on grouped data. For example, it can calculate total sales per product. It uses accumulators like `$sum` or `$avg` to aggregate values. `$group` is resource-intensive, so it benefits from prior `$match` or `$sort` stages to reduce input. Indexes on grouped fields improve performance for large datasets.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB handle concurrency?",
+          answer:
+            "MongoDB handles concurrency using document-level locking for writes, ensuring atomic updates within a single document. Multi-document transactions (since version 4.0) use snapshot isolation to maintain consistency across operations. Reads can target secondaries in replica sets to distribute load, but eventual consistency may apply unless using `readConcern: majority`. High-concurrency applications require optimized indexes and careful transaction design to minimize lock contention and ensure performance.",
+        },
+        {
+          category: "mongodb",
+          question: "What are the best practices for MongoDB schema design?",
+          answer:
+            "MongoDB schema design should optimize for application access patterns, favoring embedded documents for frequently accessed, tightly coupled data to reduce queries. Use references for large or frequently updated data to avoid duplication. Normalize data only when necessary to manage size and consistency. Leverage indexes for common queries, and avoid overly complex documents to maintain performance. Regularly analyze access patterns and adjust schema as the application evolves.",
+        },
+        {
+          category: "mongodb",
+          question: "How do you handle data migration in MongoDB?",
+          answer:
+            "Data migration in MongoDB involves tools like `mongodump` and `mongorestore` for moving data between databases or clusters. For large datasets, use MongoDB Atlas’s live migration or sharded cluster migration tools to minimize downtime. Plan migrations to account for schema changes, index rebuilding, and data validation. Test migrations in a staging environment to ensure compatibility. Monitor performance and validate data integrity post-migration to avoid issues in production.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB integrate with a project’s backend?",
+          answer:
+            "MongoDB integrates with a project’s backend through drivers available for languages like Node.js, Python, or Java, enabling seamless database operations. For example, the Node.js driver supports async queries and connection pooling for scalability. Use ORMs like Mongoose for schema validation and simplified queries in Node.js projects. Ensure connection strings include proper authentication and replica set details. Optimize performance with connection pooling and index strategies tailored to the application’s query patterns.",
+        },
+        {
+          category: "mongodb",
+          question: "What is the role of the MongoDB profiler?",
+          answer:
+            "The MongoDB profiler collects performance data on database operations, helping identify slow queries or bottlenecks. Enabled via `db.setProfilingLevel()`, it logs operations exceeding a specified threshold to the `system.profile` collection. Use it to analyze query execution times, index usage, and resource consumption. The profiler is useful for debugging performance issues in development but should be disabled or limited in production to avoid overhead. Combine with `explain()` for deeper query insights.",
+        },
+        {
+          category: "mongodb",
+          question:
+            "What is MongoDB and how does it differ from SQL databases?",
+          answer:
+            "MongoDB is a NoSQL, document-oriented database that stores data in flexible, JSON-like documents called BSON. Unlike SQL databases with fixed schemas and tables, MongoDB uses collections and documents with dynamic schemas. It offers better scalability, flexibility for evolving data structures, and natural object mapping for modern applications. Use MongoDB when schema changes frequently or for handling unstructured data.",
+        },
+        {
+          category: "mongodb",
+          question: "What is the difference between MongoDB and SQL databases?",
+          answer:
+            "MongoDB is a NoSQL document-oriented database that stores data as flexible JSON-like documents. SQL databases use rigid schemas with rows and tables. MongoDB is best for evolving data models, while SQL suits applications needing complex joins and strong relational consistency. Choosing depends on workload and project requirements.",
+        },
+        {
+          category: "mongodb",
+          question: "What are MongoDB indexes and why are they important?",
+          answer:
+            "Indexes in MongoDB improve query performance by reducing the amount of scanned documents. Without indexes, queries require full collection scans, which are costly. MongoDB supports single-field, compound, and text indexes. Proper indexing drastically speeds up reads but comes with a tradeoff of slower writes and more storage usage.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB replication work?",
+          answer:
+            "Replication in MongoDB is achieved via replica sets, where one primary node handles writes and secondaries replicate data for high availability. In case of failure, an election promotes a secondary to primary. Replication ensures fault tolerance, data redundancy, and read scaling in distributed applications.",
+        },
+        {
+          category: "mongodb",
+          question: "What is MongoDB sharding and when to use it?",
+          answer:
+            "Sharding is MongoDB’s method of horizontal scaling by partitioning data across multiple servers. It’s ideal when collections grow too large for a single machine’s storage or performance. Shard keys must be chosen carefully (high cardinality and even distribution). Sharding suits large-scale apps like IoT, analytics, and global platforms.",
+        },
+        {
+          category: "mongodb",
+          question: "What are capped collections in MongoDB?",
+          answer:
+            "Capped collections are fixed-size collections that maintain insertion order and automatically remove the oldest documents once the limit is reached. They are useful for logging, caching, and real-time monitoring. They provide fast writes, but do not allow document deletion or updates that increase size.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB handle schema validation?",
+          answer:
+            "While MongoDB is schema-less, it supports schema validation rules using JSON Schema. You can enforce required fields, data types, or constraints at the collection level. This balances flexibility with data quality. Developers often combine validation with Mongoose in Node.js for stronger enforcement.",
+        },
+        {
+          category: "mongodb",
+          question: "How to optimize MongoDB schema design?",
+          answer:
+            "Schema design should follow data access patterns. Embed documents for one-to-many relations (e.g., user with addresses), and reference for many-to-many. Avoid deep nesting beyond 2–3 levels. Denormalization is common for read-heavy workloads, while normalization fits write-heavy and large datasets.",
+        },
+        {
+          category: "mongodb",
+          question: "What are MongoDB aggregations and why use them?",
+          answer:
+            "Aggregation pipelines process data through stages like $match, $group, and $sort. They allow complex transformations and analytics directly in the database. Common use cases include reporting, analytics dashboards, and summarizing large datasets. Aggregations are more powerful and efficient than multiple client-side queries.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB differ from Redis?",
+          answer:
+            "MongoDB is a general-purpose document database with persistence and complex queries. Redis is an in-memory data store optimized for speed, caching, and real-time metrics. Use MongoDB for primary storage and Redis for caching frequently accessed data. Many projects combine both for performance and durability.",
+        },
+        {
+          category: "mongodb",
+          question: "When to embed vs reference documents in MongoDB?",
+          answer:
+            "Embed documents when related data is frequently read together, such as user profiles with addresses. Reference when data grows large, is reused across documents, or changes frequently, like product IDs in orders. Embedding reduces joins, while referencing maintains normalization and reduces duplication.",
+        },
+        {
+          category: "mongodb",
+          question: "What are MongoDB Atlas Triggers?",
+          answer:
+            "Triggers in MongoDB Atlas automatically run serverless functions in response to database events like insert, update, or delete. They are useful for sending notifications, syncing data, or auditing logs. Triggers reduce backend code complexity by moving event-driven logic closer to the data.",
+        },
+        {
+          category: "mongodb",
+          question: "What is MongoDB Compass and its benefits?",
+          answer:
+            "MongoDB Compass is a GUI for MongoDB that helps visualize data, run queries, and analyze schema. It supports aggregation pipelines and index visualization. Developers use Compass to debug queries and monitor database health without relying only on CLI. It simplifies learning and productivity for teams.",
+        },
+        {
+          category: "mongodb",
+          question: "What is the WiredTiger storage engine in MongoDB?",
+          answer:
+            "WiredTiger is MongoDB’s default storage engine, offering compression and document-level concurrency control. It improves write throughput and storage efficiency compared to the legacy MMAPv1. WiredTiger’s checkpointing and caching system optimize performance for large workloads while ensuring durability.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB handle concurrency?",
+          answer:
+            "MongoDB uses document-level locking in the WiredTiger engine, allowing multiple writes to different documents concurrently. This improves throughput compared to older collection-level locks. Transactions also help coordinate multi-document writes safely. Still, careful schema and index design minimize lock contention.",
+        },
+        {
+          category: "mongodb",
+          question: "What are time-series collections in MongoDB?",
+          answer:
+            "Time-series collections, introduced in MongoDB 5.0, are optimized for IoT, financial data, or logs where records are tied to time. They automatically bucket data, compress storage, and optimize queries for ranges. Developers benefit from reduced storage costs and faster queries on temporal datasets.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB handle scalability?",
+          answer:
+            "MongoDB scales horizontally using sharding, where data is partitioned across multiple servers. Vertical scaling (more RAM/CPU) is possible but limited. With replica sets and sharding combined, MongoDB supports massive workloads. It’s ideal for SaaS platforms, global apps, and data-heavy microservices.",
+        },
+        {
+          category: "mongodb",
+          question: "What are MongoDB change streams?",
+          answer:
+            "Change streams allow applications to subscribe to real-time changes in collections or databases. They use the oplog under the hood. Use them for event-driven architectures like chat apps, notifications, or analytics dashboards. Change streams reduce polling and improve performance by pushing changes.",
+        },
+        {
+          category: "mongodb",
+          question: "How to improve MongoDB write performance?",
+          answer:
+            "For high write throughput, use bulk writes, disable unnecessary indexes on write-heavy collections, and batch operations. Pre-splitting shards avoids hot spots. Also, use WiredTiger’s compression for efficient disk writes. WriteConcern can be tuned for lower latency, but balance it with durability needs.",
+        },
+        {
+          category: "mongodb",
+          question: "How to reduce MongoDB read latency?",
+          answer:
+            "Use covered queries with proper indexing, limit returned fields using projection, and cache results with Redis for frequently accessed data. Place read replicas geographically close to users. Query hints and explain() help detect slow queries. Avoid unbounded scans on large collections for faster reads.",
+        },
+        {
+          category: "mongodb",
+          question: "What are MongoDB GridFS and its use cases?",
+          answer:
+            "GridFS stores large files (over 16MB) by splitting them into chunks across documents. It’s useful for images, videos, or PDFs within MongoDB. Instead of a traditional file system, GridFS integrates files with metadata and database queries. It’s commonly used in media apps, CMS platforms, and archiving systems.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB handle backups in production?",
+          answer:
+            "In production, use MongoDB Atlas automated backups or Ops Manager for enterprise. Backups can be continuous (point-in-time) or scheduled snapshots. Use oplog-based backups for replication sets. Always test restores as part of disaster recovery planning. For self-hosted setups, combine snapshots with mongodump.",
+        },
+        {
+          category: "mongodb",
+          question: "When should you not use MongoDB?",
+          answer:
+            "Avoid MongoDB when your project requires complex multi-table joins, heavy transactions, or strict relational integrity, such as core banking systems. It’s also not the best fit for small-scale apps needing simple relational logic. SQL databases may offer better performance for highly structured data models.",
+        },
+        {
+          category: "mongodb",
+          question: "How to optimize MongoDB for analytics workloads?",
+          answer:
+            "Use the aggregation pipeline for data transformations instead of client-side processing. Build indexes on fields frequently used in $match and $group. Consider sharding for large datasets and use Atlas Data Lake for hybrid workloads. Pre-compute aggregates for dashboards to minimize query times.",
+        },
+        {
+          category: "mongodb",
+          question: "What are MongoDB Atlas Data Lakes?",
+          answer:
+            "Atlas Data Lakes let you query and analyze data stored in AWS S3 alongside MongoDB Atlas clusters using the same MongoDB query language. It’s useful for mixing hot and cold storage, especially for analytics pipelines. This reduces costs by offloading infrequently accessed data to cheaper storage.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB handle consistency?",
+          answer:
+            "MongoDB uses eventual consistency for replicas but supports strong consistency when reading from the primary. Read preferences allow fine control (primary, nearest, or secondary). Transactions ensure strict consistency across multiple documents. Developers can choose based on latency vs consistency needs.",
+        },
+        {
+          category: "mongodb",
+          question: "What are MongoDB validators?",
+          answer:
+            "Validators enforce rules at the collection level using JSON Schema. They ensure only valid documents are inserted or updated. For example, you can require email format or limit field values. Validators are useful in large teams where enforcing consistent data quality is critical without relying only on the application layer.",
+        },
+        {
+          category: "mongodb",
+          question: "What are the pros and cons of MongoDB?",
+          answer:
+            "Pros: flexible schema, horizontal scaling, rich queries, and developer-friendly JSON documents. Cons: weaker relational capabilities, larger storage footprint without tuning, and higher complexity for transactions. It’s excellent for rapid development but requires careful design for enterprise-grade workloads.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB Atlas differ from self-hosted MongoDB?",
+          answer:
+            "MongoDB Atlas is fully managed with automated backups, scaling, and monitoring. Self-hosting gives more control but requires manual setup, patching, and security management. Atlas offers features like serverless instances, triggers, and global clusters, which are harder to implement manually in on-prem setups.",
+        },
+        {
+          category: "mongodb",
+          question: "How to secure MongoDB against injection attacks?",
+          answer:
+            "Use parameterized queries instead of concatenating user input. Sanitize inputs at the application layer. Enable role-based access control (RBAC) so users have least privilege. Audit logs help detect suspicious queries. Avoid exposing MongoDB directly to the internet without authentication and firewall rules.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB handle geospatial data?",
+          answer:
+            "MongoDB supports 2D and 3D geospatial indexes for location-based queries. Developers can find nearby points, calculate distances, or build geofencing apps. Common use cases include ride-hailing, delivery services, and mapping platforms. Indexed geospatial queries are efficient for real-time apps.",
+        },
+        {
+          category: "mongodb",
+          question: "What is MongoDB Realm?",
+          answer:
+            "MongoDB Realm is a serverless platform for building apps with real-time sync between devices and the cloud. It supports mobile SDKs, triggers, and GraphQL APIs. Realm is especially useful for offline-first mobile apps where data syncs automatically when devices reconnect.",
+        },
+        {
+          category: "mongodb",
+          question: "How to monitor MongoDB performance?",
+          answer:
+            "Use tools like MongoDB Atlas monitoring, Ops Manager, or open-source Prometheus exporters. Monitor key metrics like ops/sec, index hit ratio, and replication lag. Slow query logs help identify bottlenecks. Alerts can be set up for memory, disk, or network thresholds to prevent downtime.",
+        },
+        {
+          category: "mongodb",
+          question: "How to handle pagination efficiently in MongoDB?",
+          answer:
+            "Avoid skip/limit for large collections as they get slower with offsets. Instead, use range-based queries with indexed fields like createdAt or _id. This method, known as keyset pagination, ensures stable performance. For example, fetch the next set of records where _id > lastSeenId.",
+        },
+        {
+          category: "mongodb",
+          question: "How does MongoDB handle failover?",
+          answer:
+            "In a replica set, if the primary node goes down, an election occurs where secondaries vote to choose a new primary. Applications with drivers automatically detect and reconnect. Failover usually happens within seconds, ensuring high availability. Clients can configure retry logic for smoother recovery.",
+        },
+        {
+          category: "mongodb",
+          question: "What is MongoDB's role in microservices architecture?",
+          answer:
+            "MongoDB fits microservices well due to its schema flexibility and ability to store domain-specific data models per service. Each service can have its own database without global migrations. MongoDB’s horizontal scaling supports independently scaling microservices. Change streams also integrate well with event-driven designs.",
+        },
+        // Angular Questions (30+ - existing 20 + 10 more)
+        {
+          category: "angular",
+          question: "What is Angular and what are its key advantages?",
+          answer:
+            "Angular is a platform and framework for building client-side, single-page web applications using HTML, CSS, and TypeScript. Its key advantages include a powerful component-based architecture that promotes reusability and testability, two-way data binding for seamless model-view synchronization, a comprehensive suite of tools like the CLI for project setup and deployment, and built-in solutions for routing, forms, and HTTP communication. This full-featured, opinionated nature provides a solid structure for large-scale enterprise applications.",
+        },
+        {
+          category: "angular",
+          question: "What is the role of TypeScript in Angular?",
+          answer:
+            "TypeScript is a superset of JavaScript that adds static types, used as the primary language in Angular for writing application code. It enhances code quality by catching errors during compilation, improving maintainability and scalability. Angular’s framework leverages TypeScript’s features like interfaces, enums, and decorators to define components, services, and modules clearly. TypeScript’s type safety ensures better tooling support, such as autocompletion and refactoring in IDEs, making development faster and less error-prone, especially in large projects.",
+        },
+        {
+          category: "angular",
+          question: "What are Angular components and how do they work?",
+          answer:
+            "Angular components are the building blocks of an Angular application, encapsulating the template, logic, and styles for a specific part of the UI. Each component is a TypeScript class decorated with @Component, defining its metadata like selector, template, and styles. Components manage their own data and behavior, communicating with other components via inputs, outputs, or services. They follow a lifecycle (e.g., ngOnInit, ngOnDestroy) to handle initialization, updates, and cleanup, enabling modular and reusable UI development.",
+        },
+        {
+          category: "angular",
+          question: "What is two-way data binding in Angular?",
+          answer:
+            "Two-way data binding in Angular synchronizes data between the model and the view, so changes in one automatically update the other. It’s achieved using the [(ngModel)] directive, which combines property binding ([ngModel]) and event binding (ngModelChange). This simplifies form handling, as user input updates the model, and model changes reflect in the view. While convenient, it can impact performance in complex applications if overused, so developers must balance its use with one-way binding for efficiency.",
+        },
+        {
+          category: "angular",
+          question: "How does Angular’s dependency injection system work?",
+          answer:
+            "Angular’s dependency injection (DI) system manages the creation and delivery of dependencies like services to components or other services. By using the @Injectable decorator and registering providers in modules or components, Angular’s injector creates instances and injects them where needed. This promotes loose coupling, reusability, and testability, as dependencies can be swapped or mocked easily. DI operates hierarchically, with injectors at different levels (root, module, or component) determining the scope of the dependency instance.",
+        },
+        {
+          category: "angular",
+          question: "What is the purpose of Angular modules (NgModule)?",
+          answer:
+            "Angular modules, defined with @NgModule, are containers that organize related components, directives, pipes, and services into cohesive units. They declare which components belong to the module, import other modules for shared functionality, and provide services via dependency injection. Modules help manage application structure, enabling lazy loading for performance and encapsulating features for modularity. The root module (AppModule) bootstraps the application, while feature modules organize specific functionality.",
+        },
+        {
+          category: "angular",
+          question:
+            "What is the Angular CLI and how does it improve development?",
+          answer:
+            "The Angular CLI is a command-line tool that streamlines Angular development by automating tasks like project setup, component generation, and build optimization. It provides commands like `ng new`, `ng generate`, and `ng serve` to create projects, scaffold code, and run development servers. The CLI also supports testing, linting, and production builds with tree-shaking and Ahead-of-Time (AOT) compilation, improving performance and reducing manual configuration, making development faster and more consistent.",
+        },
+        {
+          category: "angular",
+          question:
+            "What is the difference between AOT and JIT compilation in Angular?",
+          answer:
+            "Ahead-of-Time (AOT) compilation converts Angular templates and components into JavaScript during the build process, producing smaller, faster-loading applications. Just-In-Time (JIT) compilation occurs at runtime in the browser, increasing initial load time but allowing dynamic template changes. AOT improves performance by reducing runtime overhead and catching template errors early, while JIT is useful for development due to its flexibility. AOT is preferred for production to optimize speed and bundle size.",
+        },
+        {
+          category: "angular",
+          question: "How does Angular handle routing?",
+          answer:
+            "Angular’s routing module, provided by @angular/router, enables navigation between different views or components based on the URL. Developers define routes in a routing module, mapping paths to components, and use the RouterOutlet directive to render the active component. Features like lazy loading, route guards, and resolvers enhance performance and security by loading modules on demand, controlling access, and pre-fetching data. Routing supports nested routes and parameterized URLs for dynamic navigation.",
+        },
+        {
+          category: "angular",
+          question: "What are Angular directives and their types?",
+          answer:
+            "Angular directives are classes that extend HTML’s functionality by adding custom behavior or attributes to elements. There are three types: Component directives (with templates), Structural directives (e.g., *ngIf, *ngFor) that modify the DOM’s structure, and Attribute directives (e.g., ngClass, ngStyle) that change an element’s appearance or behavior. Directives enable reusable logic, such as conditionally displaying elements or iterating over lists, enhancing Angular’s declarative template syntax for dynamic UI manipulation.",
+        },
+        {
+          category: "angular",
+          question: "What is the purpose of Angular services?",
+          answer:
+            "Angular services are singleton classes, decorated with @Injectable, designed to handle business logic, data access, or shared functionality across components. They promote separation of concerns by keeping components focused on UI logic while services manage tasks like HTTP requests, state management, or calculations. Services are injected via dependency injection, ensuring modularity and testability. They can be scoped to the root, module, or component level, controlling their lifecycle and accessibility.",
+        },
+        {
+          category: "angular",
+          question: "What is lazy loading in Angular and why is it important?",
+          answer:
+            "Lazy loading is a technique in Angular where feature modules are loaded only when their routes are accessed, rather than at application startup. This is achieved by configuring routes with loadChildren in the routing module, reducing the initial bundle size and improving load times. Lazy loading enhances performance, especially for large applications, by deferring the loading of non-critical resources, ensuring faster startup and a smoother user experience.",
+        },
+        {
+          category: "angular",
+          question: "How does Angular handle forms?",
+          answer:
+            "Angular supports two form approaches: Template-driven and Reactive forms. Template-driven forms use directives like ngModel for simple, declarative form handling with two-way data binding. Reactive forms, built with FormGroup and FormControl, offer programmatic control, better scalability, and support for complex validation and dynamic forms. Both approaches provide built-in validation, error handling, and form state management, making it easier to create robust, user-friendly forms.",
+        },
+        {
+          category: "angular",
+          question: "What is the role of pipes in Angular?",
+          answer:
+            "Pipes in Angular transform data in templates for display without modifying the underlying data. Built-in pipes like date, currency, and uppercase format values, while custom pipes can be created for specific transformations. Pipes are applied using the | operator in templates, supporting chaining and parameters for customization. They improve code readability and maintainability by keeping transformation logic separate from components, enhancing the declarative nature of Angular templates.",
+        },
+        {
+          category: "angular",
+          question: "What are Angular lifecycle hooks?",
+          answer:
+            "Angular lifecycle hooks are methods that allow developers to tap into specific moments in a component’s or directive’s lifecycle, such as creation, update, or destruction. Key hooks include ngOnInit (for initialization), ngOnChanges (for input changes), ngAfterViewInit (after view rendering), and ngOnDestroy (for cleanup). These hooks enable fine-grained control over component behavior, such as fetching data, updating the DOM, or unsubscribing from observables to prevent memory leaks.",
+        },
+        {
+          category: "angular",
+          question: "How does Angular optimize performance?",
+          answer:
+            "Angular optimizes performance through techniques like Ahead-of-Time (AOT) compilation, which reduces bundle size and speeds up rendering, and change detection optimization using OnPush strategy to minimize checks. Lazy loading defers module loading, tree-shaking removes unused code, and Zone.js tracks asynchronous tasks efficiently. Developers can further optimize by avoiding complex computations in templates, using trackBy with *ngFor, and minimizing watchers to enhance application speed and responsiveness.",
+        },
+        {
+          category: "angular",
+          question: "What is the OnPush change detection strategy?",
+          answer:
+            "The OnPush change detection strategy in Angular optimizes performance by reducing the frequency of change detection cycles. It only checks a component when its input properties change, an event is triggered, or an observable emits a new value. This is set using changeDetection: ChangeDetectionStrategy.OnPush in the @Component decorator. OnPush is ideal for immutable data or components with stable inputs, significantly improving performance in large applications by avoiding unnecessary checks.",
+        },
+        {
+          category: "angular",
+          question: "How does Angular handle HTTP requests?",
+          answer:
+            "Angular uses the HttpClient module to handle HTTP requests, providing a robust API for GET, POST, PUT, DELETE, and other operations. Services inject HttpClient to communicate with APIs, returning Observables for asynchronous data handling. Features like interceptors allow global handling of requests/responses (e.g., adding headers or error handling), and RxJS operators like map or catchError enhance data manipulation. This setup ensures scalable, maintainable, and testable API interactions.",
+        },
+        {
+          category: "angular",
+          question: "What are Angular interceptors and their use cases?",
+          answer:
+            "Angular interceptors are middleware classes that intercept HTTP requests and responses in the HttpClient pipeline. Defined via HttpInterceptor, they allow modifying requests (e.g., adding authentication headers) or handling responses (e.g., logging errors). Use cases include adding JWT tokens, retrying failed requests, caching responses, or logging API calls. Interceptors promote reusable, centralized logic for cross-cutting concerns, improving code organization and maintainability in Angular applications.",
+        },
+        {
+          category: "angular",
+          question: "What is the role of Zone.js in Angular?",
+          answer:
+            "Zone.js is a library used by Angular to manage asynchronous operations and trigger change detection automatically. It creates execution contexts (zones) to track tasks like timers, events, or promises, notifying Angular when they complete. This enables seamless UI updates without manual intervention. While Zone.js simplifies development, it can impact performance in complex apps, so developers may use zone-less strategies or optimize async tasks to reduce overhead.",
+        },
+        {
+          category: "angular",
+          question: "What is Angular Universal and how does it improve SEO?",
+          answer:
+            "Angular Universal is a technology for server-side rendering (SSR) of Angular applications, generating static HTML on the server before sending it to the client. This improves SEO by making content crawlable by search engines, which often struggle with client-side rendered apps. Universal also enhances initial page load performance and provides a better user experience on low-powered devices. It requires additional setup, like Node.js integration, but significantly boosts discoverability and performance.",
+        },
+        {
+          category: "angular",
+          question: "How can you improve Angular application performance?",
+          answer:
+            "To improve Angular application performance, use Ahead-of-Time (AOT) compilation to reduce bundle size and speed up rendering. Implement lazy loading to defer module loading, and adopt the OnPush change detection strategy to minimize checks. Optimize templates by avoiding complex logic, using trackBy with *ngFor, and minimizing watchers. Tree-shaking removes unused code, while caching HTTP responses and optimizing RxJS subscriptions further enhance speed and resource efficiency.",
+        },
+        {
+          category: "angular",
+          question:
+            "What is the trackBy function in *ngFor and why is it important?",
+          answer:
+            "The trackBy function in Angular’s *ngFor directive optimizes DOM updates by identifying which items have changed in a list. By providing a unique identifier for each item, it prevents Angular from re-rendering unchanged elements, improving performance. Without trackBy, Angular rebuilds the entire list on changes, causing unnecessary DOM operations. It’s especially critical for large or frequently updated lists, reducing rendering time and enhancing application efficiency.",
+        },
+        {
+          category: "angular",
+          question: "How does Angular handle queries to APIs?",
+          answer:
+            "Angular handles API queries using the HttpClient module, which sends HTTP requests and returns RxJS Observables for asynchronous data handling. Developers create services to encapsulate API calls, using methods like get(), post(), or put() to interact with endpoints. RxJS operators (e.g., map, switchMap, catchError) transform or handle responses, while interceptors manage cross-cutting concerns like authentication. This approach ensures scalable, reactive, and maintainable API interactions in Angular applications.",
+        },
+        {
+          category: "angular",
+          question:
+            "What are RxJS Observables and how are they used in Angular?",
+          answer:
+            "RxJS Observables are a reactive programming construct used in Angular to handle asynchronous data streams, such as HTTP requests or user events. They allow subscribing to data changes, transforming streams with operators like map or filter, and managing multiple events efficiently. In Angular, Observables are integral to HttpClient, event handling, and reactive forms, enabling non-blocking, scalable data handling. They simplify complex async workflows, improving responsiveness and code clarity.",
+        },
+        {
+          category: "angular",
+          question: "How can you cache HTTP responses in Angular?",
+          answer:
+            "Caching HTTP responses in Angular can be achieved using interceptors or services to store responses and avoid redundant API calls. A common approach is to create a service that caches responses in a Map or BehaviorSubject, checking the cache before making requests. Interceptors can centralize this logic, returning cached data for matching URLs. RxJS operators like shareReplay can also cache Observables. Caching improves performance by reducing server load and response time.",
+        },
+        {
+          category: "angular",
+          question: "What are Angular route guards and their types?",
+          answer:
+            "Angular route guards control navigation by allowing or denying access to routes based on conditions. There are five types: CanActivate (checks route access), CanActivateChild (guards child routes), CanDeactivate (prevents leaving a route), Resolve (pre-fetches data), and CanLoad (blocks lazy-loaded modules). Guards are implemented as services and registered in routing modules, ensuring secure and controlled navigation, such as restricting access to authenticated users or fetching data before rendering.",
+        },
+        {
+          category: "angular",
+          question: "How does Angular handle error handling in HTTP requests?",
+          answer:
+            "Angular handles HTTP errors using the HttpClient module’s error handling mechanisms, typically with RxJS’s catchError operator. In a service, catchError intercepts errors from HTTP requests, allowing custom logic like logging, retrying with retry(), or displaying user-friendly messages. Interceptors can centralize error handling for all requests, such as redirecting on 401 errors. This approach ensures robust, maintainable error management, improving user experience and application reliability.",
+        },
+        {
+          category: "angular",
+          question: "What is the purpose of the async pipe in Angular?",
+          answer:
+            "The async pipe in Angular automatically subscribes to Observables or Promises in templates, unwrapping their values for display and handling subscription cleanup. It simplifies asynchronous data handling by eliminating manual subscribe/unsubscribe in components, reducing boilerplate and memory leaks. Used as {{ data | async }}, it updates the view when new values emit. The async pipe is ideal for reactive programming, enhancing performance and readability in Angular templates.",
+        },
+        {
+          category: "angular",
+          question: "How do you handle large datasets in Angular applications?",
+          answer:
+            "Handling large datasets in Angular involves optimizing performance with techniques like pagination or infinite scrolling to load data in chunks, reducing DOM overhead. Use the trackBy function in *ngFor to minimize re-rendering, and apply the OnPush change detection strategy to limit checks. Virtual scrolling, via libraries like @angular/cdk, renders only visible items. Caching API responses and compressing data transfers further enhance efficiency, ensuring smooth handling of large datasets.",
+        },
+        {
+          category: "angular",
+          question: "What are Angular resolvers and when should they be used?",
+          answer:
+            "Angular resolvers are services implementing the Resolve interface, used to pre-fetch data before a route’s component loads. Defined in the routing module, they ensure data availability, avoiding empty or loading states in the UI. Resolvers are ideal for scenarios like fetching user profiles or configuration data critical to a component. They improve user experience by ensuring data is ready but should be used judiciously to avoid delaying navigation.",
+        },
+        {
+          category: "angular",
+          question: "How can you optimize change detection in Angular?",
+          answer:
+            "Optimizing change detection in Angular involves using the OnPush strategy to reduce checks by only triggering when inputs or events change. Detaching change detectors manually with ChangeDetectorRef and reattaching when needed minimizes unnecessary cycles. Avoid complex computations in templates, use pure pipes, and leverage trackBy in *ngFor to optimize list rendering. These techniques reduce performance overhead, especially in large applications with frequent updates.",
+        },
+        {
+          category: "angular",
+          question:
+            "What is the difference between template-driven and reactive forms?",
+          answer:
+            "Template-driven forms in Angular use directives like ngModel for simple, declarative form handling with two-way data binding, suitable for basic forms. Reactive forms, built with FormGroup and FormControl, offer programmatic control, better scalability, and support for complex validation and dynamic forms. Reactive forms are more testable and maintainable, ideal for large applications, while template-driven forms are easier for quick setups but less flexible.",
+        },
+        {
+          category: "angular",
+          question: "How do you implement state management in Angular?",
+          answer:
+            "State management in Angular can be implemented using services with BehaviorSubject or ReplaySubject from RxJS to store and share state across components. Libraries like NgRx or Akita provide advanced solutions with Redux-like patterns, offering actions, reducers, and selectors for predictable state changes. Services are simpler for small apps, while NgRx suits complex applications with centralized stores. Ensure state updates are reactive and optimized to avoid performance bottlenecks.",
+        },
+        {
+          category: "angular",
+          question: "What are the benefits of using Angular’s Ivy renderer?",
+          answer:
+            "Angular’s Ivy renderer, introduced in Angular 9, improves performance by generating smaller bundles and faster compilation times. It enhances change detection with better tree-shaking and reduces runtime overhead. Ivy supports backward compatibility, simplifies debugging with better error messages, and enables advanced features like lazy-loaded components. Its optimized code generation makes applications faster and more efficient, particularly for large-scale projects, while maintaining Angular’s core functionality.",
+        },
+        {
+          category: "angular",
+          question: "What is Angular and what are its key advantages?",
+          answer:
+            "Angular is a platform and framework for building client-side, single-page web applications using HTML, CSS, and TypeScript. Its key advantages include a powerful component-based architecture that promotes reusability and testability, two-way data binding for seamless model-view synchronization, a comprehensive suite of tools like the CLI for project setup and deployment, and built-in solutions for routing, forms, and HTTP communication. This full-featured, opinionated nature provides a solid structure for large-scale enterprise applications.",
+        },
+        {
+          category: "angular",
+          question:
+            "Explain the core architecture concepts of an Angular application: Modules, Components, and Services.",
+          answer:
+            "Angular apps are built on three core concepts: NgModules, which are containers for cohesive code blocks (components, services) that define compilation context; Components, which are the fundamental building blocks that control a patch of screen (view) through associated logic and data; and Services, which are reusable classes专注于 business logic, data fetching, or other non-view tasks, which can be injected into components via Dependency Injection (DI) for modularity and testability. This separation of concerns is central to Angular's design philosophy.",
+        },
+        {
+          category: "angular",
+          question:
+            "What is Data Binding and what are the different types in Angular?",
+          answer:
+            'Data Binding is the automatic synchronization of data between the model (component class properties) and the view (the template). Angular provides four forms of binding: Interpolation (`{{value}}`) for displaying component properties; Property Binding (`[property]="value"`) to set an element property to a value from the component; Event Binding (`(event)="handler()"`) to listen for and respond to user events; and Two-Way Binding (`[(ngModel)]="property"`) which combines property and event binding to keep the model and view updated simultaneously, commonly used in form inputs.',
+        },
+        {
+          category: "angular",
+          question:
+            "What are Directives in Angular? Name and explain the types.",
+          answer:
+            "Directives are classes that add custom behavior to DOM elements. There are three types: Components are directives with a template. Structural Directives (e.g., `*ngIf`, `*ngFor`) alter the DOM's layout by adding, removing, or manipulating elements. Attribute Directives (e.g., `NgClass`, `NgStyle`) change the appearance or behavior of an existing element, component, or another directive by manipulating its attributes. Directives are a powerful way to extend HTML's functionality.",
+        },
+        {
+          category: "angular",
+          question:
+            "What is Dependency Injection (DI) and how is it used in Angular?",
+          answer:
+            "Dependency Injection (DI) is a design pattern where a class receives its dependencies from an external source rather than creating them itself. In Angular, the DI framework provides dependencies (like services) to a class (like a component) upon request. You define a provider (often at the root module level via `providedIn: 'root'`) which acts as a recipe for creating the service. Angular's injector then creates and injects instances of these services into components, promoting loose coupling, easier testing, and greater modularity.",
+        },
+        {
+          category: "angular",
+          question: "What are Angular Pipes? Give examples.",
+          answer:
+            "Pipes are simple functions used in template expressions to transform input data into a desired output format for display. They are called using the pipe operator (`|`). Built-in pipes include `date` for formatting dates, `uppercase`/`lowercase` for text transformation, `currency` for formatting money, and `async` for subscribing to and unwrapping Observables or Promises automatically. You can also create custom pipes for application-specific transformations.",
+        },
+        {
+          category: "angular",
+          question: "How does Angular handle HTTP requests?",
+          answer:
+            "Angular provides the `HttpClient` service, available from `@angular/common/http`, to perform HTTP requests. It returns responses as Observables (RxJS), enabling powerful async operations like transformation, error handling, and retry logic. Key methods include `get()`, `post()`, `put()`, and `delete()`. You typically subscribe to the Observable returned by these methods in your component to initiate the request and handle the response or error. For complex scenarios, you can use interceptors to globally handle auth tokens or logging.",
+        },
+        {
+          category: "angular",
+          question: "What is Angular Routing and how is it configured?",
+          answer:
+            "Angular Router is a core library for navigating between different views (components) in a Single Page Application (SPA). It is configured by defining an array of Routes, where each route maps a URL path to a corresponding component. This configuration is imported via `RouterModule.forRoot(routes)` in the main AppModule. Navigation is achieved using the `routerLink` directive in templates and the `Router` service in component classes. Features include lazy loading modules for performance, route guards for authentication, and parameter passing.",
+        },
+        {
+          category: "angular",
+          question: "What are Template-driven Forms vs Reactive Forms?",
+          answer:
+            "Template-driven forms rely on directives in the template (like `ngModel`) to create and manipulate the form model implicitly. They are simpler and good for basic scenarios. Reactive forms are model-driven, where the form model (FormControl, FormGroup) is explicitly created in the component class, providing synchronous access. They are more robust, scalable, and easier to test, making them preferable for complex forms with dynamic behavior, custom validation, or programmatic changes.",
+        },
+        {
+          category: "angular",
+          question: "What is the Angular Lifecycle? Name key hooks.",
+          answer:
+            "Angular components have a lifecycle managed by Angular itself, from creation to destruction. Key lifecycle hooks allow developers to tap into key moments: `ngOnInit()` for one-time initialization logic after data-bound properties are set; `ngOnChanges()` to react to input property changes; `ngAfterViewInit()` to perform actions after the component's view is initialized; and `ngOnDestroy()` for cleanup logic like unsubscribing from Observables right before the component is destroyed, preventing memory leaks.",
+        },
+        {
+          category: "angular",
+          question: "How to handle state management in Angular?",
+          answer:
+            "Handle state with services for simple sharing, NgRx for complex Redux-like patterns with effects and selectors. Use Akita or NGXS for lighter alternatives. Centralize in stores for predictability. This scales from small apps to enterprise with immutable updates.",
+        },
+        {
+          category: "angular",
+          question: "What is the purpose of the `async` pipe?",
+          answer:
+            "The `async` pipe subscribes to an Observable or Promise and returns the latest emitted value. It automatically handles subscription and, crucially, unsubscription when the component is destroyed, which prevents common memory leaks. It is used directly in the template, eliminating the need to manually manage subscriptions in the component class. This promotes a more declarative and safer approach to working with asynchronous data streams.",
+        },
+        {
+          category: "angular",
+          question: "What are Route Guards and what are they used for?",
+          answer:
+            "Route Guards are interfaces that control navigation. `CanActivate` decides if a route can be navigated to (e.g., checking user authentication). `CanDeactivate` asks if a user can leave a route (e.g., preventing loss of unsaved form data). `CanLoad` prevents asynchronous loading of a feature module if conditions aren't met. They are essential for implementing application security and improving user experience by protecting routes and preventing unintended actions.",
+        },
+        {
+          category: "angular",
+          question:
+            "What is Lazy Loading and why is it critical for performance?",
+          answer:
+            "Lazy Loading is a technique where Angular modules (feature modules) are loaded asynchronously only when they are needed, i.e., when the user navigates to their route. This is critical for performance because it drastically reduces the initial bundle size downloaded by the browser, leading to a faster initial load time (Time to Interactive). It is configured in the routing module using the `loadChildren` property, which points to the module's file path.",
+        },
+        {
+          category: "angular",
+          question:
+            "What is the purpose of the `ChangeDetectionStrategy.OnPush` strategy?",
+          answer:
+            "`OnPush` is a change detection strategy that instructs Angular to only run change detection for a component under specific conditions: when one of its `@Input` references changes, a component event handler emits, or an observable bound in the template via the `async` pipe emits a new value. This dramatically improves performance by reducing the number of checks Angular has to perform across the component tree, as it prevents unnecessary checks for components whose state truly hasn't changed.",
+        },
+        {
+          category: "angular",
+          question:
+            "How can you optimize an Angular application's bundle size?",
+          answer:
+            "Optimize bundles by using lazy loading to split code. Run the build command with `--production` flag which enables bundling, minification, and dead code elimination (tree-shaking). Analyze the bundle using `webpack-bundle-analyzer` to identify large dependencies. Consider replacing large libraries with lighter alternatives or using Angular's pure pipes for transformations instead of methods to avoid being included in every change detection cycle.",
+        },
+        {
+          category: "angular",
+          question:
+            "Why is it important to unsubscribe from Observables and how can you do it?",
+          answer:
+            "Not unsubscribing from active Observables when a component is destroyed is a common cause of memory leaks, as the subscription callback may continue to execute and hold references to components. Methods to unsubscribe: manually calling `subscription.unsubscribe()` in `ngOnDestroy`; using the `async` pipe in templates which handles it automatically; or using the `takeUntil` operator with a subject that completes in `ngOnDestroy`, which is a clean and scalable pattern for managing multiple subscriptions.",
+        },
+        {
+          category: "angular",
+          question: "What are Pure Pipes and how do they aid performance?",
+          answer:
+            "Pure pipes are pipes that are only re-executed when Angular detects a pure change to the input value (a change to a primitive input or a changed object reference). This is the default. Because they are pure functions (same input yields same output), Angular can optimize performance by caching the results and avoiding re-rendering if the inputs haven't changed. This makes them more efficient than using component class methods in templates, which are called on every change detection cycle.",
+        },
+        {
+          category: "angular",
+          question:
+            "How would you implement a debounce for user input in a search field?",
+          answer:
+            "For a search field, use Reactive Forms and RxJS operators. Create a `FormControl` for the input. In the component, subscribe to the control's `valueChanges` observable. Use the `debounceTime` operator to wait for a pause in typing (e.g., 400ms) before emitting the latest value. Then use `distinctUntilChanged` to only emit if the new value is different. Finally, `switchMap` to cancel previous in-flight HTTP requests and switch to the new one. This pattern minimizes API calls and provides a smooth user experience.",
+        },
+        {
+          category: "angular",
+          question:
+            "What is the `trackBy` function with `*ngFor` and why is it needed?",
+          answer:
+            "The `trackBy` function is used with `*ngFor` to tell Angular how to track items in an iterable. By default, `*ngFor` tracks items by object identity. If the data is re-fetched from a server, new object references are created, causing Angular to tear down and rebuild all DOM elements. A `trackBy` function returns a unique identifier for each item (e.g., an `id` field). This allows Angular to identify which items were added, removed, or moved, and only manipulate the specific DOM elements that changed, significantly improving rendering performance for large lists.",
+        },
+        {
+          category: "angular",
+          question: "How do you perform testing in Angular?",
+          answer:
+            "Angular is designed for testability. It provides utilities with `TestBed` to configure and create a testing module for unit testing components, services, and pipes in isolation. You can inject dependencies, query the DOM with `DebugElement`, and simulate user events with `ComponentFixture`. For services, you can test them directly by instantiating them. The framework also supports integration testing and end-to-end (E2E) testing with tools like Protractor or Cypress, ensuring all parts of the application work together correctly.",
+        },
+        {
+          category: "angular",
+          question:
+            "What is the purpose of the `@ViewChild` and `@ContentChild` decorators?",
+          answer:
+            "`@ViewChild` is a decorator used to get a reference to a directive, child component, or DOM element within the component's view (its template). `@ContentChild` is used to query for content that has been projected into the component via `<ng-content>` (its content). They provide a way for a parent component to interact with its child components or elements programmatically, such as calling methods on them or accessing their properties, after the view has been initialized (`ngAfterViewInit` or `ngAfterContentInit` lifecycle hooks).",
+        },
+        {
+          category: "angular",
+          question: "Explain the concept of Content Projection in Angular.",
+          answer:
+            "Content Projection (also known as transclusion) is a pattern where you insert, or project, external content into a component's template at a specified location. The parent component passes HTML content to the child component. The child component defines where to place that content using the `<ng-content>` tag as a placeholder in its own template. This is fundamental for creating highly reusable components like modals, cards, or tabs, where the container structure is fixed but the content inside can be arbitrary.",
+        },
+        {
+          category: "angular",
+          question: "What is the purpose of an `Interceptor`?",
+          answer:
+            "An Interceptor is a service that implements the `HttpInterceptor` interface. It allows you to intercept and transform outgoing HTTP requests or incoming responses globally. Common use cases include automatically adding authentication tokens (e.g., an Authorization header) to every request, logging HTTP traffic, globally handling errors, or adding custom headers. You provide them in the root module, and they form a chain through which every HTTP request and response passes.",
+        },
+        {
+          category: "angular",
+          question:
+            "How can you make an Angular application accessible (a11y)?",
+          answer:
+            "Improve accessibility by using semantic HTML and ARIA attributes in templates. Ensure all interactive elements are focusable and navigable via keyboard. Provide meaningful text alternatives for images (`alt` text). Use Angular's built-in features like the `A11yModule` which provides directives for managing focus and aria attributes. Properly label form controls. Test with screen readers and use tools like Lighthouse to audit and identify areas for improvement, ensuring the app is usable by everyone.",
+        },
+        {
+          category: "angular",
+          question: "What is the purpose of the `ng-container` element?",
+          answer:
+            "The `<ng-container>` is a logical container that doesn't get rendered to the DOM. It's used to group elements without adding an extra node, which is useful when you need to apply structural directives (like `*ngIf` or `*ngFor`) to a section of code but cannot or do not want to use a real HTML element as the host. It helps keep the DOM clean and avoids breaking CSS styling that might be sensitive to element structure (e.g., flexbox or CSS grid layouts).",
+        },
+        {
+          category: "angular",
+          question: "How do you share data between sibling components?",
+          answer:
+            "To share data between sibling components that don't have a direct parent-child line, the most common methods are: 1) Using a shared parent component with `@Input()` and `@Output()` to pass data up and back down (which can become cumbersome). 2) Using a shared Service (often as a Singleton with `providedIn: 'root'`) that holds the data and uses RxJS Subjects or BehaviorSubjects to allow components to subscribe to data changes. This 'service with a subject' pattern is a lightweight and effective form of state management for many scenarios.",
+        },
+        {
+          category: "angular",
+          question:
+            "What is the difference between `constructor` and `ngOnInit`?",
+          answer:
+            "The `constructor` is a default method of the TypeScript/JavaScript class that is called when the class is instantiated. It is primarily used for initializing class members and injecting dependencies. `ngOnInit` is a lifecycle hook called by Angular after it has set the component's input-bound properties (`@Input`) and initialized the component. Therefore, you should use the `constructor` for dependency injection and use `ngOnInit` for any complex initialization logic that requires the inputs to be available.",
+        },
+        {
+          category: "angular",
+          question: "How do you handle errors globally in an Angular app?",
+          answer:
+            "Global error handling can be implemented in several ways: Use an HTTP Interceptor to catch and handle HTTP errors consistently across all requests. Implement a custom `ErrorHandler` class (by extending the core `ErrorHandler`) to catch all unhandled errors that occur in the application. For errors related to RxJS streams, use the `catchError` operator within your service calls. This centralized approach allows for logging errors to a server, displaying user-friendly messages, and preventing the app from crashing unexpectedly.",
+        },
+        {
+          category: "angular",
+          question: "What are Dynamic Components and how are they created?",
+          answer:
+            "Dynamic Components are components that are loaded and rendered at runtime, not defined in a template at compile time. The process involves: 1) Getting a reference to a `ViewContainerRef` where the component will be inserted. 2) Using the `ComponentFactoryResolver` to resolve a factory for the component. 3) Using the factory to create an instance of the component. 4) Inserting the component's view into the DOM. This is an advanced technique used for modals, popovers, or any UI that is not static and known in advance.",
+        },
+        {
+          category: "angular",
+          question:
+            "What is the purpose of the `providedIn` property in the `@Injectable` decorator?",
+          answer:
+            "The `providedIn` property in `@Injectable({ providedIn: 'root' })` specifies the injector that should provide the service. Using `'root'` makes the service a singleton provided in the root application injector, meaning a single instance is shared across the entire app. This is the preferred and most efficient way to provide services since it allows Angular to perform tree-shaking and remove the service from the final bundle if it's never injected by any component or other service, optimizing the bundle size.",
+        },
+      ];
+
+      let currentFilter = "all";
+      let filteredData = [...qaData];
+      let recognition = null;
+
+      // Initialize Speech Recognition
+      function initializeSpeechRecognition() {
+        if (
+          "SpeechRecognition" in window ||
+          "webkitSpeechRecognition" in window
+        ) {
+          const SpeechRecognition =
+            window.SpeechRecognition || window.webkitSpeechRecognition;
+          recognition = new SpeechRecognition();
+          recognition.continuous = false;
+          recognition.interimResults = true; // Enable for faster real-time feedback
+          recognition.lang = "en-US";
+
+          recognition.onstart = function () {
+            const voiceBtn = document.getElementById("voiceBtn");
+            voiceBtn.classList.add("listening");
+            voiceBtn.textContent = "🔴";
+            voiceBtn.disabled = true;
+          };
+
+          recognition.onresult = function (event) {
+            // Use the latest transcript (interim or final) for faster response
+            const transcript = Array.from(event.results)
+              .map((result) => result[0].transcript)
+              .join("");
+            const searchInput = document.getElementById("searchInput");
+            searchInput.value = transcript;
+            const inputEvent = new Event("input", { bubbles: true });
+            searchInput.dispatchEvent(inputEvent);
+          };
+
+          recognition.onend = function () {
+            const voiceBtn = document.getElementById("voiceBtn");
+            voiceBtn.classList.remove("listening");
+            voiceBtn.textContent = "🎤";
+            voiceBtn.disabled = false;
+          };
+
+          recognition.onerror = function (event) {
+            const voiceBtn = document.getElementById("voiceBtn");
+            voiceBtn.classList.remove("listening");
+            voiceBtn.textContent = "🎤";
+            voiceBtn.disabled = false;
+
+            let errorMessage = "An error occurred during voice recognition.";
+            switch (event.error) {
+              case "no-speech":
+                errorMessage = "No speech detected. Please try again.";
+                break;
+              case "audio-capture":
+                errorMessage =
+                  "Microphone not found or not accessible. Please check your device.";
+                break;
+              case "not-allowed":
+                errorMessage =
+                  "Microphone access denied. Please allow microphone permissions.";
+                break;
+              case "network":
+                errorMessage =
+                  "Network error. Please check your internet connection.";
+                break;
+              case "aborted":
+                errorMessage = "Voice recognition was aborted.";
+                break;
+              default:
+                errorMessage = `Voice recognition error: ${event.error}`;
+            }
+            console.error(errorMessage);
+            alert(errorMessage);
+          };
+
+          const voiceBtn = document.getElementById("voiceBtn");
+          voiceBtn.disabled = false;
+          voiceBtn.title = "Start Voice Search";
+        } else {
+          console.warn(
+            "SpeechRecognition API is not supported in this browser."
+          );
+          const voiceBtn = document.getElementById("voiceBtn");
+          voiceBtn.style.display = "none";
+        }
+      }
+
+      // Check microphone permission
+      async function checkMicrophonePermission() {
+        try {
+          const permissionStatus = await navigator.permissions.query({
+            name: "microphone",
+          });
+          if (permissionStatus.state === "denied") {
+            alert(
+              "Microphone access is denied. Please enable microphone permissions in your browser settings."
+            );
+            document.getElementById("voiceBtn").disabled = true;
+          } else if (permissionStatus.state === "prompt") {
+            document.getElementById("voiceBtn").disabled = false;
+          } else {
+            document.getElementById("voiceBtn").disabled = false;
+          }
+
+          permissionStatus.onchange = () => {
+            if (permissionStatus.state === "denied") {
+              alert("Microphone access was denied. Voice search is disabled.");
+              document.getElementById("voiceBtn").disabled = true;
+            } else {
+              document.getElementById("voiceBtn").disabled = false;
+            }
+          };
+        } catch (err) {
+          console.warn("Microphone permission check failed:", err);
+        }
+      }
+
+      // Initialize the application
+      function init() {
+        renderQuestions(qaData);
+        setupEventListeners();
+        initializeSpeechRecognition();
+        checkMicrophonePermission();
+      }
+
+      // Setup event listeners
+      function setupEventListeners() {
+        document
+          .getElementById("searchInput")
+          .addEventListener("input", handleSearch);
+
+        document.querySelectorAll(".filter-btn").forEach((btn) => {
+          btn.addEventListener("click", handleFilter);
+        });
+
+        document
+          .getElementById("voiceBtn")
+          .addEventListener("click", function () {
+            if (recognition && !this.disabled) {
+              try {
+                recognition.start();
+              } catch (err) {
+                console.error("Failed to start speech recognition:", err);
+                alert("Failed to start voice search. Please try again.");
+              }
+            }
+          });
+      }
+
+      function handleSearch(e) {
+        const searchTerm = e.target.value.toLowerCase().trim();
+
+        if (searchTerm === "") {
+          filteredData = filterByCategory(qaData, currentFilter);
+        } else {
+          const searchResults = qaData.filter((item) => {
+            const questionMatch = item.question
+              .toLowerCase()
+              .includes(searchTerm);
+            const answerMatch = item.answer.toLowerCase().includes(searchTerm);
+            const categoryMatch =
+              currentFilter === "all" || item.category === currentFilter;
+
+            return (questionMatch || answerMatch) && categoryMatch;
+          });
+          filteredData = searchResults;
+        }
+
+        renderQuestions(filteredData);
+        updateStats(filteredData.length);
+      }
+
+      function handleFilter(e) {
+        document.querySelectorAll(".filter-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        e.target.classList.add("active");
+
+        currentFilter = e.target.dataset.filter;
+        const searchTerm = document
+          .getElementById("searchInput")
+          .value.toLowerCase()
+          .trim();
+
+        if (searchTerm === "") {
+          filteredData = filterByCategory(qaData, currentFilter);
+        } else {
+          filteredData = qaData.filter((item) => {
+            const questionMatch = item.question
+              .toLowerCase()
+              .includes(searchTerm);
+            const answerMatch = item.answer.toLowerCase().includes(searchTerm);
+            const categoryMatch =
+              currentFilter === "all" || item.category === currentFilter;
+
+            return (questionMatch || answerMatch) && categoryMatch;
+          });
+        }
+
+        renderQuestions(filteredData);
+        updateStats(filteredData.length);
+      }
+
+      function filterByCategory(data, category) {
+        if (category === "all") {
+          return [...data];
+        }
+        return data.filter((item) => item.category === category);
+      }
+
+      function renderQuestions(data) {
+        const container = document.getElementById("qaContainer");
+        const noResults = document.getElementById("noResults");
+
+        if (data.length === 0) {
+          container.innerHTML = "";
+          noResults.style.display = "block";
+          return;
+        }
+
+        noResults.style.display = "none";
+
+        const questionsHTML = data
+          .map((item) => {
+            return `
+                    <div class="qa-card ${item.category}">
+                        <div class="question">
+                            ${item.question}
+                            <span class="tech-tag ${
+                              item.category
+                            }">${getTechLabel(item.category)}</span>
+                        </div>
+                        <div class="answer">
+                            ${item.answer}
+                        </div>
+                    </div>
+                `;
+          })
+          .join("");
+
+        container.innerHTML = questionsHTML;
+      }
+
+      function getTechLabel(category) {
+        const labels = {
+          nodejs: "Node.js",
+          mongodb: "MongoDB",
+          angular: "Angular",
+          express: "expressjs",
+        };
+        return labels[category] || category;
+      }
+
+      function updateStats(visibleCount) {
+        document.getElementById("visibleQuestions").textContent = visibleCount;
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+    </script>
+  </body>
+</html>

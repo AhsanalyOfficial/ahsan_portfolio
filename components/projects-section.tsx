@@ -1,11 +1,37 @@
-"use client"
+"use client";
 
-import { motion, AnimatePresence } from "framer-motion"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { ExternalLink, Github, Eye, Shield, Globe, Zap, Users, Database, Smartphone, X } from "lucide-react"
-import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  ExternalLink,
+  Github,
+  Eye,
+  Shield,
+  Globe,
+  Zap,
+  Users,
+  Database,
+  Smartphone,
+  X,
+} from "lucide-react";
+import { useState } from "react";
+import denProject1 from "../assets/den_project01.png";
+import denProject2 from "../assets/den_project02.png";
+import denProject3 from "../assets/den_project03.png";
+import realProject1 from "../assets/real_project01.png";
+import realProject2 from "../assets/real_project02.png";
+import realProject3 from "../assets/real_project03.png";
+import ssoProject01 from "../assets/sso_project01.png";
+import ssoProject02 from "../assets/sso_project02.png";
+import ssoProject03 from "../assets/sso_project03.png";
+import mobileProject01 from "../assets/mobile_project01.png";
+import mobileProject02 from "../assets/mobile_project02.png";
+import mobileProject03 from "../assets/mobile_project03.png";
+import ecomProject01 from "../assets/ecom_project01.png";
+import ecomProject02 from "../assets/ecom_project02.png";
+import ecomProject03 from "../assets/ecom_project03.png";
 
 interface Project {
   title: string;
@@ -22,10 +48,9 @@ interface Project {
   demo: string;
   status: string;
 }
-import denProjectPic from "../assets/den_project.png"
 
 export function ProjectsSection() {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -36,7 +61,7 @@ export function ProjectsSection() {
         staggerChildren: 0.1,
       },
     },
-  }
+  };
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
@@ -47,21 +72,27 @@ export function ProjectsSection() {
         duration: 0.5,
       },
     },
-  }
+  };
 
   const projects = [
     {
-      title: "Dentistry99",
+      title: "Dentistry99 Platform",
       category: "Healthcare Platform",
-      description: "Comprehensive dental practice management platform with advanced security and real-time features.",
+      description:
+        "Comprehensive dental practice management platform with advanced security and real-time features.",
       longDescription:
         "Architected a full-featured dental platform with multi-factor authentication, role-based access control, and real-time communication. Implemented Stripe payment processing and Redis caching for optimal performance.",
-      images: [
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
+      images: [denProject1.src, denProject2.src, denProject3.src],
+      technologies: [
+        "Next.js",
+        "NestJS",
+        "PostgreSQL",
+        "Stripe",
+        "WebSockets",
+        "Redis",
+        "MFA",
+        "RBAC",
       ],
-      technologies: ["Next.js", "NestJS", "PostgreSQL", "Stripe", "WebSockets", "Redis", "MFA", "RBAC"],
       features: [
         "Multi-factor Authentication (MFA)",
         "Role-based Access Control (RBAC)",
@@ -80,18 +111,21 @@ export function ProjectsSection() {
       status: "Live",
     },
     {
-      title: "Real Estate Web App",
+      title: "Real Estate Platform",
       category: "Property Management",
       description:
         "Modern real estate platform with interactive maps, advanced search, and comprehensive property management.",
       longDescription:
         "Built a responsive real estate platform featuring Google Maps integration, advanced property search filters, and intuitive dashboards for both agents and clients.",
-      images: [
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
+      images: [realProject1.src, realProject2.src, realProject3.src],
+      technologies: [
+        "React",
+        "Tailwind CSS",
+        "Google Maps API",
+        "Node.js",
+        "MongoDB",
+        "Express.js",
       ],
-      technologies: ["React", "Tailwind CSS", "Google Maps API", "Node.js", "MongoDB", "Express.js"],
       features: [
         "Interactive Google Maps integration",
         "Advanced property search & filters",
@@ -103,8 +137,8 @@ export function ProjectsSection() {
         "Mortgage calculator",
       ],
       icon: Globe,
-      color: "text-blue-500",
-      bgColor: "bg-blue-500/10",
+      color: "text-teal-400",
+      bgColor: "bg-teal-400/10",
       github: "https://github.com/AhsanalyOfficial/real-estate-app",
       demo: "https://real-estate-demo.vercel.app",
       status: "Live",
@@ -112,15 +146,25 @@ export function ProjectsSection() {
     {
       title: "E-Commerce Platform",
       category: "Online Store",
-      description: "Full-stack e-commerce solution with secure payments, inventory management, and admin dashboard.",
+      description:
+        "Full-stack e-commerce solution with secure payments, inventory management, and admin dashboard.",
       longDescription:
         "Developed a complete e-commerce platform with React/Redux frontend and Node.js backend, featuring JWT authentication, Stripe payments, and comprehensive admin controls.",
       images: [
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
+        ecomProject02.src,
+        ecomProject01.src,
+        ecomProject03.src,
       ],
-      technologies: ["React", "Redux", "Node.js", "Express.js", "MongoDB", "JWT", "Stripe", "Material-UI"],
+      technologies: [
+        "React",
+        "Redux",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "JWT",
+        "Stripe",
+        "Material-UI",
+      ],
       features: [
         "Secure JWT authentication",
         "Stripe payment processing",
@@ -132,8 +176,8 @@ export function ProjectsSection() {
         "Wishlist functionality",
       ],
       icon: Zap,
-      color: "text-purple-500",
-      bgColor: "bg-purple-500/10",
+      color: "text-teal-400",
+      bgColor: "bg-teal-400/10",
       github: "https://github.com/AhsanalyOfficial/ecommerce-platform",
       demo: "https://ecommerce-demo.vercel.app",
       status: "Live",
@@ -141,15 +185,20 @@ export function ProjectsSection() {
     {
       title: "SSO.ID",
       category: "Authentication System",
-      description: "Single Sign-On solution with optimized APIs and modern UI components.",
+      description:
+        "Single Sign-On solution with optimized APIs and modern UI components.",
       longDescription:
         "Built an Angular-based SSO system with API optimizations, modern SCSS/Bootstrap layouts, and seamless integration capabilities for multiple applications.",
-      images: [
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
+      images: [ssoProject01.src, ssoProject02.src, ssoProject03.src],
+      technologies: [
+        "Angular",
+        "TypeScript",
+        "SCSS",
+        "Bootstrap",
+        "Node.js",
+        "JWT",
+        "OAuth",
       ],
-      technologies: ["Angular", "TypeScript", "SCSS", "Bootstrap", "Node.js", "JWT", "OAuth"],
       features: [
         "Single Sign-On functionality",
         "API optimization and caching",
@@ -170,7 +219,8 @@ export function ProjectsSection() {
     {
       title: "School Management System",
       category: "Education Platform",
-      description: "Comprehensive school management system with role-based access and intuitive UI/UX design.",
+      description:
+        "Comprehensive school management system with role-based access and intuitive UI/UX design.",
       longDescription:
         "Developed a complete school management system using HTML/JavaScript with multiple modules, role-based access control, and focus on exceptional UI/UX design.",
       images: [
@@ -178,7 +228,15 @@ export function ProjectsSection() {
         "/placeholder.svg?height=400&width=600",
         "/placeholder.svg?height=400&width=600",
       ],
-      technologies: ["HTML5", "JavaScript", "CSS3", "Bootstrap", "PHP", "MySQL", "RBAC"],
+      technologies: [
+        "HTML5",
+        "JavaScript",
+        "CSS3",
+        "Bootstrap",
+        "PHP",
+        "MySQL",
+        "RBAC",
+      ],
       features: [
         "Student information management",
         "Teacher and staff modules",
@@ -197,17 +255,21 @@ export function ProjectsSection() {
       status: "Live",
     },
     {
-      title: "Mobile Web Application",
+      title: "Store Web Application",
       category: "Responsive Web App",
-      description: "Feature-rich mobile-first web application with forms, modals, and API integrations.",
+      description:
+        "Feature-rich mobile-first web application with forms, modals, and API integrations.",
       longDescription:
         "Created a responsive mobile web application with JavaScript features including dynamic forms, interactive modals, and seamless API integrations for optimal mobile experience.",
-      images: [
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
+      images: [mobileProject02.src, mobileProject01.src, mobileProject03.src],
+      technologies: [
+        "HTML5",
+        "CSS3",
+        "JavaScript",
+        "Bootstrap",
+        "REST APIs",
+        "PWA",
       ],
-      technologies: ["HTML5", "CSS3", "JavaScript", "Bootstrap", "REST APIs", "PWA"],
       features: [
         "Mobile-first responsive design",
         "Dynamic forms with validation",
@@ -225,7 +287,7 @@ export function ProjectsSection() {
       demo: "https://mobile-demo.vercel.app",
       status: "Live",
     },
-  ]
+  ];
 
   return (
     <section id="projects" className="py-20 relative overflow-hidden">
@@ -247,10 +309,14 @@ export function ProjectsSection() {
         {[...Array(12)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-red-500 rounded-full"
+            className="absolute w-1 h-1 bg-teal-400 rounded-full"
             initial={{
-              x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1200),
-              y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 800),
+              x:
+                Math.random() *
+                (typeof window !== "undefined" ? window.innerWidth : 1200),
+              y:
+                Math.random() *
+                (typeof window !== "undefined" ? window.innerHeight : 800),
               opacity: 0,
             }}
             animate={{
@@ -275,15 +341,21 @@ export function ProjectsSection() {
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="text-center mb-16">
-            <Badge variant="outline" className="mb-4 bg-red-500/10 text-red-400 border-red-500/30">
+            <Badge
+              variant="outline"
+              className="mb-4 bg-teal-400/10 text-teal-400 border-teal-400/30"
+            >
               Featured Projects
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 font-poppins">
-              <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">My </span>
-              <span className="text-red-500">Portfolio</span>
+              <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                My{" "}
+              </span>
+              <span className="text-teal-400">Portfolio</span>
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto font-inter">
-              A showcase of diverse projects demonstrating expertise across different domains and technologies
+              A showcase of diverse projects demonstrating expertise across
+              different domains and technologies
             </p>
           </motion.div>
 
@@ -306,26 +378,33 @@ export function ProjectsSection() {
                       className="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-110"
                       whileHover={{ scale: 1.1 }}
                     />
-                    <div className="absolute top-3 right-3">
+                    {/* <div className="absolute top-3 right-3">
                       <Badge variant="secondary" className="bg-gray-800/90 text-gray-300 text-xs">
                         {project.status}
                       </Badge>
-                    </div>
+                    </div> */}
                   </div>
 
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between mb-2">
-                      <div className={`p-2 rounded-lg ${project.bgColor} bg-opacity-20`}>
+                      <div
+                        className={`p-2 rounded-lg ${project.bgColor} bg-opacity-20`}
+                      >
                         <project.icon className={`w-4 h-4 ${project.color}`} />
                       </div>
-                      <Badge variant="outline" className="text-xs bg-gray-700/50 text-gray-300 border-gray-600">
+                      <Badge
+                        variant="outline"
+                        className="text-xs bg-gray-700/50 text-gray-300 border-gray-600"
+                      >
                         {project.category}
                       </Badge>
                     </div>
-                    <CardTitle className="text-lg group-hover:text-red-400 transition-colors text-white">
+                    <CardTitle className="text-lg group-hover:text-teal-400 transition-colors text-white">
                       {project.title}
                     </CardTitle>
-                    <p className="text-gray-400 text-sm line-clamp-2">{project.description}</p>
+                    <p className="text-gray-400 text-sm line-clamp-2">
+                      {project.description}
+                    </p>
                   </CardHeader>
 
                   <CardContent className="space-y-3 pt-0">
@@ -342,7 +421,10 @@ export function ProjectsSection() {
                           </Badge>
                         ))}
                         {project.technologies.length > 3 && (
-                          <Badge variant="outline" className="text-xs bg-gray-700/50 text-gray-300 border-gray-600">
+                          <Badge
+                            variant="outline"
+                            className="text-xs bg-gray-700/50 text-gray-300 border-gray-600"
+                          >
                             +{project.technologies.length - 3}
                           </Badge>
                         )}
@@ -353,13 +435,13 @@ export function ProjectsSection() {
                       <Button
                         size="sm"
                         variant="default"
-                        className="flex-1 bg-red-500 hover:bg-red-600 text-white"
+                        className="flex-1 bg-teal-400 hover:bg-teal-400 text-white"
                         onClick={() => setSelectedProject(project)}
                       >
                         <Eye className="w-3 h-3 mr-2" />
                         View Details
                       </Button>
-                      <Button
+                      {/* <Button
                         size="sm"
                         variant="outline"
                         className="border-gray-600 text-gray-300 hover:bg-gray-700 bg-transparent"
@@ -368,7 +450,7 @@ export function ProjectsSection() {
                         <a href={project.demo} target="_blank" rel="noopener noreferrer">
                           <ExternalLink className="w-3 h-3" />
                         </a>
-                      </Button>
+                      </Button> */}
                     </div>
                   </CardContent>
                 </Card>
@@ -396,12 +478,21 @@ export function ProjectsSection() {
             >
               <div className="sticky top-0 bg-gray-900/95 backdrop-blur-sm border-b border-gray-700/50 p-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className={`p-2 rounded-lg ${selectedProject.bgColor} bg-opacity-20`}>
-                    <selectedProject.icon className={`w-5 h-5 ${selectedProject.color}`} />
+                  <div
+                    className={`p-2 rounded-lg ${selectedProject.bgColor} bg-opacity-20`}
+                  >
+                    <selectedProject.icon
+                      className={`w-5 h-5 ${selectedProject.color}`}
+                    />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-white">{selectedProject.title}</h3>
-                    <Badge variant="outline" className="text-xs bg-gray-700/50 text-gray-300 border-gray-600">
+                    <h3 className="text-xl font-bold text-white">
+                      {selectedProject.title}
+                    </h3>
+                    <Badge
+                      variant="outline"
+                      className="text-xs bg-gray-700/50 text-gray-300 border-gray-600"
+                    >
                       {selectedProject.category}
                     </Badge>
                   </div>
@@ -434,13 +525,19 @@ export function ProjectsSection() {
 
                 {/* Description */}
                 <div>
-                  <h4 className="text-lg font-semibold mb-3 text-white">Project Overview</h4>
-                  <p className="text-gray-400 leading-relaxed">{selectedProject.longDescription}</p>
+                  <h4 className="text-lg font-semibold mb-3 text-white">
+                    Project Overview
+                  </h4>
+                  <p className="text-gray-400 leading-relaxed">
+                    {selectedProject.longDescription}
+                  </p>
                 </div>
 
                 {/* Features */}
                 <div>
-                  <h4 className="text-lg font-semibold mb-3 text-white">Key Features</h4>
+                  <h4 className="text-lg font-semibold mb-3 text-white">
+                    Key Features
+                  </h4>
                   <div className="grid md:grid-cols-2 gap-2">
                     {selectedProject.features.map((feature, index) => (
                       <motion.div
@@ -450,7 +547,7 @@ export function ProjectsSection() {
                         transition={{ delay: index * 0.05 }}
                         className="flex items-start gap-2 text-sm"
                       >
-                        <div className="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0" />
+                        <div className="w-1.5 h-1.5 bg-teal-400 rounded-full mt-2 flex-shrink-0" />
                         <span className="text-gray-300">{feature}</span>
                       </motion.div>
                     ))}
@@ -459,7 +556,9 @@ export function ProjectsSection() {
 
                 {/* Technologies */}
                 <div>
-                  <h4 className="text-lg font-semibold mb-3 text-white">Technologies Used</h4>
+                  <h4 className="text-lg font-semibold mb-3 text-white">
+                    Technologies Used
+                  </h4>
                   <div className="flex flex-wrap gap-2">
                     {selectedProject.technologies.map((tech, index) => (
                       <motion.div
@@ -468,7 +567,10 @@ export function ProjectsSection() {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: index * 0.05 }}
                       >
-                        <Badge variant="secondary" className="bg-gray-700 text-gray-300">
+                        <Badge
+                          variant="secondary"
+                          className="bg-gray-700 text-gray-300"
+                        >
                           {tech}
                         </Badge>
                       </motion.div>
@@ -478,13 +580,13 @@ export function ProjectsSection() {
 
                 {/* Action Buttons */}
                 <div className="flex gap-4 pt-4">
-                  <Button className="bg-red-500 hover:bg-red-600 text-white" asChild>
+                  {/* <Button className="bg-teal-400 hover:bg-teal-400 text-white" asChild>
                     <a href={selectedProject.demo} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="w-4 h-4 mr-2" />
                       View Live Demo
                     </a>
-                  </Button>
-                  <Button
+                  </Button> */}
+                  {/* <Button
                     variant="outline"
                     className="border-gray-600 text-gray-300 hover:bg-gray-700 bg-transparent"
                     asChild
@@ -493,7 +595,7 @@ export function ProjectsSection() {
                       <Github className="w-4 h-4 mr-2" />
                       View Source Code
                     </a>
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </motion.div>
@@ -501,5 +603,5 @@ export function ProjectsSection() {
         )}
       </AnimatePresence>
     </section>
-  )
+  );
 }

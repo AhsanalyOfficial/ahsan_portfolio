@@ -44,7 +44,7 @@ export function HeroSection() {
     {
       name: "React",
       icon: "⚛️",
-      color: "from-blue-400 to-blue-600",
+      color: "from-blue-400 to-teal-400",
       delay: 0.2,
     },
     {
@@ -62,13 +62,13 @@ export function HeroSection() {
     {
       name: "NestJS",
       icon: "🔴",
-      color: "from-red-400 to-red-600",
+      color: "from-teal-400 to-teal-400",
       delay: 0.8,
     },
     {
       name: "TypeScript",
       icon: "📘",
-      color: "from-blue-500 to-blue-700",
+      color: "from-teal-400 to-blue-700",
       delay: 1.0,
     },
     {
@@ -108,7 +108,7 @@ export function HeroSection() {
         {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-red-500 rounded-full"
+            className="absolute w-1 h-1 bg-teal-400 rounded-full"
             initial={{
               x:
                 Math.random() *
@@ -153,16 +153,16 @@ export function HeroSection() {
                   animate={{ opacity: [1, 0, 1] }}
                   transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY }}
                   style={{ width: "6px", height: "40px" }}
-                  className="bg-red-500 ml-2 inline-block align-middle"
+                  className="bg-teal-400 ml-2 inline-block align-middle"
                 ></motion.span>
               </motion.h1>
 
-              <motion.div
+              {/* <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: "200px" }}
                 transition={{ delay: 1, duration: 1.2 }}
-                className="h-1 bg-gradient-to-r from-red-500 to-red-600 mt-2 rounded-full"
-              />
+                className="h-1 bg-gradient-to-r from-teal-400 to-teal-400 mt-2 rounded-full"
+              /> */}
             </div>
 
             <motion.p
@@ -184,7 +184,7 @@ export function HeroSection() {
             >
               <Button
                 onClick={() => scrollToSection("contact")}
-                className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-8 py-3 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/25 group"
+                className="bg-gradient-to-r from-teal-400 to-teal-400 hover:from-teal-400 hover:to-teal-700 text-white px-8 py-3 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-teal-400/25 group"
               >
                 Hire Me
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -193,7 +193,7 @@ export function HeroSection() {
               <Button
                 onClick={() => scrollToSection("projects")}
                 variant="outline"
-                className="border-2 border-red-500 text-white hover:bg-red-500 hover:text-white px-8 py-3 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 bg-transparent backdrop-blur-sm group"
+                className="border-2 border-teal-400 text-white hover:bg-teal-400 hover:text-white px-8 py-3 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 bg-transparent backdrop-blur-sm group"
               >
                 View My Work
                 <Projector className="ml-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
@@ -212,13 +212,13 @@ export function HeroSection() {
                 animate={{
                   scale: [1, 1.1, 1],
                   boxShadow: [
-                    "0 0 50px rgba(239, 68, 68, 0.3)",
-                    "0 0 80px rgba(239, 68, 68, 0.5)",
-                    "0 0 50px rgba(239, 68, 68, 0.3)",
+                    "0 0 50px rgba(150, 168, 168, 0.3)",
+                    "0 0 80px rgba(150, 618, 168, 0.5)",
+                    "0 0 50px rgba(150, 618, 168, 0.3)",
                   ],
                 }}
                 transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
-                className="w-64 h-64 bg-gradient-to-br from-red-500/20 to-red-600/20 rounded-full flex items-center justify-center mx-auto backdrop-blur-sm border border-red-500/30"
+                className="w-64 h-64 bg-gradient-to-br from-teal-400/20 to-teal-400/20 rounded-full flex items-center justify-center mx-auto backdrop-blur-sm border border-teal-400/30"
               >
                 <motion.div
                   animate={{ rotate: 360 }}
@@ -227,9 +227,9 @@ export function HeroSection() {
                     repeat: Number.POSITIVE_INFINITY,
                     ease: "linear",
                   }}
-                  className="w-48 h-48 border-2 border-dashed border-red-500/50 rounded-full flex items-center justify-center"
+                  className="w-48 h-48 border-2 border-dashed border-teal-400/50 rounded-full flex items-center justify-center"
                 >
-                  <div className="w-32 h-32 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center">
+                  <div className="w-32 h-32 bg-gradient-to-br from-teal-400 to-teal-400 rounded-full flex items-center justify-center">
                     <span className="text-4xl font-bold text-white font-poppins">
                       AA
                     </span>
@@ -292,7 +292,7 @@ export function HeroSection() {
                   repeat: Number.POSITIVE_INFINITY,
                   ease: "easeInOut",
                 }}
-                className="absolute -top-8 -left-8 w-20 h-20 bg-gradient-to-br from-blue-500/20 to-blue-600/20 rounded-2xl flex items-center justify-center text-blue-400 font-mono text-2xl backdrop-blur-sm border border-blue-500/30"
+                className="absolute -top-8 -left-8 w-20 h-20 bg-gradient-to-br from-teal-400/20 to-teal-400/20 rounded-2xl flex items-center justify-center text-blue-400 font-mono text-2xl backdrop-blur-sm border border-teal-400/30"
               >
                 {"</>"}
               </motion.div>

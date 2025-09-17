@@ -38,7 +38,6 @@ export function Navigation() {
     { href: "#home", label: "Home" },
     { href: "#about", label: "About" },
     { href: "#skills", label: "Skills" },
-    { href: "#experience", label: "Experience" },
     { href: "#projects", label: "Projects" },
     { href: "#contact", label: "Contact" },
   ]
@@ -71,7 +70,7 @@ export function Navigation() {
           >
             <Link
               href="#home"
-              className="text-2xl font-bold font-poppins bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent hover:from-red-400 hover:to-red-500 transition-all duration-300"
+              className="text-2xl font-bold font-poppins bg-gradient-to-r from-teal-400 to-teal-400 bg-clip-text text-transparent hover:from-red-400 hover:to-teal-400 transition-all duration-300"
             >
               Ahsan Ali
             </Link>
@@ -94,12 +93,12 @@ export function Navigation() {
                 }}
                 onClick={() => scrollToSection(item.href)}
                 className={`relative text-sm font-medium font-inter tracking-wide transition-all duration-300 group ${
-                  activeSection === item.href.slice(1) ? "text-red-500" : "text-gray-300 hover:text-white"
+                  activeSection === item.href.slice(1) ? "text-teal-400" : "text-gray-300 hover:text-white"
                 }`}
               >
                 {item.label}
                 <motion.span
-                  className="absolute -bottom-2 left-0 h-0.5 bg-gradient-to-r from-red-500 to-red-600 rounded-full"
+                  className="absolute -bottom-2 left-0 h-0.5 bg-gradient-to-r from-teal-400 to-teal-400 rounded-full"
                   initial={{ width: 0 }}
                   animate={{
                     width: activeSection === item.href.slice(1) ? "100%" : "0%",
@@ -124,7 +123,7 @@ export function Navigation() {
               }}
               whileTap={{ scale: 0.95 }}
               onClick={() => scrollToSection("#contact")}
-              className="px-6 py-2.5 bg-gradient-to-r from-red-500 to-red-600 text-white font-medium font-inter rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg"
+              className="px-6 py-2.5 bg-gradient-to-r from-teal-400 to-teal-400 text-white font-medium font-inter rounded-lg hover:from-teal-400 hover:to-teal-700 transition-all duration-300 shadow-lg"
             >
               Let's Talk
             </motion.button>
@@ -165,7 +164,7 @@ export function Navigation() {
                     onClick={() => scrollToSection(item.href)}
                     className={`text-left font-inter transition-all duration-300 py-2 px-3 rounded-md ${
                       activeSection === item.href.slice(1)
-                        ? "text-red-500 bg-red-500/10"
+                        ? "text-teal-400 bg-teal-400/10"
                         : "text-gray-300 hover:text-white hover:bg-white/5"
                     }`}
                   >
@@ -179,7 +178,7 @@ export function Navigation() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => scrollToSection("#contact")}
-                  className="mt-4 px-4 py-2.5 bg-gradient-to-r from-red-500 to-red-600 text-white font-medium rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-300"
+                  className="mt-4 px-4 py-2.5 bg-gradient-to-r from-teal-400 to-teal-400 text-white font-medium rounded-lg hover:from-teal-400 hover:to-red-700 transition-all duration-300"
                 >
                   Let's Talk
                 </motion.button>

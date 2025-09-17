@@ -79,15 +79,15 @@ export function AboutSection() {
               initial={{ scale: 0.8, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.6 }}
-              className="inline-block px-4 py-2 bg-red-500/10 border border-red-500/20 rounded-full mb-6"
+              className="inline-block px-4 py-2 bg-teal-400/10 border border-teal-400/20 rounded-full mb-6"
             >
-              <span className="text-red-400 font-medium font-inter">About Me</span>
+              <span className="text-teal-400 font-medium font-inter">About Me</span>
             </motion.div>
             <h2 className="text-4xl md:text-5xl font-bold font-poppins mb-6">
               <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                 Passionate About Building{" "}
               </span>
-              <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-teal-400 to-teal-400 bg-clip-text text-transparent">
                 Digital Solutions
               </span>
             </h2>
@@ -95,7 +95,7 @@ export function AboutSection() {
               initial={{ width: 0 }}
               whileInView={{ width: "100px" }}
               transition={{ delay: 0.5, duration: 1 }}
-              className="h-1 bg-gradient-to-r from-red-500 to-red-600 mx-auto mb-6 rounded-full"
+              className="h-1 bg-gradient-to-r from-teal-400 to-teal-400 mx-auto mb-6 rounded-full"
             />
             <p className="text-xl text-gray-400 max-w-2xl mx-auto font-inter leading-relaxed">
               From mentoring juniors to leading projects, I'm dedicated to creating impactful web applications
@@ -107,7 +107,7 @@ export function AboutSection() {
               <div className="relative">
                 <motion.div
                   whileHover={{ scale: 1.02 }}
-                  className="w-full max-w-md mx-auto aspect-square bg-gradient-to-br from-red-500/10 to-red-600/5 rounded-3xl flex items-center justify-center border border-red-500/20 backdrop-blur-sm"
+                  className="w-full max-w-md mx-auto aspect-square bg-gradient-to-br from-teal-400/10 to-teal-400/5 rounded-3xl flex items-center justify-center border border-teal-400/20 backdrop-blur-sm"
                 >
                   <div className="text-center">
                     <motion.div
@@ -119,7 +119,7 @@ export function AboutSection() {
                         ],
                       }}
                       transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
-                      className="w-32 h-32 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4"
+                      className="w-32 h-32 bg-gradient-to-br from-teal-400 to-teal-400 rounded-full flex items-center justify-center mx-auto mb-4"
                     >
                       <Code className="w-16 h-16 text-white" />
                     </motion.div>
@@ -137,13 +137,13 @@ export function AboutSection() {
                 <div className="space-y-4 text-gray-400 leading-relaxed font-inter">
                   <p>
                     As a full-stack developer with expertise in{" "}
-                    <span className="text-red-400 font-medium">React, Next.js, Node.js, NestJS</span>, and modern web
+                    <span className="text-teal-400 font-medium">React, Next.js, Node.js, NestJS</span>, and modern web
                     technologies, I focus on delivering high-performance applications that drive business growth.
                   </p>
 
                   <p>
                     My journey began with a{" "}
-                    <span className="text-red-400 font-medium">
+                    <span className="text-teal-400 font-medium">
                       curiosity about how websites work
                     </span>
                     , and it has evolved into a passion for creating seamless digital experiences. I believe in writing clean, maintainable code and staying up-to-date with the latest industry trends.
@@ -171,10 +171,10 @@ export function AboutSection() {
                   whileHover={{ y: -10, scale: 1.02 }}
                   className="text-center"
                 >
-                  <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 h-full hover:border-red-500/50 transition-all duration-300 group">
+                  <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 h-full hover:border-teal-400/50 transition-all duration-300 group">
                     <motion.div
                       whileHover={{ scale: 1.1 }}
-                      className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-lg group-hover:shadow-red-500/25 transition-all duration-300"
+                      className="w-16 h-16 bg-gradient-to-br from-teal-400 to-teal-400 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-lg group-hover:shadow-teal-400/25 transition-all duration-300"
                     >
                       <value.icon className="w-8 h-8 text-white" />
                     </motion.div>

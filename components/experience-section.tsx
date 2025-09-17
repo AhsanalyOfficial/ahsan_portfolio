@@ -77,8 +77,8 @@
 //       ],
 //       technologies: ["React", "Node.js", "MongoDB", "Express.js", "Redux", "JavaScript", "AWS"],
 //       icon: Code2,
-//       color: "text-blue-500",
-//       bgColor: "bg-blue-500/10",
+//       color: "text-teal-400",
+//       bgColor: "bg-teal-400/10",
 //     },
 //   ]
 
@@ -102,7 +102,7 @@
 //         {[...Array(10)].map((_, i) => (
 //           <motion.div
 //             key={i}
-//             className="absolute w-1 h-1 bg-red-500 rounded-full"
+//             className="absolute w-1 h-1 bg-teal-400 rounded-full"
 //             initial={{
 //               x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1200),
 //               y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 800),
@@ -130,14 +130,14 @@
 //         >
 //           {/* Section Header */}
 //           <motion.div variants={itemVariants} className="text-center mb-16">
-//             <Badge variant="outline" className="mb-4 bg-red-500/10 text-red-400 border-red-500/30">
+//             <Badge variant="outline" className="mb-4 bg-teal-400/10 text-red-400 border-teal-400/30">
 //               Professional Experience
 //             </Badge>
 //             <h2 className="text-3xl md:text-4xl font-bold mb-4 font-poppins">
 //               <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
 //                 My Professional{" "}
 //               </span>
-//               <span className="text-red-500">Journey</span>
+//               <span className="text-teal-400">Journey</span>
 //             </h2>
 //             <p className="text-xl text-gray-400 max-w-2xl mx-auto font-inter">
 //               Building impactful solutions and leading teams across diverse projects and technologies
@@ -147,8 +147,8 @@
 //           {/* Timeline */}
 //           <div className="relative">
 //             {/* Timeline Line */}
-//             <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-red-500/30 md:transform md:-translate-x-0.5">
-//               <motion.div variants={lineVariants} className="w-full bg-red-500" style={{ transformOrigin: "top" }} />
+//             <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-teal-400/30 md:transform md:-translate-x-0.5">
+//               <motion.div variants={lineVariants} className="w-full bg-teal-400" style={{ transformOrigin: "top" }} />
 //             </div>
 
 //             {/* Experience Items */}
@@ -160,13 +160,13 @@
 //                   className={`relative flex items-center ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
 //                 >
 //                   {/* Timeline Dot */}
-//                   <div className="absolute left-8 md:left-1/2 w-4 h-4 bg-red-500 rounded-full border-4 border-gray-900 md:transform md:-translate-x-1/2 z-10">
+//                   <div className="absolute left-8 md:left-1/2 w-4 h-4 bg-teal-400 rounded-full border-4 border-gray-900 md:transform md:-translate-x-1/2 z-10">
 //                     <motion.div
 //                       initial={{ scale: 0 }}
 //                       whileInView={{ scale: 1 }}
 //                       transition={{ delay: 0.5 }}
 //                       viewport={{ once: true }}
-//                       className="w-full h-full bg-red-500 rounded-full"
+//                       className="w-full h-full bg-teal-400 rounded-full"
 //                     />
 //                   </div>
 
@@ -182,7 +182,7 @@
 //                             <Badge
 //                               variant={exp.type === "Current Role" ? "default" : "secondary"}
 //                               className={
-//                                 exp.type === "Current Role" ? "bg-red-500 text-white" : "bg-gray-700 text-gray-300"
+//                                 exp.type === "Current Role" ? "bg-teal-400 text-white" : "bg-gray-700 text-gray-300"
 //                               }
 //                             >
 //                               {exp.type}
@@ -220,7 +220,7 @@
 //                                   viewport={{ once: true }}
 //                                   className="flex items-start gap-2 text-sm"
 //                                 >
-//                                   <div className="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0" />
+//                                   <div className="w-1.5 h-1.5 bg-teal-400 rounded-full mt-2 flex-shrink-0" />
 //                                   <span className="text-gray-300">{achievement}</span>
 //                                 </motion.li>
 //                               ))}

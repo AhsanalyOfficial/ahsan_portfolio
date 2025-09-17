@@ -77,7 +77,7 @@ export function Footer() {
               <motion.div
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.6 }}
-                className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center"
+                className="w-12 h-12 bg-gradient-to-br from-teal-400 to-teal-400 rounded-2xl flex items-center justify-center"
               >
                 <Code className="w-6 h-6 text-white" />
               </motion.div>
@@ -108,9 +108,9 @@ export function Footer() {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="p-3 bg-gray-800/50 border border-gray-700 rounded-xl hover:border-red-500/50 hover:bg-red-500/10 transition-all duration-300 group"
+                  className="p-3 bg-gray-800/50 border border-gray-700 rounded-xl hover:border-teal-400/50 hover:bg-teal-400/10 transition-all duration-300 group"
                 >
-                  <social.icon className="w-5 h-5 text-gray-400 group-hover:text-red-400 transition-colors" />
+                  <social.icon className="w-5 h-5 text-gray-400 group-hover:text-teal-400 transition-colors" />
                 </motion.a>
               ))}
             </div>
@@ -124,7 +124,7 @@ export function Footer() {
                   <motion.button
                     whileHover={{ x: 5 }}
                     onClick={() => scrollToSection(link.href)}
-                    className="text-gray-400 hover:text-red-400 transition-colors text-sm font-inter"
+                    className="text-gray-400 hover:text-teal-400 transition-colors text-sm font-inter"
                   >
                     {link.label}
                   </motion.button>
@@ -136,12 +136,12 @@ export function Footer() {
           <motion.div variants={itemVariants}>
             <h4 className="font-semibold mb-6 text-white font-poppins text-lg">Services</h4>
             <ul className="space-y-3 text-sm text-gray-400 font-inter">
-              <li className="hover:text-red-400 transition-colors cursor-default">Full Stack Development</li>
-              <li className="hover:text-red-400 transition-colors cursor-default">React & Next.js Apps</li>
-              <li className="hover:text-red-400 transition-colors cursor-default">API Development</li>
-              <li className="hover:text-red-400 transition-colors cursor-default">Database Design</li>
-              <li className="hover:text-red-400 transition-colors cursor-default">UI/UX Implementation</li>
-              <li className="hover:text-red-400 transition-colors cursor-default">Performance Optimization</li>
+              <li className="hover:text-teal-400 transition-colors cursor-default">Full Stack Development</li>
+              <li className="hover:text-teal-400 transition-colors cursor-default">React & Next.js Apps</li>
+              <li className="hover:text-teal-400 transition-colors cursor-default">API Development</li>
+              <li className="hover:text-teal-400 transition-colors cursor-default">Database Design</li>
+              <li className="hover:text-teal-400 transition-colors cursor-default">UI/UX Implementation</li>
+              <li className="hover:text-teal-400 transition-colors cursor-default">Performance Optimization</li>
             </ul>
           </motion.div>
         </motion.div>
@@ -155,7 +155,7 @@ export function Footer() {
           <div className="flex items-center gap-2 text-sm text-gray-400 font-inter">
             <span>© 2025 Ahsan Ali. Made with</span>
             <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY }}>
-              <Heart className="w-4 h-4 text-red-500" />
+              <Heart className="w-4 h-4 text-teal-400" />
             </motion.div>
             <span>and</span>
             <Zap className="w-4 h-4 text-yellow-500" />
