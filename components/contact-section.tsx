@@ -52,8 +52,8 @@ export function ContactSection() {
       label: "Email",
       value: "ahsanalyofficial@gmail.com",
       href: "mailto:ahsanalyofficial@gmail.com",
-      color: "text-blue-500",
-      bgColor: "bg-blue-500/10",
+      color: "text-teal-400",
+      bgColor: "bg-teal-400/10",
     },
     {
       icon: Phone,
@@ -76,13 +76,13 @@ export function ContactSection() {
       icon: Linkedin,
       label: "LinkedIn",
       href: "https://linkedin.com/in/ahsan-ali-developer",
-      color: "hover:text-blue-600",
+      color: "hover:text-teal-400",
     },
     {
       icon: Mail,
       label: "Email",
       href: "mailto:ahsanalyofficial@gmail.com",
-      color: "hover:text-red-500",
+      color: "hover:text-teal-400",
     },
   ]
 
@@ -143,7 +143,7 @@ export function ContactSection() {
         {[...Array(8)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-red-500 rounded-full"
+            className="absolute w-1 h-1 bg-teal-400 rounded-full"
             initial={{
               x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1200),
               y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 800),
@@ -171,12 +171,12 @@ export function ContactSection() {
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="text-center mb-16">
-            <Badge variant="outline" className="mb-4 bg-red-500/10 text-red-400 border-red-500/30">
+            <Badge variant="outline" className="mb-4 bg-teal-400/10 text-teal-400 border-teal-400/30">
               Get In Touch
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 font-poppins">
               <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Let's Work </span>
-              <span className="text-red-500">Together</span>
+              <span className="text-teal-400">Together</span>
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto font-inter">
               Ready to bring your ideas to life? I'm available for freelance projects and would love to hear about your
@@ -260,7 +260,7 @@ export function ContactSection() {
               <Card className="hover:shadow-lg transition-shadow bg-gray-800/50 border-gray-700/50 backdrop-blur-sm">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-white">
-                    <MessageSquare className="w-5 h-5 text-red-500" />
+                    <MessageSquare className="w-5 h-5 text-teal-400" />
                     Send Me a Message
                   </CardTitle>
                 </CardHeader>
@@ -290,7 +290,7 @@ export function ContactSection() {
                             onChange={handleInputChange}
                             placeholder="Your full name"
                             required
-                            className="transition-all focus:ring-2 focus:ring-red-500/20 bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400"
+                            className="transition-all focus:ring-2 focus:ring-teal-400/20 bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400"
                           />
                         </motion.div>
 
@@ -307,7 +307,7 @@ export function ContactSection() {
                             onChange={handleInputChange}
                             placeholder="your.email@example.com"
                             required
-                            className="transition-all focus:ring-2 focus:ring-red-500/20 bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400"
+                            className="transition-all focus:ring-2 focus:ring-teal-400/20 bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400"
                           />
                         </motion.div>
                       </div>
@@ -322,7 +322,7 @@ export function ContactSection() {
                           value={formData.subject}
                           onChange={handleInputChange}
                           placeholder="Project inquiry, collaboration, etc."
-                          className="transition-all focus:ring-2 focus:ring-red-500/20 bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400"
+                          className="transition-all focus:ring-2 focus:ring-teal-400/20 bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400"
                         />
                       </motion.div>
 
@@ -338,14 +338,14 @@ export function ContactSection() {
                           placeholder="Tell me about your project, requirements, timeline, and budget..."
                           rows={5}
                           required
-                          className="transition-all focus:ring-2 focus:ring-red-500/20 bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400"
+                          className="transition-all focus:ring-2 focus:ring-teal-400/20 bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400"
                         />
                       </motion.div>
 
                       <Button
                         type="submit"
                         disabled={!isFormValid || isSubmitting}
-                        className="w-full bg-red-500 hover:bg-red-600 text-white"
+                        className="w-full bg-teal-400 hover:bg-teal-400 text-white"
                         size="lg"
                       >
                         {isSubmitting ? (

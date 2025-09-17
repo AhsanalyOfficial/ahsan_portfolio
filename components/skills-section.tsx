@@ -30,7 +30,7 @@ export function SkillsSection() {
     {
       icon: Code,
       title: "Frontend",
-      color: "from-blue-500 to-blue-600",
+      color: "from-teal-400 to-teal-400",
       skills: ["React", "Angular", "Next.js", "TypeScript", "JavaScript", "HTML5", "CSS3"],
     },
     {
@@ -48,7 +48,7 @@ export function SkillsSection() {
     {
       icon: Database,
       title: "Database",
-      color: "from-purple-500 to-purple-600",
+      color: "from-teal-400 to-teal-400",
       skills: ["MongoDB", "PostgreSQL", "SQL", "MySQL", "Redis"],
     },
     {
@@ -95,21 +95,21 @@ export function SkillsSection() {
               initial={{ scale: 0.8, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.6 }}
-              className="inline-block px-4 py-2 bg-red-500/10 border border-red-500/20 rounded-full mb-6"
+              className="inline-block px-4 py-2 bg-teal-400/10 border border-teal-400/20 rounded-full mb-6"
             >
-              <span className="text-red-400 font-medium font-inter">Technical Skills</span>
+              <span className="text-teal-400 font-medium font-inter">Technical Skills</span>
             </motion.div>
             <h2 className="text-4xl md:text-5xl font-bold font-poppins mb-6">
               <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                 Technologies I{" "}
               </span>
-              <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">Master</span>
+              <span className="bg-gradient-to-r from-teal-400 to-teal-400 bg-clip-text text-transparent">Master</span>
             </h2>
             <motion.div
               initial={{ width: 0 }}
               whileInView={{ width: "100px" }}
               transition={{ delay: 0.5, duration: 1 }}
-              className="h-1 bg-gradient-to-r from-red-500 to-red-600 mx-auto mb-6 rounded-full"
+              className="h-1 bg-gradient-to-r from-teal-400 to-teal-400 mx-auto mb-6 rounded-full"
             />
             <p className="text-xl text-gray-400 max-w-2xl mx-auto font-inter leading-relaxed">
               A comprehensive toolkit for building modern, scalable web applications
@@ -124,7 +124,7 @@ export function SkillsSection() {
                 whileHover={{ y: -10, scale: 1.02 }}
                 className="h-full"
               >
-                <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 h-full hover:border-red-500/50 transition-all duration-300 group">
+                <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 h-full hover:border-teal-400/50 transition-all duration-300 group">
                   <div className="flex items-center gap-4 mb-6">
                     <motion.div
                       whileHover={{ scale: 1.1, rotate: 5 }}
@@ -143,7 +143,7 @@ export function SkillsSection() {
                         whileHover={{ scale: 1.05 }}
                         transition={{ delay: categoryIndex * 0.1 + skillIndex * 0.05 }}
                         viewport={{ once: true }}
-                        className="px-3 py-1.5 bg-gray-800/50 border border-gray-600 rounded-lg text-sm text-gray-300 hover:border-red-500/50 hover:text-white transition-all duration-300 cursor-default"
+                        className="px-3 py-1.5 bg-gray-800/50 border border-gray-600 rounded-lg text-sm text-gray-300 hover:border-teal-400/50 hover:text-white transition-all duration-300 cursor-default"
                       >
                         {skill}
                       </motion.div>

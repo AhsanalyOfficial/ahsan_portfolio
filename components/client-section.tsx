@@ -80,7 +80,7 @@ export function ClientSection() {
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-red-500/20 rounded-full"
+            className="absolute w-1 h-1 bg-teal-400/20 rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -107,12 +107,12 @@ export function ClientSection() {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-2 mb-4">
-            <Users className="w-6 h-6 text-red-500" />
-            <span className="text-red-500 font-medium tracking-wider uppercase text-sm">Trusted Clients</span>
+            <Users className="w-6 h-6 text-teal-400" />
+            <span className="text-teal-400 font-medium tracking-wider uppercase text-sm">Trusted Clients</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 font-poppins">
             What My{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600">Clients</span> Say
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-teal-400">Clients</span> Say
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto font-inter">
             Building lasting relationships through exceptional web development and reliable project delivery
@@ -131,7 +131,7 @@ export function ClientSection() {
                 className="w-full"
               >
                 <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-3xl p-8 md:p-12 min-h-[400px] flex flex-col justify-center">
-                  <Quote className="w-12 h-12 text-red-500/60 mb-6 mx-auto" />
+                  <Quote className="w-12 h-12 text-teal-400/60 mb-6 mx-auto" />
 
                   <p className="text-gray-300 text-lg md:text-xl mb-8 font-inter leading-relaxed text-center max-w-3xl mx-auto">
                     "{clients[currentIndex].testimonial}"
@@ -160,16 +160,16 @@ export function ClientSection() {
 
           <button
             onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-gray-900/80 backdrop-blur-sm border border-gray-700 hover:border-red-500/50 text-white p-3 rounded-full transition-all duration-300 hover:bg-red-500/10 group"
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-gray-900/80 backdrop-blur-sm border border-gray-700 hover:border-teal-400/50 text-white p-3 rounded-full transition-all duration-300 hover:bg-teal-400/10 group"
           >
-            <ChevronLeft className="w-6 h-6 group-hover:text-red-500 transition-colors duration-300" />
+            <ChevronLeft className="w-6 h-6 group-hover:text-teal-400 transition-colors duration-300" />
           </button>
 
           <button
             onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-gray-900/80 backdrop-blur-sm border border-gray-700 hover:border-red-500/50 text-white p-3 rounded-full transition-all duration-300 hover:bg-red-500/10 group"
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-gray-900/80 backdrop-blur-sm border border-gray-700 hover:border-teal-400/50 text-white p-3 rounded-full transition-all duration-300 hover:bg-teal-400/10 group"
           >
-            <ChevronRight className="w-6 h-6 group-hover:text-red-500 transition-colors duration-300" />
+            <ChevronRight className="w-6 h-6 group-hover:text-teal-400 transition-colors duration-300" />
           </button>
           <div className="flex justify-center gap-2 mt-8">
             {clients.map((_, index) => (
@@ -177,7 +177,7 @@ export function ClientSection() {
                 key={index}
                 onClick={() => goToSlide(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentIndex ? "bg-red-500 scale-125" : "bg-gray-600 hover:bg-gray-500"
+                  index === currentIndex ? "bg-teal-400 scale-125" : "bg-gray-600 hover:bg-gray-500"
                 }`}
               />
             ))}

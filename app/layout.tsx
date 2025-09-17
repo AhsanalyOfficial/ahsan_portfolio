@@ -40,7 +40,12 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-    generator: 'v0.app'
+    generator: 'v0.app',
+     icons: {
+    icon: "/favicon.ico", // or "/myicon.png"
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 }
 
 export default function RootLayout({
