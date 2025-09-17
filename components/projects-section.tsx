@@ -32,6 +32,10 @@ import mobileProject03 from "../assets/mobile_project03.png";
 import ecomProject01 from "../assets/ecom_project01.png";
 import ecomProject02 from "../assets/ecom_project02.png";
 import ecomProject03 from "../assets/ecom_project03.png";
+import schoolProject01 from "../assets/school_project01.png";
+import schoolProject02 from "../assets/school_project02.png";
+import schoolProject03 from "../assets/school_project03.png";
+import schoolProject04 from "../assets/school_project04.png";
 
 interface Project {
   title: string;
@@ -224,9 +228,10 @@ export function ProjectsSection() {
       longDescription:
         "Developed a complete school management system using HTML/JavaScript with multiple modules, role-based access control, and focus on exceptional UI/UX design.",
       images: [
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
-        "/placeholder.svg?height=400&width=600",
+        schoolProject01.src,
+        schoolProject02.src,
+        schoolProject03.src,
+        schoolProject04.src,
       ],
       technologies: [
         "HTML5",

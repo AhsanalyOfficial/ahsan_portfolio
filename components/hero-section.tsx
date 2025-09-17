@@ -184,19 +184,19 @@ export function HeroSection() {
             >
               <Button
                 onClick={() => scrollToSection("contact")}
-                className="bg-gradient-to-r from-teal-400 to-teal-400 hover:from-teal-400 hover:to-teal-700 text-white px-8 py-3 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-teal-400/25 group"
+                className="cursor-pointer bg-gradient-to-r from-teal-400 to-teal-400 hover:from-teal-400 hover:to-teal-700 text-white px-8 py-3 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-teal-400/25 group"
               >
                 Hire Me
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                {/* <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" /> */}
               </Button>
 
               <Button
                 onClick={() => scrollToSection("projects")}
                 variant="outline"
-                className="border-2 border-teal-400 text-white hover:bg-teal-400 hover:text-white px-8 py-3 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 bg-transparent backdrop-blur-sm group"
+                className="cursor-pointer border-teal-400 text-white hover:bg-teal-400 hover:text-white px-8 py-3 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 bg-transparent backdrop-blur-sm group"
               >
                 View My Work
-                <Projector className="ml-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
+                {/* <Projector className="ml-2 w-5 h-5 group-hover:rotate-12 transition-transform" /> */}
               </Button>
             </motion.div>
           </motion.div>
