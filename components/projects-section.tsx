@@ -56,6 +56,7 @@ interface Project {
 export function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const [isClient, setIsClient] = useState(false);
 
   // Get window dimensions on mount (client-side only)
   useEffect(() => {
@@ -68,6 +69,7 @@ export function ProjectsSection() {
 
     // Only run on client side
     if (typeof window !== "undefined") {
+      setIsClient(true);
       handleResize(); // Set initial size
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
@@ -324,8 +326,8 @@ export function ProjectsSection() {
           />
         </div>
 
-        {/* Floating particles */}
-        {[...Array(12)].map((_, i) => (
+        {/* Floating particles - Only render on client side */}
+        {isClient && [...Array(12)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-teal-400 rounded-full"
