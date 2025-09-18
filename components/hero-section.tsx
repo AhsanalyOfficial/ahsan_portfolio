@@ -26,6 +26,7 @@ export function HeroSection() {
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
+        
       });
     };
 
