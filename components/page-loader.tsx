@@ -41,6 +41,7 @@ export function PageLoader() {
           initial={{
             x: Math.random() * window.innerWidth,
             y: Math.random() * window.innerHeight,
+            
             opacity: 0,
           }}
           animate={{
