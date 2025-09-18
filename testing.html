@@ -16,6 +16,7 @@
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
         color: #333;
+        padding-bottom: 100px;
       }
 
       .container {
@@ -51,6 +52,8 @@
 
       .search-container {
         display: flex;
+        align-items: center;
+        flex-direction: column;
         gap: 15px;
         margin-bottom: 20px;
         flex-wrap: wrap;
@@ -59,12 +62,13 @@
 
       .search-input {
         flex: 1;
-        min-width: 250px;
+        min-width: 100%;
         padding: 15px;
-        border: 2px solid #e0e0e0;
+        border: 1px solid #e0e0e0;
         border-radius: 10px;
         font-size: 16px;
-        transition: border-color 0.3s;
+        /* transition: border-color 0.3s; */
+        outline: none;
       }
 
       .search-input:focus {
@@ -287,9 +291,9 @@
             id="searchInput"
             placeholder="Search questions..."
           />
-          <button class="voice-btn" id="voiceBtn" title="Voice Search" disabled>
+          <!-- <button class="voice-btn" id="voiceBtn" title="Voice Search" disabled>
             🎤
-          </button>
+          </button> -->
           <div class="filter-buttons">
             <button class="filter-btn active" data-filter="all">All</button>
             <button class="filter-btn" data-filter="nodejs">Node.js</button>
@@ -298,6 +302,8 @@
             <button class="filter-btn" data-filter="expressjs">
               Express.js
             </button>
+            <button class="filter-btn" data-filter="skill">Skill</button>
+            <button class="filter-btn" data-filter="query">Query</button>
           </div>
         </div>
 
@@ -329,6 +335,47 @@
 
     <script>
       const qaData = [
+        // Quey Questio,
+
+        {
+          category: "query",
+          question: "Intro",
+          answer:
+            "Hi Amisha, thanks for having me. I'm Ahsan Ali, a Full-Stack Developer with over 3 years of experience in building scalable web applications, primarily using the MERN stack and Angular for front-end. I recently led the development of Dentistry99 at Haraz Co., a secure platform for dental vendors that integrated Stripe payments and real-time features – very similar to the scalable systems your job description mentions. I'm excited about this role because I thrive in fast-paced teams, and your focus on high-quality, reliable code with Node.js, MongoDB, and Angular aligns perfectly with my expertise in creating user-centric solutions. I'd love to contribute to your mission by owning features from prototype to deployment.",
+        },
+        {
+          category: "query",
+          question:
+            "Great, that sounds promising. Our tech stack is Node.js, Express.js, MongoDB on the backend, Angular on the front-end, and AWS/Mongo Atlas for hosting. What technologies are you most comfortable with, and how do they match what we're using?",
+          answer:
+            "I have strong experience with Node.js and Express.js for building RESTful APIs, as well as MongoDB for flexible, scalable data storage – I've used MongoDB Atlas in production for projects like Dentistry99, where I handled real-time data with WebSockets and Redis caching. For front-end, I've worked extensively with Angular for modular UI development, including components, RxJS for async handling, and lazy loading for performance. I also integrate third-party services like Stripe and Google Maps seamlessly. While my recent work at Haraz Co. involved Next.js and NestJS, I'm quick to adapt to pure Angular setups like yours, and I've deployed on AWS EC2 and Heroku, ensuring high availability.",
+        },
+        {
+          category: "query",
+          question:
+            "Impressive. You mentioned over 3 years – can you give a quick overview of your professional experience, focusing on full-stack projects similar to ours?",
+          answer:
+            "Absolutely. I hold a BSc in Computer Science from Superior University Lahore (2022), which gave me a solid foundation. From Oct 2022 to Dec 2024, I was a MERN Stack Developer at Asian Solutions Pvt. Ltd., where I developed and maintained scalable apps, integrated APIs, and mentored juniors – we delivered features under tight deadlines while ensuring clean, bug-free code. Since Jan 2025, I've been a Full-Stack Developer at Haraz Co., leading projects like Dentistry99, a vendor platform with Stripe payments, MFA security, and real-time chat via WebSockets. Other highlights include a real estate app with Google Maps integration for search filters and an e-commerce site with Redux state management and JWT auth. Across these, I've owned end-to-end features, from API design to Angular UIs, aligning with your need for owning prototypes to polished implementations in a fast-paced environment.",
+        },
+        {
+          category: "query",
+          question: "Project-Specific Question",
+          answer:
+            "I saw your job emphasizes working closely with the Chief Product Officer on new features. Can you tell me more about the current project phase and the types of features we'll be prioritizing in the next 3-6 months?",
+        },
+        {
+          category: "query",
+          question: "Team & Workflow Question",
+          answer:
+            "With multiple meetings and a minimum of 30 hours/week, how does the team collaborate daily – for example, using tools like Jira or Slack for planning and code reviews?",
+        },
+        {
+          category: "query",
+          question: "Growth/Impact Question",
+          answer:
+            "What success looks like for this role in the first month, and how does it contribute to the overall mission?",
+        },
+
         // Node.js Questions (30+)
         {
           category: "nodejs",
@@ -1978,6 +2025,97 @@
           answer:
             "The `providedIn` property in `@Injectable({ providedIn: 'root' })` specifies the injector that should provide the service. Using `'root'` makes the service a singleton provided in the root application injector, meaning a single instance is shared across the entire app. This is the preferred and most efficient way to provide services since it allows Angular to perform tree-shaking and remove the service from the final bundle if it's never injected by any component or other service, optimizing the bundle size.",
         },
+        {
+          category: "skill",
+          question:
+            "Can you describe your experience with backend technologies like Node.js, MongoDB, and Express.js, and provide an example of a project where you used these technologies",
+          answer:
+            "I have over four years of experience working with Node.js, MongoDB, and Express.js, building scalable backend systems. In my role at Asian Solutions, I developed a task management application using Node.js and Express.js to create a RESTful API for user authentication, task creation, and status updates. MongoDB served as the database to store user profiles and tasks, leveraging its schema flexibility to accommodate evolving requirements. I implemented pagination and filtering for task lists to ensure efficient data retrieval. The API was deployed on AWS EC2 with MongoDB Atlas, achieving high availability and performance.",
+        },
+        {
+          category: "skill",
+          question:
+            "How do you approach designing and deploying APIs, and what steps do you take to ensure they are secure and scalable?",
+          answer:
+            "I design RESTful APIs following best practices, such as clear endpoint naming (e.g., /api/v1/tasks), appropriate HTTP methods, and versioning for backward compatibility. Using Express.js, I structure routes and middleware for input validation and error handling. For security, I implement JWT-based authentication, HTTPS, and rate limiting. For scalability, I use pagination, Redis caching, and MongoDB indexes to optimize queries. During deployment, I’ve used AWS API Gateway with Lambda for serverless APIs or EC2 for traditional setups, integrating CloudWatch for monitoring. In the Dentistry99 project, I designed a secure API for vendor payments, handling thousands of requests daily using AWS load balancers and MongoDB sharding.",
+        },
+        {
+          category: "skill",
+          question:
+            "Can you walk us through your experience with Angular for UI development and how you ensure a maintainable codebase?",
+          answer:
+            "I’ve worked with Angular for over two years, building responsive and modular front-end applications. At Haraz Co., I developed a dashboard using Angular components like product lists and user profiles, organizing features into modules (e.g., ProductModule). I used TypeScript for type safety, dependency injection for reusable services, and RxJS for asynchronous API calls. To ensure maintainability, I implemented lazy loading for performance, used Angular CLI for consistent structure, and wrote unit tests with Jasmine/Karma. Tools like Prettier and ESLint kept the codebase clean. For example, in a real estate project, I modularized the codebase to handle dynamic property listings efficiently.",
+        },
+        {
+          category: "skill",
+          question:
+            "How do you incorporate UX principles into your development process to ensure an optimal user experience?",
+          answer:
+            "I prioritize UX through user-centered design, simplicity, and accessibility. In the Dentistry99 project, I collaborated with designers to create an intuitive vendor dashboard in Angular, using clear navigation and progressive disclosure for complex features. I followed WCAG guidelines, adding ARIA labels and ensuring keyboard navigation. Real-time feedback, like loading spinners and success messages, enhanced usability. I conducted usability tests with vendors, iterating based on feedback to improve navigation, which increased user satisfaction by 20% in post-launch surveys.",
+        },
+        {
+          category: "skill",
+          question:
+            "The job requires working closely with the Chief Product Officer to plan and implement new features. How would you approach turning a design document into a technical plan and implementing it?",
+          answer:
+            "I start by reviewing the design document with the CPO to clarify requirements and edge cases. I break the feature into tasks, outlining backend (e.g., API endpoints, MongoDB schemas) and front-end (e.g., Angular components) requirements. For example, for a comment feature, I’d plan a POST /api/v1/tasks/{id}/comments endpoint, update MongoDB schemas, and create Angular components for comment input/display. I use Jira to track tasks and ensure milestones are met. During implementation, I write modular code, test with Jest and Karma, and deploy incrementally on AWS. Regular CPO check-ins ensure alignment. In Dentistry99, I used this approach to deliver the payment system on time.",
+        },
+        {
+          category: "skill",
+          question:
+            "How would you implement modern charts and graphs in an Angular application to visualize data effectively?",
+          answer:
+            "I use Chart.js with ng2-charts in Angular for responsive, interactive charts. In the Dentistry99 project, I built a bar chart to display vendor sales trends, binding data from a Node.js API using RxJS observables. I ensured responsiveness with Chart.js’s responsive: true option and added tooltips and legend toggling for interactivity. For accessibility, I included ARIA labels and high-contrast colors. To optimize performance, I aggregated data server-side using MongoDB. This resulted in a user-friendly visualization that helped vendors track performance efficiently.",
+        },
+        {
+          category: "skill",
+          question:
+            "The job requires operating in a fast-paced environment while maintaining high-quality code. How do you balance speed and quality under tight deadlines?",
+          answer:
+            "I balance speed and quality by prioritizing modular design and reusable code. In the Dentistry99 project, I reused Angular components and Express.js middleware to accelerate development. I use ESLint and Prettier for code quality and write Jest/Karma tests to catch bugs early. Breaking tasks into smaller chunks allows incremental delivery, meeting deadlines while ensuring stability. Code reviews with peers help identify issues early. This approach enabled me to deliver Dentistry99’s payment system on a tight timeline with minimal bugs.",
+        },
+        {
+          category: "skill",
+          question:
+            "Our core principle of exploration encourages approaching hard problems with an inquisitive mind. Can you share an example of a challenging technical problem you solved creatively?",
+          answer:
+            "In Dentistry99, I faced a performance issue where real-time chat using WebSockets was lagging due to high message volumes. I analyzed the issue using Node.js debugging tools and identified inefficient message handling. I implemented a Pub/Sub architecture with Redis to manage WebSocket communication efficiently, reducing latency by 60%. I also added rate limiting to prevent abuse. This creative solution—combining Redis Pub/Sub and rate limiting—ensured a scalable, responsive chat system that met vendor needs.",
+        },
+        {
+          category: "skill",
+          question:
+            "How do you ensure the security of the applications and APIs you develop, particularly in terms of authentication, authorization, and data protection?",
+          answer:
+            "I prioritize security by implementing robust authentication and authorization mechanisms. In Dentistry99, I used JWT for user authentication and implemented role-based access control (RBAC) to enforce granular permissions, ensuring vendors could only access their data. I enabled HTTPS for secure data transmission and used MongoDB’s field-level encryption for sensitive data like payment details. I also validated all inputs to prevent injection attacks and implemented rate limiting to mitigate DDoS risks. For third-party integrations like Stripe, I followed OAuth 2.0 and securely stored API keys in environment variables. Regular security audits using tools like Postman and Swagger ensured compliance with best practices.",
+        },
+        {
+          category: "skill",
+          question:
+            "What strategies do you use to optimize the performance of full-stack applications, particularly for large-scale systems?",
+          answer:
+            "I optimize performance by addressing both frontend and backend bottlenecks. On the backend, I use MongoDB indexes and aggregation pipelines to speed up queries, as done in Dentistry99 for vendor analytics. I implement Redis caching for frequently accessed data, reducing database load. For APIs, I use pagination and compression (e.g., gzip in Express.js) to minimize latency. On the frontend, I leverage Angular’s lazy loading and Ahead-of-Time (AOT) compilation to reduce bundle sizes and improve load times. In the real estate project, I optimized search functionality by caching Google Maps API results and debouncing user inputs, improving response times by 40%. I also monitor performance with AWS CloudWatch to identify bottlenecks.",
+        },
+        {
+          category: "skill",
+          question:
+            "Can you describe your process for enrolling in and managing complex projects like Dentistry99, from inception to deployment?",
+          answer:
+            "For complex projects like Dentistry99, I start by collaborating with stakeholders to understand requirements and define scope. I create a technical plan, breaking the project into milestones (e.g., API development, frontend components, integrations). I use Git for version control, creating feature branches for tasks like Stripe integration or WebSocket chat. I write modular code with clear documentation and conduct code reviews to ensure quality. For testing, I use Jest for backend and Karma for Angular components, followed by integration tests. I deploy incrementally on AWS, using MongoDB Atlas for the database and CloudWatch for monitoring. In Dentistry99, this approach delivered a secure, scalable platform on schedule, with regular stakeholder feedback ensuring alignment.",
+        },
+        {
+          category: "skill",
+          question:
+            "How do you ensure clean, maintainable code in your projects, and what practices do you follow to achieve this?",
+          answer:
+            "I ensure clean code by following SOLID principles and modular design. In Dentistry99, I organized backend code into Express.js middleware and services, and frontend code into Angular components and modules. I use TypeScript for type safety, reducing runtime errors. Tools like ESLint and Prettier enforce consistent formatting, while GitHub code reviews catch issues early. I write clear documentation and use meaningful variable names. For example, in the e-commerce project, I refactored legacy code into reusable services, improving readability and reducing technical debt. Regular unit tests with Jest and Karma ensure code reliability. This approach makes the codebase maintainable and scalable.",
+        },
+        {
+          category: "skill",
+          question:
+            "Can you share your experience with third-party integrations, such as Stripe or Google Maps, and how you ensure they are seamless and secure?",
+          answer:
+            "I have extensive experience with third-party integrations. In Dentistry99, I integrated Stripe for payment processing, implementing vendor onboarding, subscriptions, and payouts using Stripe’s SDK. I secured API keys in environment variables and used OAuth for secure authentication. For the real estate project, I integrated Google Maps for location-based search, caching API responses to reduce costs and improve performance. I also integrated NodeMailer for low-stock alerts in Dentistry99, ensuring reliable email delivery. To ensure seamlessness, I test integrations with Postman and mock APIs, and for security, I validate all external data and use HTTPS. These integrations enhanced functionality while maintaining reliability.",
+        },
       ];
 
       let currentFilter = "all";
@@ -2230,6 +2368,7 @@
           mongodb: "MongoDB",
           angular: "Angular",
           express: "expressjs",
+          skill: "skill",
         };
         return labels[category] || category;
       }
