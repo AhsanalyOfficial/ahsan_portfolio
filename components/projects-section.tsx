@@ -66,9 +66,12 @@ export function ProjectsSection() {
       });
     };
 
-    handleResize(); // Set initial size
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    // Only run on client side
+    if (typeof window !== "undefined") {
+      handleResize(); // Set initial size
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
   }, []);
 
   const containerVariants = {
@@ -327,8 +330,8 @@ export function ProjectsSection() {
             key={i}
             className="absolute w-1 h-1 bg-teal-400 rounded-full"
             initial={{
-              x: Math.random() * windowSize.width,
-              y: Math.random() * windowSize.height,
+              x: Math.random() * (windowSize.width || 1200),
+              y: Math.random() * (windowSize.height || 800),
               opacity: 0,
             }}
             animate={{
