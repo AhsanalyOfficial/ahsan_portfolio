@@ -46,6 +46,11 @@ const clients = [
 export function ClientSection() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   useEffect(() => {
     if (!isAutoPlaying) return
@@ -77,7 +82,8 @@ export function ClientSection() {
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(239,68,68,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(239,68,68,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
 
-        {[...Array(20)].map((_, i) => (
+        {/* Floating particles - Only render on client side */}
+        {isClient && [...Array(20)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-teal-400/20 rounded-full"

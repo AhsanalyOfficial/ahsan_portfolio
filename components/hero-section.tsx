@@ -11,6 +11,7 @@ export function HeroSection() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [titleIndex, setTitleIndex] = useState(0);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const [isClient, setIsClient] = useState(false);
 
   const titles = [
     "FULL STACK DEVELOPER",
@@ -32,6 +33,7 @@ export function HeroSection() {
 
     // Only run on client side
     if (typeof window !== "undefined") {
+      setIsClient(true);
       handleResize(); // Set initial size
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
@@ -127,7 +129,8 @@ export function HeroSection() {
           />
         </div>
 
-        {[...Array(15)].map((_, i) => (
+        {/* Floating particles - Only render on client side */}
+        {isClient && [...Array(15)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-teal-400 rounded-full"

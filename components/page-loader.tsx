@@ -14,6 +14,7 @@ export function PageLoader() {
 
   // State to store window dimensions
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
+  const [isClient, setIsClient] = useState(false)
 
   // Get window dimensions on mount (client-side only)
   useEffect(() => {
@@ -26,6 +27,7 @@ export function PageLoader() {
 
     // Only run on client side
     if (typeof window !== "undefined") {
+      setIsClient(true)
       // Set initial size
       handleResize()
 
@@ -57,8 +59,8 @@ export function PageLoader() {
         />
       </div>
 
-      {/* Floating Particles */}
-      {[...Array(20)].map((_, i) => (
+      {/* Floating Particles - Only render on client side */}
+      {isClient && [...Array(20)].map((_, i) => (
         <motion.div
           key={i}
           className="absolute w-1 h-1 bg-teal-400 rounded-full"
