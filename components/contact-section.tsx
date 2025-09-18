@@ -1,8 +1,7 @@
 "use client"
 
 import type React from "react"
-
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -23,6 +22,26 @@ export function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const { toast } = useToast()
+
+  // State to store window dimensions
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
+
+  // Get window dimensions on mount (client-side only)
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      })
+    }
+
+    // Set initial size
+    handleResize()
+
+    // Update on resize
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -145,8 +164,8 @@ export function ContactSection() {
             key={i}
             className="absolute w-1 h-1 bg-teal-400 rounded-full"
             initial={{
-              x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1200),
-              y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 800),
+              x: Math.random() * windowSize.width,
+              y: Math.random() * windowSize.height,
               opacity: 0,
             }}
             animate={{

@@ -16,7 +16,7 @@ import {
   Smartphone,
   X,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import denProject1 from "../assets/den_project01.png";
 import denProject2 from "../assets/den_project02.png";
 import denProject3 from "../assets/den_project03.png";
@@ -55,6 +55,21 @@ interface Project {
 
 export function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+
+  // Get window dimensions on mount (client-side only)
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    handleResize(); // Set initial size
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -154,11 +169,7 @@ export function ProjectsSection() {
         "Full-stack e-commerce solution with secure payments, inventory management, and admin dashboard.",
       longDescription:
         "Developed a complete e-commerce platform with React/Redux frontend and Node.js backend, featuring JWT authentication, Stripe payments, and comprehensive admin controls.",
-      images: [
-        ecomProject02.src,
-        ecomProject01.src,
-        ecomProject03.src,
-      ],
+      images: [ecomProject02.src, ecomProject01.src, ecomProject03.src],
       technologies: [
         "React",
         "Redux",
@@ -316,12 +327,8 @@ export function ProjectsSection() {
             key={i}
             className="absolute w-1 h-1 bg-teal-400 rounded-full"
             initial={{
-              x:
-                Math.random() *
-                (typeof window !== "undefined" ? window.innerWidth : 1200),
-              y:
-                Math.random() *
-                (typeof window !== "undefined" ? window.innerHeight : 800),
+              x: Math.random() * windowSize.width,
+              y: Math.random() * windowSize.height,
               opacity: 0,
             }}
             animate={{
@@ -364,7 +371,7 @@ export function ProjectsSection() {
             </p>
           </motion.div>
 
-          {/* Projects Grid - Made cards smaller */}
+          {/* Projects Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project, index) => (
               <motion.div
@@ -383,11 +390,6 @@ export function ProjectsSection() {
                       className="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-110"
                       whileHover={{ scale: 1.1 }}
                     />
-                    {/* <div className="absolute top-3 right-3">
-                      <Badge variant="secondary" className="bg-gray-800/90 text-gray-300 text-xs">
-                        {project.status}
-                      </Badge>
-                    </div> */}
                   </div>
 
                   <CardHeader className="pb-3">
@@ -413,7 +415,7 @@ export function ProjectsSection() {
                   </CardHeader>
 
                   <CardContent className="space-y-3 pt-0">
-                    {/* Technologies - Show fewer */}
+                    {/* Technologies */}
                     <div>
                       <div className="flex flex-wrap gap-1">
                         {project.technologies.slice(0, 3).map((tech) => (
@@ -446,16 +448,6 @@ export function ProjectsSection() {
                         <Eye className="w-3 h-3 mr-2" />
                         View Details
                       </Button>
-                      {/* <Button
-                        size="sm"
-                        variant="outline"
-                        className="border-gray-600 text-gray-300 hover:bg-gray-700 bg-transparent"
-                        asChild
-                      >
-                        <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      </Button> */}
                     </div>
                   </CardContent>
                 </Card>
@@ -584,14 +576,14 @@ export function ProjectsSection() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex gap-4 pt-4">
-                  {/* <Button className="bg-teal-400 hover:bg-teal-400 text-white" asChild>
+                {/* <div className="flex gap-4 pt-4">
+                  <Button className="bg-teal-400 hover:bg-teal-400 text-white" asChild>
                     <a href={selectedProject.demo} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="w-4 h-4 mr-2" />
                       View Live Demo
                     </a>
-                  </Button> */}
-                  {/* <Button
+                  </Button>
+                  <Button
                     variant="outline"
                     className="border-gray-600 text-gray-300 hover:bg-gray-700 bg-transparent"
                     asChild
@@ -600,8 +592,8 @@ export function ProjectsSection() {
                       <Github className="w-4 h-4 mr-2" />
                       View Source Code
                     </a>
-                  </Button> */}
-                </div>
+                  </Button>
+                </div> */}
               </div>
             </motion.div>
           </motion.div>

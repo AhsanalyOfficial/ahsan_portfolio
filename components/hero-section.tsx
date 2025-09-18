@@ -10,6 +10,8 @@ export function HeroSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [titleIndex, setTitleIndex] = useState(0);
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+
   const titles = [
     "FULL STACK DEVELOPER",
     "MERN STACK DEVELOPER",
@@ -17,6 +19,20 @@ export function HeroSection() {
     "WEB DEVELOPER",
   ];
   const currentTitle = titles[titleIndex];
+
+  // Get window dimensions on mount (client-side only)
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    handleResize(); // Set initial size
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const timeout = setTimeout(
@@ -80,11 +96,13 @@ export function HeroSection() {
   ];
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+    if (typeof document !== "undefined") {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     }
-  }
+  };
 
   return (
     <section
@@ -110,12 +128,8 @@ export function HeroSection() {
             key={i}
             className="absolute w-1 h-1 bg-teal-400 rounded-full"
             initial={{
-              x:
-                Math.random() *
-                (typeof window !== "undefined" ? window.innerWidth : 1200),
-              y:
-                Math.random() *
-                (typeof window !== "undefined" ? window.innerHeight : 800),
+              x: Math.random() * windowSize.width,
+              y: Math.random() * windowSize.height,
               opacity: 0,
             }}
             animate={{
@@ -156,13 +170,6 @@ export function HeroSection() {
                   className="bg-teal-400 ml-2 inline-block align-middle"
                 ></motion.span>
               </motion.h1>
-
-              {/* <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: "200px" }}
-                transition={{ delay: 1, duration: 1.2 }}
-                className="h-1 bg-gradient-to-r from-teal-400 to-teal-400 mt-2 rounded-full"
-              /> */}
             </div>
 
             <motion.p
@@ -187,7 +194,6 @@ export function HeroSection() {
                 className="cursor-pointer bg-gradient-to-r from-teal-400 to-teal-400 hover:from-teal-400 hover:to-teal-700 text-white px-8 py-3 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-teal-400/25 group"
               >
                 Hire Me
-                {/* <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" /> */}
               </Button>
 
               <Button
@@ -196,7 +202,6 @@ export function HeroSection() {
                 className="cursor-pointer border-teal-400 text-white hover:bg-teal-400 hover:text-white px-8 py-3 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 bg-transparent backdrop-blur-sm group"
               >
                 View My Work
-                {/* <Projector className="ml-2 w-5 h-5 group-hover:rotate-12 transition-transform" /> */}
               </Button>
             </motion.div>
           </motion.div>

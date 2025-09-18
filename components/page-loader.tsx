@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Code2, Terminal, Zap } from "lucide-react"
+import { useState, useEffect } from "react"
 
 export function PageLoader() {
   const codeLines = [
@@ -10,6 +11,26 @@ export function PageLoader() {
     "const passion = 'Building amazing apps';",
     "console.log('Welcome to my portfolio!');",
   ]
+
+  // State to store window dimensions
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
+
+  // Get window dimensions on mount (client-side only)
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      })
+    }
+
+    // Set initial size
+    handleResize()
+
+    // Update on resize
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
 
   return (
     <motion.div
@@ -25,9 +46,9 @@ export function PageLoader() {
           className="absolute inset-0"
           style={{
             backgroundImage: `
-            linear-gradient(rgba(239, 68, 68, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(239, 68, 68, 0.1) 1px, transparent 1px)
-          `,
+              linear-gradient(rgba(239, 68, 68, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(239, 68, 68, 0.1) 1px, transparent 1px)
+            `,
             backgroundSize: "50px 50px",
           }}
         />
@@ -39,9 +60,8 @@ export function PageLoader() {
           key={i}
           className="absolute w-1 h-1 bg-teal-400 rounded-full"
           initial={{
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
-            
+            x: Math.random() * windowSize.width,
+            y: Math.random() * windowSize.height,
             opacity: 0,
           }}
           animate={{
@@ -120,7 +140,6 @@ export function PageLoader() {
             </div>
           </div>
           <div className="text-left font-mono text-sm">
-            
             {codeLines.map((line, index) => (
               <motion.div
                 key={index}
