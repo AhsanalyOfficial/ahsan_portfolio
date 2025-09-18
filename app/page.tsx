@@ -9,12 +9,14 @@ import { SkillsSection } from "@/components/skills-section"
 import { ProjectsSection } from "@/components/projects-section"
 import { ContactSection } from "@/components/contact-section"
 import { Footer } from "@/components/footer"
-import { ScrollProgress } from "@/components/scroll-progress"
 import { PageLoader } from "@/components/page-loader"
-import { BackToTop } from "@/components/back-to-top"
 import { Toaster } from "@/components/ui/toaster"
 import { motion } from "framer-motion"
 import { ClientSection } from "@/components/client-section"
+import dynamic from "next/dynamic"
+
+const BackToTop = dynamic(() => import("@/components/back-to-top").then(m => m.BackToTop), { ssr: false })
+const ScrollProgress = dynamic(() => import("@/components/scroll-progress").then(m => m.ScrollProgress), { ssr: false })
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
